@@ -1,0 +1,24 @@
+C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\build\bin\ARM64\Release\resources.pri
+C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\build\bin\ARM64\Release\AppxManifest.xml
+C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\build\bin\ARM64\Release\Reality Mesher.build.appxrecipe
+C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\build\obj\Reality Mesher\ARM64\Release\Reality Mesher.vcxproj.AssemblyReference.cache
+C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\build\obj\Reality Mesher\ARM64\Release\Reality .773DACBC.Up2Date
+C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\build\obj\Reality Mesher\ARM64\Release\ResourceHandlingTask.state
+C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\build\obj\Reality Mesher\ARM64\Release\Reality Mesher.vcxproj.GenerateResource.Cache
+C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\build\obj\Reality Mesher\ARM64\Release\priconfig.xml
+C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\build\obj\Reality Mesher\ARM64\Release\priconfig.xml.intermediate
+C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\build\obj\Reality Mesher\ARM64\Release\unfiltered.layout.resfiles
+C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\build\obj\Reality Mesher\ARM64\Release\unfiltered.layout.resfiles.intermediate
+C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\build\obj\Reality Mesher\ARM64\Release\filtered.layout.resfiles
+C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\build\obj\Reality Mesher\ARM64\Release\filtered.layout.resfiles.intermediate
+C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\build\obj\Reality Mesher\ARM64\Release\excluded.layout.resfiles
+C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\build\obj\Reality Mesher\ARM64\Release\excluded.layout.resfiles.intermediate
+C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\build\obj\Reality Mesher\ARM64\Release\resources.resfiles
+C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\build\obj\Reality Mesher\ARM64\Release\resources.resfiles.intermediate
+C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\build\obj\Reality Mesher\ARM64\Release\pri.resfiles
+C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\build\obj\Reality Mesher\ARM64\Release\pri.resfiles.intermediate
+C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\build\obj\Reality Mesher\ARM64\Release\qualifiers.txt
+C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\build\obj\Reality Mesher\ARM64\Release\qualifiers.txt.intermediate
+C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\build\obj\Reality Mesher\ARM64\Release\MultipleQualifiersPerDimensionFound.txt
+C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\build\obj\Reality Mesher\ARM64\Release\ProjectArchitectures.txt
+C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\build\obj\Reality Mesher\ARM64\Release\.winmd_cache\$UnityPlayer.winmd_637804802260000000.json

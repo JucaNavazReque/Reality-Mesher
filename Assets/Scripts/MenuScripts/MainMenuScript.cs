@@ -5,6 +5,7 @@ using System.Text;
 using UnityEngine.Rendering;
 using System.Linq;
 using UnityEngine.Windows.WebCam;
+using System.Globalization;
 
 public class MainMenuScript : MonoBehaviour
 {
@@ -44,7 +45,7 @@ public class MainMenuScript : MonoBehaviour
         using (StreamWriter sw = new StreamWriter(Application.persistentDataPath + "/mesh_" + DateTime.Now.ToString("dd-MM-yyyy_HH-mm-ss") + ".txt")) {
             StringBuilder sb = new StringBuilder();
             foreach (Vector3 v in combinedMesh.vertices) {
-                sb.Append(string.Format("{0} {1} {2}\n", v.x, v.y, -v.z));
+                sb.Append(string.Format(CultureInfo.InvariantCulture, "{0},{1},{2}\n", -v.z, v.x, v.y));
             }
             sw.Write(sb.ToString());
         }

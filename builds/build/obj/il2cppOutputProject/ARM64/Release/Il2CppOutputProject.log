@@ -1,0 +1,15 @@
+﻿  Building GameAssembly.dll with MsvcWinRtToolChain
+  	Msvc Install Version: 17.0
+  	Msvc Install SDK Directory: C:\Program Files (x86)\Windows Kits\10
+  	Msvc Linker Path: C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.40.33807\bin\HostX64\ARM64\link.exe
+  	Msvc Compiler Path: C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.40.33807\bin\HostX64\ARM64\cl.exe
+  
+  	Output directory: C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\build\bin\ARM64\Release
+  	Cache directory: C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\build\obj\il2cppOutputProject\ARM64\Release
+  Assembly-CSharp.cpp
+  ObjectFiles: 694 of which compiled: 1
+  	Time Compile: 546 milliseconds Assembly-CSharp.cpp
+  Total compilation time: 3988 milliseconds.
+  Creating library C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\build\obj\il2cppOutputProject\ARM64\Release\linkresult_C1DC7F0C2A22A3E56A8C1B13E7CA192A\GameAssembly.lib and object C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\build\obj\il2cppOutputProject\ARM64\Release\linkresult_C1DC7F0C2A22A3E56A8C1B13E7CA192A\GameAssembly.exp
+  Total link time: 11532 milliseconds.
+  Cleaned up 2 object files.

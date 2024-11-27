@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using System.IO;
+using System.Globalization;
 
 public class CreatePosMarkers : MonoBehaviour
 {
@@ -8,12 +9,13 @@ public class CreatePosMarkers : MonoBehaviour
     public float LineWidth = 0.003f;
     public Color LineColor = Color.yellow;
     public float PosMarkerCreationPeriod = 1.0f;
-    public bool ShowMarkers = true;
+    public bool ShowMarkers = false;
     public bool ShowOrientation = true;
 
     float nextActionTime = 0.0f;
     StreamWriter posWriter;
     GameObject GOParent;
+    CultureInfo culture = CultureInfo.InvariantCulture;
 
 // Función ejecutada al iniciar la aplicación
     void Awake() {
@@ -24,6 +26,7 @@ public class CreatePosMarkers : MonoBehaviour
 // Función ejecutada al habilitar el script
     void OnEnable() {
         posWriter = new StreamWriter(Application.persistentDataPath + "/traj.txt", true);
+        posWriter.WriteLine("timestamp,x,y,z,e_x,e_y,e_z");
     }
 
 // Función ejecutada al deshabilitar el script
@@ -40,7 +43,14 @@ public class CreatePosMarkers : MonoBehaviour
             createSphere();
             DrawLine();
             GOParent.tag = "PosMarker";
-            posWriter.WriteLine(DateTime.Now.ToString("[dd-MM-yyyy_HH:mm:ss]") + " ((" + Camera.main.transform.position.x + " " + Camera.main.transform.position.y + " " + -Camera.main.transform.position.z + ") " + Camera.main.transform.rotation.eulerAngles + ")");
+            Vector3 eulerAngles = Camera.main.transform.rotation.eulerAngles;
+            posWriter.WriteLine(DateTime.Now.ToString("dd-MM-yyyy_HH:mm:ss", culture) + "," 
+                + (-Camera.main.transform.position.z).ToString(culture) + "," 
+                + Camera.main.transform.position.x.ToString(culture) + "," 
+                + Camera.main.transform.position.y.ToString(culture) + "," 
+                + eulerAngles.z.ToString(culture) + "," 
+                + eulerAngles.x.ToString(culture) + "," 
+                + eulerAngles.y.ToString(culture));
         }
     }
 
