@@ -16,9 +16,15 @@ typedef struct Baselib_Lock
     char _cachelineSpacer[PLATFORM_CACHE_LINE_SIZE - sizeof(int32_t)];
 } Baselib_Lock;
 
+BASELIB_INLINE_API void Baselib_Lock_CreateInplace(Baselib_Lock* lockData)
+{
+    lockData->state = Detail_Baselib_Lock_UNLOCKED;
+}
+
 BASELIB_INLINE_API Baselib_Lock Baselib_Lock_Create(void)
 {
-    Baselib_Lock lock = {Detail_Baselib_Lock_UNLOCKED, {0}};
+    Baselib_Lock lock;
+    Baselib_Lock_CreateInplace(&lock);
     return lock;
 }
 
@@ -48,7 +54,7 @@ BASELIB_INLINE_API void Baselib_Lock_Acquire(Baselib_Lock* lock)
     while (OPTIMIZER_LIKELY(previousState != Detail_Baselib_Lock_UNLOCKED))
     {
         Baselib_SystemFutex_Wait(&lock->state, Detail_Baselib_Lock_CONTENDED, UINT32_MAX);
-        previousState = Baselib_atomic_exchange_32_relaxed(&lock->state, Detail_Baselib_Lock_CONTENDED);
+        previousState = Baselib_atomic_exchange_32_acquire(&lock->state, Detail_Baselib_Lock_CONTENDED);
     }
 }
 
@@ -71,7 +77,7 @@ BASELIB_INLINE_API bool Baselib_Lock_TryTimedAcquire(Baselib_Lock* lock, const u
     do
     {
         Baselib_SystemFutex_Wait(&lock->state, Detail_Baselib_Lock_CONTENDED, timeoutInMilliseconds);
-        const int32_t previousState = Baselib_atomic_exchange_32_relaxed(&lock->state, Detail_Baselib_Lock_CONTENDED);
+        const int32_t previousState = Baselib_atomic_exchange_32_acquire(&lock->state, Detail_Baselib_Lock_CONTENDED);
         if (previousState == Detail_Baselib_Lock_UNLOCKED)
             return true;
         timeLeft = Baselib_CountdownTimer_GetTimeLeftInMilliseconds(timer);
@@ -88,5 +94,9 @@ BASELIB_INLINE_API void Baselib_Lock_Release(Baselib_Lock* lock)
 }
 
 BASELIB_INLINE_API void Baselib_Lock_Free(Baselib_Lock* lock)
+{
+}
+
+BASELIB_INLINE_API void Baselib_Lock_FreeInplace(Baselib_Lock* lock)
 {
 }

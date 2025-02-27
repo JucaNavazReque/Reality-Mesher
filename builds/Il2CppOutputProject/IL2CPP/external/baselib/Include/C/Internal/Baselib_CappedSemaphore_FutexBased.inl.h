@@ -18,13 +18,26 @@ typedef struct Baselib_CappedSemaphore
     int32_t wakeups;
     char _cachelineSpacer0[PLATFORM_CACHE_LINE_SIZE - sizeof(int32_t)];
     int32_t count;
+    int32_t cap;
     char _cachelineSpacer1[PLATFORM_CACHE_LINE_SIZE - sizeof(int32_t) * 2]; // Having cap on the same cacheline is fine since it is a constant.
-    const int32_t cap;
 } Baselib_CappedSemaphore;
+
+BASELIB_STATIC_ASSERT(sizeof(Baselib_CappedSemaphore) == PLATFORM_CACHE_LINE_SIZE * 2, "Baselib_CappedSemaphore (Futex) size should match 2*cacheline size (128bytes)");
+BASELIB_STATIC_ASSERT(offsetof(Baselib_CappedSemaphore, wakeups) ==
+    (offsetof(Baselib_CappedSemaphore, count) - PLATFORM_CACHE_LINE_SIZE), "Baselib_CappedSemaphore (futex) wakeups and count shouldnt share cacheline");
+
+
+BASELIB_INLINE_API void Baselib_CappedSemaphore_CreateInplace(Baselib_CappedSemaphore* semaphoreData, const uint16_t cap)
+{
+    semaphoreData->wakeups = 0;
+    semaphoreData->count = 0;
+    semaphoreData->cap = cap;
+}
 
 BASELIB_INLINE_API Baselib_CappedSemaphore Baselib_CappedSemaphore_Create(const uint16_t cap)
 {
-    Baselib_CappedSemaphore semaphore = { 0, {0}, 0, {0}, cap };
+    Baselib_CappedSemaphore semaphore;
+    Baselib_CappedSemaphore_CreateInplace(&semaphore, cap);
     return semaphore;
 }
 
@@ -33,7 +46,7 @@ BASELIB_INLINE_API bool Detail_Baselib_CappedSemaphore_ConsumeWakeup(Baselib_Cap
     int32_t previousCount = Baselib_atomic_load_32_relaxed(&semaphore->wakeups);
     while (previousCount > 0)
     {
-        if (Baselib_atomic_compare_exchange_weak_32_relaxed_relaxed(&semaphore->wakeups, &previousCount, previousCount - 1))
+        if (Baselib_atomic_compare_exchange_weak_32_acquire_relaxed(&semaphore->wakeups, &previousCount, previousCount - 1))
             return true;
     }
     return false;
@@ -144,4 +157,9 @@ BASELIB_INLINE_API void Baselib_CappedSemaphore_Free(Baselib_CappedSemaphore* se
         return;
     const int32_t count = Baselib_atomic_load_32_seq_cst(&semaphore->count);
     BaselibAssert(count >= 0, "Destruction is not allowed when there are still threads waiting on the semaphore.");
+}
+
+BASELIB_INLINE_API void Baselib_CappedSemaphore_FreeInplace(Baselib_CappedSemaphore* semaphore)
+{
+    Baselib_CappedSemaphore_Free(semaphore);
 }

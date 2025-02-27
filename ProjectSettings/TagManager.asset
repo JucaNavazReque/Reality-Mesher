@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Marker
   - PosMarker
+  - Submesh
   layers:
   - Default
   - TransparentFX

@@ -1,6 +1,5 @@
 #include "il2cpp-config.h"
 #include "il2cpp-object-internals.h"
-#include "il2cpp-vm-support.h"
 #include "GarbageCollector.h"
 #include "os/Event.h"
 #include "os/Mutex.h"
@@ -23,7 +22,10 @@
 #endif
 
 using namespace il2cpp::os;
+
+#if !RUNTIME_TINY
 using namespace il2cpp::vm;
+#endif
 
 namespace il2cpp
 {
@@ -112,9 +114,19 @@ namespace gc
         return s_FinalizerThreadObject == thread;
     }
 
+    bool GarbageCollector::IsFinalizerInternalThread(Il2CppInternalThread *thread)
+    {
+        return s_FinalizerThreadObject->GetInternalThread() == thread;
+    }
+
 #else
 
     bool GarbageCollector::IsFinalizerThread(Il2CppThread *thread)
+    {
+        return false;
+    }
+
+    bool GarbageCollector::IsFinalizerInternalThread(Il2CppInternalThread *thread)
     {
         return false;
     }
@@ -315,7 +327,7 @@ namespace gc
 
         Il2CppIUnknown* result;
         il2cpp_hresult_t hr = comCallableWrapper->QueryInterface(iid, reinterpret_cast<void**>(&result));
-        IL2CPP_VM_RAISE_IF_FAILED(hr, true);
+        vm::Exception::RaiseIfFailed(hr, true);
         return result;
     }
 

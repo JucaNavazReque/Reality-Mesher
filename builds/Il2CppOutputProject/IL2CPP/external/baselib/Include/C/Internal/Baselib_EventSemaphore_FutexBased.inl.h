@@ -14,6 +14,7 @@ typedef struct Baselib_EventSemaphore
     char _cachelineSpacer1[PLATFORM_CACHE_LINE_SIZE - sizeof(int32_t)];
 } Baselib_EventSemaphore;
 
+BASELIB_STATIC_ASSERT(sizeof(Baselib_EventSemaphore) == PLATFORM_CACHE_LINE_SIZE, "Baselib_EventSemaphore size should match cacheline size (64bytes)");
 
 // The futex based event semaphore is in one of *three* states:
 // * ResetNoWaitingThreads: EventSemaphore blocks threads, but there aren't any blocked yet
@@ -64,9 +65,15 @@ static FORCE_INLINE uint32_t Detail_Baselib_EventSemaphore_TransitionFrom_ResetN
     return state;
 }
 
+BASELIB_INLINE_API void Baselib_EventSemaphore_CreateInplace(Baselib_EventSemaphore* semaphoreData)
+{
+    semaphoreData->state = 0;
+}
+
 BASELIB_INLINE_API Baselib_EventSemaphore Baselib_EventSemaphore_Create(void)
 {
-    const Baselib_EventSemaphore semaphore = { 0, {0} };
+    Baselib_EventSemaphore semaphore;
+    Baselib_EventSemaphore_CreateInplace(&semaphore);
     return semaphore;
 }
 
@@ -193,5 +200,9 @@ BASELIB_INLINE_API void Baselib_EventSemaphore_ResetAndReleaseWaitingThreads(Bas
 }
 
 BASELIB_INLINE_API void Baselib_EventSemaphore_Free(Baselib_EventSemaphore* semaphore)
+{
+}
+
+BASELIB_INLINE_API void Baselib_EventSemaphore_FreeInplace(Baselib_EventSemaphore* semaphore)
 {
 }

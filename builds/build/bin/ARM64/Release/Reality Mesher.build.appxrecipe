@@ -28,10 +28,10 @@
     <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\build\bin\ARM64\Release\Reality Mesher.exe">
       <PackagePath>Reality Mesher.exe</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Program Files\Unity\Hub\Editor\2020.3.30f1\Editor\Data\PlaybackEngines\MetroSupport\Players\UAP\il2cpp\ARM64\Release\UnityPlayer.winmd">
+    <AppxPackagedFile Include="C:\Program Files\Unity\Hub\Editor\2022.3.40f1\Editor\Data\PlaybackEngines\MetroSupport\Players\UAP\il2cpp\ARM64\Release\UnityPlayer.winmd">
       <PackagePath>UnityPlayer.winmd</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Program Files\Unity\Hub\Editor\2020.3.30f1\Editor\Data\PlaybackEngines\MetroSupport\Players\UAP\il2cpp\ARM64\Release\UnityPlayer.dll">
+    <AppxPackagedFile Include="C:\Program Files\Unity\Hub\Editor\2022.3.40f1\Editor\Data\PlaybackEngines\MetroSupport\Players\UAP\il2cpp\ARM64\Release\UnityPlayer.dll">
       <PackagePath>UnityPlayer.dll</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\build\bin\ARM64\Release\Reality_Mesher.winmd">
@@ -43,6 +43,106 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\SplashScreen.scale-200.png">
       <PackagePath>Assets\SplashScreen.scale-200.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\StoreLogo.scale-125.png">
+      <PackagePath>Assets\StoreLogo.scale-125.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\StoreLogo.scale-150.png">
+      <PackagePath>Assets\StoreLogo.scale-150.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\StoreLogo.scale-200.png">
+      <PackagePath>Assets\StoreLogo.scale-200.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\StoreLogo.scale-400.png">
+      <PackagePath>Assets\StoreLogo.scale-400.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\StoreLogo.scale-100.png">
+      <PackagePath>Assets\StoreLogo.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\Square44x44Logo.scale-100.png">
+      <PackagePath>Assets\Square44x44Logo.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\Square44x44Logo.scale-125.png">
+      <PackagePath>Assets\Square44x44Logo.scale-125.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\Square44x44Logo.scale-150.png">
+      <PackagePath>Assets\Square44x44Logo.scale-150.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\Square44x44Logo.scale-200.png">
+      <PackagePath>Assets\Square44x44Logo.scale-200.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\Square44x44Logo.scale-400.png">
+      <PackagePath>Assets\Square44x44Logo.scale-400.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\Square44x44Logo.targetsize-16.png">
+      <PackagePath>Assets\Square44x44Logo.targetsize-16.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\Square44x44Logo.targetsize-24.png">
+      <PackagePath>Assets\Square44x44Logo.targetsize-24.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\Square44x44Logo.targetsize-32.png">
+      <PackagePath>Assets\Square44x44Logo.targetsize-32.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\Square44x44Logo.targetsize-48.png">
+      <PackagePath>Assets\Square44x44Logo.targetsize-48.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\Square44x44Logo.targetsize-256.png">
+      <PackagePath>Assets\Square44x44Logo.targetsize-256.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\Square44x44Logo.targetsize-16_altform-unplated.png">
+      <PackagePath>Assets\Square44x44Logo.targetsize-16_altform-unplated.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\Square44x44Logo.targetsize-24_altform-unplated.png">
+      <PackagePath>Assets\Square44x44Logo.targetsize-24_altform-unplated.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\Square44x44Logo.targetsize-32_altform-unplated.png">
+      <PackagePath>Assets\Square44x44Logo.targetsize-32_altform-unplated.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\Square44x44Logo.targetsize-48_altform-unplated.png">
+      <PackagePath>Assets\Square44x44Logo.targetsize-48_altform-unplated.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\Square44x44Logo.targetsize-256_altform-unplated.png">
+      <PackagePath>Assets\Square44x44Logo.targetsize-256_altform-unplated.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\Square71x71Logo.scale-100.png">
+      <PackagePath>Assets\Square71x71Logo.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\Square71x71Logo.scale-125.png">
+      <PackagePath>Assets\Square71x71Logo.scale-125.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\Square71x71Logo.scale-150.png">
+      <PackagePath>Assets\Square71x71Logo.scale-150.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\Square71x71Logo.scale-200.png">
+      <PackagePath>Assets\Square71x71Logo.scale-200.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\Square71x71Logo.scale-400.png">
+      <PackagePath>Assets\Square71x71Logo.scale-400.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\Square150x150Logo.scale-100.png">
@@ -85,106 +185,6 @@
       <PackagePath>Assets\Square310x310Logo.scale-400.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\Square44x44Logo.scale-100.png">
-      <PackagePath>Assets\Square44x44Logo.scale-100.png</PackagePath>
-      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\Square44x44Logo.scale-125.png">
-      <PackagePath>Assets\Square44x44Logo.scale-125.png</PackagePath>
-      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\Square44x44Logo.scale-150.png">
-      <PackagePath>Assets\Square44x44Logo.scale-150.png</PackagePath>
-      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\Square44x44Logo.scale-200.png">
-      <PackagePath>Assets\Square44x44Logo.scale-200.png</PackagePath>
-      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\Square44x44Logo.scale-400.png">
-      <PackagePath>Assets\Square44x44Logo.scale-400.png</PackagePath>
-      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\Square44x44Logo.targetsize-16.png">
-      <PackagePath>Assets\Square44x44Logo.targetsize-16.png</PackagePath>
-      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\Square44x44Logo.targetsize-16_altform-unplated.png">
-      <PackagePath>Assets\Square44x44Logo.targetsize-16_altform-unplated.png</PackagePath>
-      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\Square44x44Logo.targetsize-24.png">
-      <PackagePath>Assets\Square44x44Logo.targetsize-24.png</PackagePath>
-      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\Square44x44Logo.targetsize-24_altform-unplated.png">
-      <PackagePath>Assets\Square44x44Logo.targetsize-24_altform-unplated.png</PackagePath>
-      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\Square44x44Logo.targetsize-256.png">
-      <PackagePath>Assets\Square44x44Logo.targetsize-256.png</PackagePath>
-      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\Square44x44Logo.targetsize-256_altform-unplated.png">
-      <PackagePath>Assets\Square44x44Logo.targetsize-256_altform-unplated.png</PackagePath>
-      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\Square44x44Logo.targetsize-32.png">
-      <PackagePath>Assets\Square44x44Logo.targetsize-32.png</PackagePath>
-      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\Square44x44Logo.targetsize-32_altform-unplated.png">
-      <PackagePath>Assets\Square44x44Logo.targetsize-32_altform-unplated.png</PackagePath>
-      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\Square44x44Logo.targetsize-48.png">
-      <PackagePath>Assets\Square44x44Logo.targetsize-48.png</PackagePath>
-      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\Square44x44Logo.targetsize-48_altform-unplated.png">
-      <PackagePath>Assets\Square44x44Logo.targetsize-48_altform-unplated.png</PackagePath>
-      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\Square71x71Logo.scale-100.png">
-      <PackagePath>Assets\Square71x71Logo.scale-100.png</PackagePath>
-      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\Square71x71Logo.scale-125.png">
-      <PackagePath>Assets\Square71x71Logo.scale-125.png</PackagePath>
-      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\Square71x71Logo.scale-150.png">
-      <PackagePath>Assets\Square71x71Logo.scale-150.png</PackagePath>
-      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\Square71x71Logo.scale-200.png">
-      <PackagePath>Assets\Square71x71Logo.scale-200.png</PackagePath>
-      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\Square71x71Logo.scale-400.png">
-      <PackagePath>Assets\Square71x71Logo.scale-400.png</PackagePath>
-      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\StoreLogo.scale-100.png">
-      <PackagePath>Assets\StoreLogo.scale-100.png</PackagePath>
-      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\StoreLogo.scale-125.png">
-      <PackagePath>Assets\StoreLogo.scale-125.png</PackagePath>
-      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\StoreLogo.scale-150.png">
-      <PackagePath>Assets\StoreLogo.scale-150.png</PackagePath>
-      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\StoreLogo.scale-200.png">
-      <PackagePath>Assets\StoreLogo.scale-200.png</PackagePath>
-      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\StoreLogo.scale-400.png">
-      <PackagePath>Assets\StoreLogo.scale-400.png</PackagePath>
-      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Assets\Wide310x150Logo.scale-100.png">
       <PackagePath>Assets\Wide310x150Logo.scale-100.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
@@ -208,29 +208,14 @@
     <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\StoreManifest.xml">
       <PackagePath>StoreManifest.xml</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Data\il2cpp_data\etc\mono\mconfig\config.xml">
-      <PackagePath>Data\il2cpp_data\etc\mono\mconfig\config.xml</PackagePath>
+    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Data\nativePlugins.txt">
+      <PackagePath>Data\nativePlugins.txt</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Data\boot.config">
-      <PackagePath>Data\boot.config</PackagePath>
+    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Data\il2cpp_data\Metadata\global-metadata.dat">
+      <PackagePath>Data\il2cpp_data\Metadata\global-metadata.dat</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Data\il2cpp_data\etc\mono\2.0\machine.config">
-      <PackagePath>Data\il2cpp_data\etc\mono\2.0\machine.config</PackagePath>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Data\il2cpp_data\etc\mono\2.0\web.config">
-      <PackagePath>Data\il2cpp_data\etc\mono\2.0\web.config</PackagePath>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Data\il2cpp_data\etc\mono\4.0\machine.config">
-      <PackagePath>Data\il2cpp_data\etc\mono\4.0\machine.config</PackagePath>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Data\il2cpp_data\etc\mono\4.0\web.config">
-      <PackagePath>Data\il2cpp_data\etc\mono\4.0\web.config</PackagePath>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Data\il2cpp_data\etc\mono\4.5\machine.config">
-      <PackagePath>Data\il2cpp_data\etc\mono\4.5\machine.config</PackagePath>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Data\il2cpp_data\etc\mono\4.5\web.config">
-      <PackagePath>Data\il2cpp_data\etc\mono\4.5\web.config</PackagePath>
+    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Data\il2cpp_data\Resources\mscorlib.dll-resources.dat">
+      <PackagePath>Data\il2cpp_data\Resources\mscorlib.dll-resources.dat</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Data\globalgamemanagers">
       <PackagePath>Data\globalgamemanagers</PackagePath>
@@ -238,14 +223,11 @@
     <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Data\level0">
       <PackagePath>Data\level0</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Data\il2cpp_data\etc\mono\config">
-      <PackagePath>Data\il2cpp_data\etc\mono\config</PackagePath>
+    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Data\Resources\unity_builtin_extra">
+      <PackagePath>Data\Resources\unity_builtin_extra</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Data\Resources\unity default resources">
       <PackagePath>Data\Resources\unity default resources</PackagePath>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Data\Resources\unity_builtin_extra">
-      <PackagePath>Data\Resources\unity_builtin_extra</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Data\globalgamemanagers.assets">
       <PackagePath>Data\globalgamemanagers.assets</PackagePath>
@@ -268,9 +250,6 @@
     <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Data\sharedassets0.assets.resS">
       <PackagePath>Data\sharedassets0.assets.resS</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Data\nativePlugins.txt">
-      <PackagePath>Data\nativePlugins.txt</PackagePath>
-    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Data\RuntimeInitializeOnLoads.json">
       <PackagePath>Data\RuntimeInitializeOnLoads.json</PackagePath>
     </AppxPackagedFile>
@@ -286,61 +265,25 @@
     <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Data\sharedassets0.resource">
       <PackagePath>Data\sharedassets0.resource</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Data\il2cpp_data\etc\mono\browscap.ini">
-      <PackagePath>Data\il2cpp_data\etc\mono\browscap.ini</PackagePath>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Data\il2cpp_data\etc\mono\2.0\DefaultWsdlHelpGenerator.aspx">
-      <PackagePath>Data\il2cpp_data\etc\mono\2.0\DefaultWsdlHelpGenerator.aspx</PackagePath>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Data\il2cpp_data\etc\mono\4.0\DefaultWsdlHelpGenerator.aspx">
-      <PackagePath>Data\il2cpp_data\etc\mono\4.0\DefaultWsdlHelpGenerator.aspx</PackagePath>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Data\il2cpp_data\etc\mono\4.5\DefaultWsdlHelpGenerator.aspx">
-      <PackagePath>Data\il2cpp_data\etc\mono\4.5\DefaultWsdlHelpGenerator.aspx</PackagePath>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Data\il2cpp_data\etc\mono\2.0\settings.map">
-      <PackagePath>Data\il2cpp_data\etc\mono\2.0\settings.map</PackagePath>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Data\il2cpp_data\etc\mono\4.0\settings.map">
-      <PackagePath>Data\il2cpp_data\etc\mono\4.0\settings.map</PackagePath>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Data\il2cpp_data\etc\mono\4.5\settings.map">
-      <PackagePath>Data\il2cpp_data\etc\mono\4.5\settings.map</PackagePath>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Data\il2cpp_data\etc\mono\2.0\Browsers\Compat.browser">
-      <PackagePath>Data\il2cpp_data\etc\mono\2.0\Browsers\Compat.browser</PackagePath>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Data\il2cpp_data\etc\mono\4.0\Browsers\Compat.browser">
-      <PackagePath>Data\il2cpp_data\etc\mono\4.0\Browsers\Compat.browser</PackagePath>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Data\il2cpp_data\etc\mono\4.5\Browsers\Compat.browser">
-      <PackagePath>Data\il2cpp_data\etc\mono\4.5\Browsers\Compat.browser</PackagePath>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Data\il2cpp_data\Metadata\global-metadata.dat">
-      <PackagePath>Data\il2cpp_data\Metadata\global-metadata.dat</PackagePath>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Data\il2cpp_data\Resources\I18N.CJK.dll-resources.dat">
-      <PackagePath>Data\il2cpp_data\Resources\I18N.CJK.dll-resources.dat</PackagePath>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Data\il2cpp_data\Resources\mscorlib.dll-resources.dat">
-      <PackagePath>Data\il2cpp_data\Resources\mscorlib.dll-resources.dat</PackagePath>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\UnityOpenXR.dll">
-      <PackagePath>UnityOpenXR.dll</PackagePath>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Microsoft.MixedReality.Input.dll">
-      <PackagePath>Microsoft.MixedReality.Input.dll</PackagePath>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\MicrosoftOpenXRPlugin.dll">
-      <PackagePath>MicrosoftOpenXRPlugin.dll</PackagePath>
+    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Data\boot.config">
+      <PackagePath>Data\boot.config</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\openxr_loader.dll">
       <PackagePath>openxr_loader.dll</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\UnityOpenXRHands.dll">
+      <PackagePath>UnityOpenXRHands.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\MicrosoftOpenXRPlugin.dll">
+      <PackagePath>MicrosoftOpenXRPlugin.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\UnityOpenXR.dll">
+      <PackagePath>UnityOpenXR.dll</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\build\bin\ARM64\Release\GameAssembly.dll">
       <PackagePath>GameAssembly.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Program Files\Unity\Hub\Editor\2020.3.30f1\Editor\Data\PlaybackEngines\MetroSupport\Players\UAP\il2cpp\ARM64\Release\baselib.dll">
+    <AppxPackagedFile Include="C:\Program Files\Unity\Hub\Editor\2022.3.40f1\Editor\Data\PlaybackEngines\MetroSupport\Players\UAP\il2cpp\ARM64\Release\baselib.dll">
       <PackagePath>baselib.dll</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\build\bin\ARM64\Release\resources.pri">

@@ -1,13 +1,13 @@
 {
     "name": "OpenXR Extension",
-    "version": "1.8.1",
+    "version": "1.11.2",
     "libraryName": "MicrosoftOpenXRPlugin",
     "inputs": [
         {
             "id": "OpenXR Input Extension"
         }
     ],
-    "meshings": [
+    "meshings":[
         {
             "id": "OpenXR Mesh Extension"
         }

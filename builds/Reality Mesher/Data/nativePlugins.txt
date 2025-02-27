@@ -1,3 +1,2 @@
-Microsoft.MixedReality.Input.dll
-
 openxr_loader.dll
+UnityOpenXRHands.dll

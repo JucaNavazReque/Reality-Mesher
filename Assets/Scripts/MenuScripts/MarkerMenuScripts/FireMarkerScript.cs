@@ -1,29 +1,38 @@
 using UnityEngine;
-using Microsoft.MixedReality.Toolkit;
-using Microsoft.MixedReality.Toolkit.Input;
-using Microsoft.MixedReality.Toolkit.UI;
 
 public class FireMarkerScript : MonoBehaviour
 {
     public GameObject markerPrefab;
+    public GameObject deleteButton;
     public Shader HighlightShader;
     public bool HighlightMarkers = false;
     [HideInInspector]
     public string MarkerName;
     [HideInInspector]
     public Color MarkerColor;
+    [SerializeField]
+    private LayerMask _layerMask;
 
     public void createMarker() {
-        Quaternion rotation_quat = Quaternion.Euler(Camera.main.transform.forward.x, Camera.main.transform.forward.y+180, Camera.main.transform.forward.z);
-        Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+        Transform CameraTransform = Camera.main.transform;
+        Quaternion rotation_quat = Quaternion.Euler(CameraTransform.forward.x, CameraTransform.forward.y+180, CameraTransform.forward.z);
+        Ray ray = new Ray(CameraTransform.position, CameraTransform.forward);
         RaycastHit hitData;
-        if (Physics.Raycast(ray, out hitData, Mathf.Infinity, 1<<31))
+        if (Physics.Raycast(ray, out hitData, Mathf.Infinity, _layerMask))
         {
             GameObject WallMarker = Instantiate(markerPrefab, hitData.point, rotation_quat);
             WallMarker.tag = "Marker";
             WallMarker.name = MarkerName;
-            WallMarker.transform.Find("Sphere").GetComponent<Renderer>().material.color = MarkerColor;
+            WallMarker.transform.GetChild(0).GetComponent<Renderer>().material.color = MarkerColor;
             if (HighlightMarkers) {WallMarker.transform.Find("Sphere").GetComponent<Renderer>().material.shader = HighlightShader;}
+            GameObject DeleteMarkerButton = Instantiate(deleteButton, WallMarker.transform.position, rotation_quat);
+            DeleteMarkerButton.transform.Translate(0f,0.048f,0f);
+            DeleteMarkerButton.transform.SetParent(WallMarker.transform);
         }
+
+        // Testing code
+        RaycastHit[] testHits;
+        testHits = Physics.RaycastAll(ray, Mathf.Infinity, _layerMask);
+        Debug.Log(testHits.Length);
     }
 }

@@ -1,15 +1,6 @@
-﻿  Building GameAssembly.dll with MsvcWinRtToolChain
-  	Msvc Install Version: 17.0
-  	Msvc Install SDK Directory: C:\Program Files (x86)\Windows Kits\10
-  	Msvc Linker Path: C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.40.33807\bin\HostX64\ARM64\link.exe
-  	Msvc Compiler Path: C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.40.33807\bin\HostX64\ARM64\cl.exe
+﻿  C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Il2CppOutputProject\IL2CPP\build\deploy\il2cpp.exe --compile-cpp --platform=WinRT --incremental-g-c-time-slice=3 --relative-data-path=Data/il2cpp_data --dotnetprofile=unityaot-win32 --profiler-report --print-command-line --architecture=ARM64 --configuration=Release --outputpath=C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\\build\bin\ARM64\Release\GameAssembly.dll --data-folder=C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\\build\bin\ARM64\Release\ --cachedirectory=C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\\build\obj\il2cppOutputProject\ARM64\Release\ --generatedcppdir=C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Il2CppOutputProject\\Source --verbose --baselib-directory=C:\Program Files\Unity\Hub\Editor\2022.3.40f1\Editor\Data\PlaybackEngines\MetroSupport\Players\UAP\il2cpp\ARM64\Release --profiler-output-file=C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\\build\obj\il2cppOutputProject\ARM64\Release\profile.json
+  Starting: C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Il2CppOutputProject\IL2CPP\build\deploy\bee_backend\win-x64\bee_backend.exe --verbose --threads=12 --profile="C:/Users/UVigo/Documents/Apps/Reality-Mesher/builds/build/obj/il2cppOutputProject/ARM64/Release/buildstate/backend_profiler0.traceevents" --beedriver-listener --dagfile="C:/Users/UVigo/Documents/Apps/Reality-Mesher/builds/build/obj/il2cppOutputProject/ARM64/Release/buildstate/bee.dag" --continue-on-failure FinalProgram
+  WorkingDir: C:/Users/UVigo/Documents/Apps/Reality-Mesher/builds/build/obj/il2cppOutputProject/ARM64/Release/buildstate
+  ExitCode: 0 Duration: 29s
+  Build succeeded with 5 successful nodes and 0 failed ones
   
-  	Output directory: C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\build\bin\ARM64\Release
-  	Cache directory: C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\build\obj\il2cppOutputProject\ARM64\Release
-  Assembly-CSharp.cpp
-  ObjectFiles: 694 of which compiled: 1
-  	Time Compile: 546 milliseconds Assembly-CSharp.cpp
-  Total compilation time: 3988 milliseconds.
-  Creating library C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\build\obj\il2cppOutputProject\ARM64\Release\linkresult_C1DC7F0C2A22A3E56A8C1B13E7CA192A\GameAssembly.lib and object C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\build\obj\il2cppOutputProject\ARM64\Release\linkresult_C1DC7F0C2A22A3E56A8C1B13E7CA192A\GameAssembly.exp
-  Total link time: 11532 milliseconds.
-  Cleaned up 2 object files.

@@ -1,4 +1,5 @@
 #include "il2cpp-config.h"
+#include "utils/Memory.h"
 
 #if IL2CPP_TARGET_DARWIN
 
@@ -7,6 +8,7 @@
 #include <mach-o/dyld.h>
 #include <mach-o/getsect.h>
 #include <mach-o/ldsyms.h>
+#include <dlfcn.h>
 #include <vector>
 
 namespace il2cpp
@@ -47,7 +49,7 @@ namespace Image
                 gameAssemblyImageIndex = i;
                 break;
             }
-            else if (strcmp(imageName, &path[0]) == 0)
+            else if (strstr(imageName, &path[0]) != NULL)
             {
                 executableImageIndex = i;
             }
@@ -63,27 +65,27 @@ namespace Image
 
     static void InitializeImageBase()
     {
-        int imageIndex = GetImageIndex();
-        if (imageIndex != -1)
-            s_ImageBase = (void*)_dyld_get_image_vmaddr_slide(imageIndex);
-        else
-            s_ImageBase = NULL;
+        // Gets info about the image containing InitializeImageBase
+        Dl_info info;
+        memset(&info, 0, sizeof(info));
+        int error = dladdr((void*)&InitializeImageBase, &info);
+
+        IL2CPP_ASSERT(error != 0);
+        if (error == 0)
+            return;
+
+        s_ImageBase = info.dli_fbase;
     }
 
 #if IL2CPP_SIZEOF_VOID_P == 8
-    typedef section_64 archSectionData_t;
+    typedef struct mach_header_64 arch_header_t;
 #else
-    typedef section archSectionData_t;
+    typedef struct mach_header arch_header_t;
 #endif
 
-    static const archSectionData_t* SectionDataFor(int imageIndex)
+    static uint8_t* SectionDataFor(int imageIndex, unsigned long* size)
     {
-        const struct mach_header* header = _dyld_get_image_header(imageIndex);
-#if IL2CPP_SIZEOF_VOID_P == 8
-        return getsectbynamefromheader_64((const struct mach_header_64*)header, "__TEXT", IL2CPP_BINARY_SECTION_NAME);
-#else
-        return getsectbynamefromheader(header, "__TEXT", IL2CPP_BINARY_SECTION_NAME);
-#endif
+        return getsectiondata((const arch_header_t*)_dyld_get_image_header(imageIndex), "__TEXT", IL2CPP_BINARY_SECTION_NAME, size);
     }
 
     static void InitializeManagedSection()
@@ -92,7 +94,8 @@ namespace Image
         if (imageIndex == -1)
             return;
 
-        const archSectionData_t* sectionData = SectionDataFor(imageIndex);
+        unsigned long sectionSize = 0;
+        uint8_t* sectionData = SectionDataFor(imageIndex, &sectionSize);
         if (sectionData == NULL)
         {
             // We did not find the managed section of the binary in the image where we
@@ -106,15 +109,15 @@ namespace Image
             imageIndex = 0;
             while (sectionData == NULL && imageIndex < numberOfImages)
             {
-                sectionData = SectionDataFor(imageIndex);
+                sectionData = SectionDataFor(imageIndex, &sectionSize);
                 imageIndex++;
             }
         }
 
         if (sectionData != NULL)
         {
-            void* start = (void*)((intptr_t)sectionData->addr + (intptr_t)s_ImageBase);
-            void* end = (uint8_t*)start + sectionData->size;
+            void* start = (void*)sectionData;
+            void* end = (uint8_t*)start + sectionSize;
 
             SetManagedSectionStartAndEnd(start, end);
         }
@@ -132,9 +135,13 @@ namespace Image
     }
 
 #if IL2CPP_ENABLE_NATIVE_INSTRUCTION_POINTER_EMISSION
-    void GetImageUUID(char* uuid)
+    char* GetImageUUID()
     {
-        const struct mach_header_64* header = (mach_header_64*)_dyld_get_image_header(GetImageIndex());
+        int imageIndex = GetImageIndex();
+        if (imageIndex == -1)
+            return NULL;
+
+        const struct mach_header_64* header = (mach_header_64*)_dyld_get_image_header(imageIndex);
         const uint8_t *command = (const uint8_t *)(header + 1);
 
         for (uint32_t idx = 0; idx < header->ncmds; ++idx)
@@ -142,18 +149,30 @@ namespace Image
             if (((const struct load_command *)command)->cmd == LC_UUID)
             {
                 command += sizeof(struct load_command);
+                char* uuid = static_cast<char*>(IL2CPP_MALLOC(33));
                 snprintf(uuid, 33, "%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
                     command[0], command[1], command[2], command[3],
                     command[4], command[5], command[6], command[7],
                     command[8], command[9], command[10], command[11],
                     command[12], command[13], command[14], command[15]);
-                return;
+                return uuid;
             }
             else
             {
                 command += ((const struct load_command *)command)->cmdsize;
             }
         }
+
+        return NULL;
+    }
+
+    char* GetImageName()
+    {
+        const char* imageName = _dyld_get_image_name(GetImageIndex());
+        size_t nameSize = strlen(imageName);
+        char* imageNameCopy = (char*)IL2CPP_MALLOC(nameSize);
+        strncpy(imageNameCopy, imageName, nameSize);
+        return imageNameCopy;
     }
 
 #endif

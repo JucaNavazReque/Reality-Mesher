@@ -9,206 +9,179 @@
 #include "codegen/il2cpp-codegen-metadata.h"
 
 
-extern const RuntimeMethod* MockRuntime_AfterFunctionCallback_mAF8AAD83714DE1C2B13FF7FAE1CC275D15EB1001_RuntimeMethod_var;
-extern const RuntimeMethod* MockRuntime_BeforeFunctionCallback_m5FDEF08149545E36EFDAE885A986A2A04151E5C9_RuntimeMethod_var;
-extern const RuntimeMethod* MockRuntime_ReceiveScriptEvent_m66F5CEF0D55D35B1E8447878C2B348426763571B_RuntimeMethod_var;
+extern const RuntimeMethod* MockRuntime_AfterFunctionCallback_mFBBF94D9868CA6870E3A6A78D831145376372D46_RuntimeMethod_var;
+extern const RuntimeMethod* MockRuntime_BeforeFunctionCallback_m70AB6148D0D9FCD315ACDB6B46131514D128380D_RuntimeMethod_var;
+extern const RuntimeMethod* MockRuntime_ReceiveScriptEvent_m4A8AAF0A455A02262E3B74CB3DB498A88C84AD14_RuntimeMethod_var;
 
 
 
-// 0x00000001 System.Void UnityEngine.XR.OpenXR.Features.Mock.MockRuntime::add_onScriptEvent(UnityEngine.XR.OpenXR.Features.Mock.MockRuntime/ScriptEventDelegate)
-extern void MockRuntime_add_onScriptEvent_mAD927DF1320B5968110B2345695A43ECA1B6BD49 (void);
-// 0x00000002 System.Void UnityEngine.XR.OpenXR.Features.Mock.MockRuntime::remove_onScriptEvent(UnityEngine.XR.OpenXR.Features.Mock.MockRuntime/ScriptEventDelegate)
-extern void MockRuntime_remove_onScriptEvent_m9E6D6DF22466EDCB3BA6D114A0EEE7F75EEF27A9 (void);
-// 0x00000003 UnityEngine.XR.OpenXR.Features.Mock.MockRuntime UnityEngine.XR.OpenXR.Features.Mock.MockRuntime::get_Instance()
-extern void MockRuntime_get_Instance_mA453F86A5ABD5DC3C30927C0A253768671B7D263 (void);
-// 0x00000004 System.Void UnityEngine.XR.OpenXR.Features.Mock.MockRuntime::ReceiveScriptEvent(UnityEngine.XR.OpenXR.Features.Mock.MockRuntime/ScriptEvent,System.UInt64)
-extern void MockRuntime_ReceiveScriptEvent_m66F5CEF0D55D35B1E8447878C2B348426763571B (void);
-// 0x00000005 UnityEngine.XR.OpenXR.NativeTypes.XrResult UnityEngine.XR.OpenXR.Features.Mock.MockRuntime::BeforeFunctionCallback(System.String)
-extern void MockRuntime_BeforeFunctionCallback_m5FDEF08149545E36EFDAE885A986A2A04151E5C9 (void);
-// 0x00000006 System.Void UnityEngine.XR.OpenXR.Features.Mock.MockRuntime::AfterFunctionCallback(System.String,UnityEngine.XR.OpenXR.NativeTypes.XrResult)
-extern void MockRuntime_AfterFunctionCallback_mAF8AAD83714DE1C2B13FF7FAE1CC275D15EB1001 (void);
-// 0x00000007 System.Void UnityEngine.XR.OpenXR.Features.Mock.MockRuntime::SetFunctionCallback(System.String,UnityEngine.XR.OpenXR.Features.Mock.MockRuntime/BeforeFunctionDelegate,UnityEngine.XR.OpenXR.Features.Mock.MockRuntime/AfterFunctionDelegate)
-extern void MockRuntime_SetFunctionCallback_mC9996CE21474799C6829A04CFDC7F53288613529 (void);
-// 0x00000008 System.Void UnityEngine.XR.OpenXR.Features.Mock.MockRuntime::SetFunctionCallback(System.String,UnityEngine.XR.OpenXR.Features.Mock.MockRuntime/BeforeFunctionDelegate)
-extern void MockRuntime_SetFunctionCallback_mF7C3166DD622AED4F3153BE63EE512170ABFA4E9 (void);
-// 0x00000009 System.Void UnityEngine.XR.OpenXR.Features.Mock.MockRuntime::SetFunctionCallback(System.String,UnityEngine.XR.OpenXR.Features.Mock.MockRuntime/AfterFunctionDelegate)
-extern void MockRuntime_SetFunctionCallback_mCC1D204E03B2CC5F710C90CE16FC8C875034F074 (void);
-// 0x0000000A UnityEngine.XR.OpenXR.Features.Mock.MockRuntime/BeforeFunctionDelegate UnityEngine.XR.OpenXR.Features.Mock.MockRuntime::GetBeforeFunctionCallback(System.String)
-extern void MockRuntime_GetBeforeFunctionCallback_m05963D31267222E3C40F0F405C9C76CAFB09BE3D (void);
-// 0x0000000B UnityEngine.XR.OpenXR.Features.Mock.MockRuntime/AfterFunctionDelegate UnityEngine.XR.OpenXR.Features.Mock.MockRuntime::GetAfterFunctionCallback(System.String)
-extern void MockRuntime_GetAfterFunctionCallback_mC41219770A22B68EFE4C1D3CD137E9BC2167A4D4 (void);
-// 0x0000000C System.Void UnityEngine.XR.OpenXR.Features.Mock.MockRuntime::ClearFunctionCallbacks()
-extern void MockRuntime_ClearFunctionCallbacks_mC1B35D463E7A0BC4D882061C1BBEBBF2AA8A325E (void);
-// 0x0000000D System.Void UnityEngine.XR.OpenXR.Features.Mock.MockRuntime::ResetDefaults()
-extern void MockRuntime_ResetDefaults_m8092A728A5E3E9922A3003BE71F7300F1911D8F2 (void);
-// 0x0000000E System.Void UnityEngine.XR.OpenXR.Features.Mock.MockRuntime::OnInstanceDestroy(System.UInt64)
-extern void MockRuntime_OnInstanceDestroy_m2572FB38B64BD4DD6ACA718B3E004A055D32781F (void);
-// 0x0000000F System.IntPtr UnityEngine.XR.OpenXR.Features.Mock.MockRuntime::HookCreateInstance(System.IntPtr)
-extern void MockRuntime_HookCreateInstance_m665056C800E4667ADF26DD7CCE3196E99A5AE18A (void);
-// 0x00000010 System.Void UnityEngine.XR.OpenXR.Features.Mock.MockRuntime::SetKeepFunctionCallbacks(System.Boolean)
-extern void MockRuntime_SetKeepFunctionCallbacks_m7C8CF4DDD24EA5252F72E1109CF0AE8E2AAF3231 (void);
-// 0x00000011 System.Void UnityEngine.XR.OpenXR.Features.Mock.MockRuntime::SetViewPose(UnityEngine.XR.OpenXR.NativeTypes.XrViewConfigurationType,System.Int32,UnityEngine.Vector3,UnityEngine.Quaternion,UnityEngine.Vector4)
-extern void MockRuntime_SetViewPose_m61EA8005FC1E20567270044741FD908E07282F53 (void);
-// 0x00000012 System.Void UnityEngine.XR.OpenXR.Features.Mock.MockRuntime::SetViewState(UnityEngine.XR.OpenXR.NativeTypes.XrViewConfigurationType,UnityEngine.XR.OpenXR.NativeTypes.XrViewStateFlags)
-extern void MockRuntime_SetViewState_m984A39DB23CD757C5B92DA2085397CBE24FC5D62 (void);
-// 0x00000013 System.Void UnityEngine.XR.OpenXR.Features.Mock.MockRuntime::SetSpace(UnityEngine.XR.OpenXR.NativeTypes.XrReferenceSpaceType,UnityEngine.Vector3,UnityEngine.Quaternion,UnityEngine.XR.OpenXR.NativeTypes.XrSpaceLocationFlags)
-extern void MockRuntime_SetSpace_m2DCD13F7B5969E4030CCF5E8A2787B2A01D610F8 (void);
-// 0x00000014 System.Void UnityEngine.XR.OpenXR.Features.Mock.MockRuntime::SetSpace(System.UInt64,UnityEngine.Vector3,UnityEngine.Quaternion,UnityEngine.XR.OpenXR.NativeTypes.XrSpaceLocationFlags)
-extern void MockRuntime_SetSpace_m701B57EC3E341548FA1D5FFBA2FD7B531552F8F5 (void);
-// 0x00000015 UnityEngine.XR.OpenXR.NativeTypes.XrResult UnityEngine.XR.OpenXR.Features.Mock.MockRuntime::Internal_RegisterScriptEventCallback(UnityEngine.XR.OpenXR.Features.Mock.MockRuntime/ScriptEventDelegate)
-extern void MockRuntime_Internal_RegisterScriptEventCallback_m08F551105EA0DC7AD70596A4A1A5C5AB4579FBA2 (void);
-// 0x00000016 System.Boolean UnityEngine.XR.OpenXR.Features.Mock.MockRuntime::Internal_TransitionToState(UnityEngine.XR.OpenXR.NativeTypes.XrSessionState,System.Boolean)
-extern void MockRuntime_Internal_TransitionToState_m7EAB754B69AF18089E4D8DE5FDE77985779F89A6 (void);
-// 0x00000017 UnityEngine.XR.OpenXR.NativeTypes.XrSessionState UnityEngine.XR.OpenXR.Features.Mock.MockRuntime::Internal_GetSessionState()
-extern void MockRuntime_Internal_GetSessionState_m8517DA92A695CCF2DC50CE3025CC5FB64CC0EEEC (void);
-// 0x00000018 System.Void UnityEngine.XR.OpenXR.Features.Mock.MockRuntime::RequestExitSession()
-extern void MockRuntime_RequestExitSession_mBFDDDB2A8EA874CDDC6CD561AECAB60D2A31BD71 (void);
-// 0x00000019 System.Void UnityEngine.XR.OpenXR.Features.Mock.MockRuntime::CauseInstanceLoss()
-extern void MockRuntime_CauseInstanceLoss_mDDDC8BA3C669648505DF8DF0CFF5A792D60FD7DC (void);
-// 0x0000001A System.Void UnityEngine.XR.OpenXR.Features.Mock.MockRuntime::SetReferenceSpaceBounds(UnityEngine.XR.OpenXR.NativeTypes.XrReferenceSpaceType,UnityEngine.Vector2)
-extern void MockRuntime_SetReferenceSpaceBounds_mBF7BCEEA4EACA6D3BD98E6763226F5E82B05D5AF (void);
-// 0x0000001B System.Void UnityEngine.XR.OpenXR.Features.Mock.MockRuntime::GetEndFrameStats(System.Int32&,System.Int32&)
-extern void MockRuntime_GetEndFrameStats_mAEF24052D2E06F18C55EED61343DBD6E078FDB23 (void);
-// 0x0000001C System.Void UnityEngine.XR.OpenXR.Features.Mock.MockRuntime::ActivateSecondaryView(UnityEngine.XR.OpenXR.NativeTypes.XrViewConfigurationType,System.Boolean)
-extern void MockRuntime_ActivateSecondaryView_m623AC4E13ABB0D2CCA017A2F501023625C5A3DF9 (void);
-// 0x0000001D System.Void UnityEngine.XR.OpenXR.Features.Mock.MockRuntime::MockRuntime_RegisterFunctionCallbacks(UnityEngine.XR.OpenXR.Features.Mock.MockRuntime/BeforeFunctionDelegate,UnityEngine.XR.OpenXR.Features.Mock.MockRuntime/AfterFunctionDelegate)
-extern void MockRuntime_MockRuntime_RegisterFunctionCallbacks_m2A32439CC03D6BA1A35A825604DC884E51D5FBB2 (void);
-// 0x0000001E System.Void UnityEngine.XR.OpenXR.Features.Mock.MockRuntime::MetaPerformanceMetrics_SeedCounterOnce_Float(System.String,System.Single,System.UInt32)
-extern void MockRuntime_MetaPerformanceMetrics_SeedCounterOnce_Float_mCE26F2E954F6A2B157577C471B376C6CB40ECD2A (void);
-// 0x0000001F System.Void UnityEngine.XR.OpenXR.Features.Mock.MockRuntime::.ctor()
-extern void MockRuntime__ctor_m8E2086CD08568B1E7621905B54E0796308F245FD (void);
-// 0x00000020 System.Void UnityEngine.XR.OpenXR.Features.Mock.MockRuntime::.cctor()
-extern void MockRuntime__cctor_mC82DE3482FA623704CFD8845F1C31887D4C81DC4 (void);
-// 0x00000021 System.Void UnityEngine.XR.OpenXR.Features.Mock.MockRuntime/ScriptEventDelegate::.ctor(System.Object,System.IntPtr)
-extern void ScriptEventDelegate__ctor_m5ED02D9DA8A45851ED73B535BDB65DA15F707D8A (void);
-// 0x00000022 System.Void UnityEngine.XR.OpenXR.Features.Mock.MockRuntime/ScriptEventDelegate::Invoke(UnityEngine.XR.OpenXR.Features.Mock.MockRuntime/ScriptEvent,System.UInt64)
-extern void ScriptEventDelegate_Invoke_mA8CBBEA1B393B81607DD3C7874F4E37493BB46E6 (void);
-// 0x00000023 System.IAsyncResult UnityEngine.XR.OpenXR.Features.Mock.MockRuntime/ScriptEventDelegate::BeginInvoke(UnityEngine.XR.OpenXR.Features.Mock.MockRuntime/ScriptEvent,System.UInt64,System.AsyncCallback,System.Object)
-extern void ScriptEventDelegate_BeginInvoke_mDA811B33970DA6BF72119EFBD8A68C47A731E61B (void);
-// 0x00000024 System.Void UnityEngine.XR.OpenXR.Features.Mock.MockRuntime/ScriptEventDelegate::EndInvoke(System.IAsyncResult)
-extern void ScriptEventDelegate_EndInvoke_m71CBE1F7B3820EBF8BB1B50B61A31BE92A6753AF (void);
-// 0x00000025 System.Void UnityEngine.XR.OpenXR.Features.Mock.MockRuntime/BeforeFunctionDelegate::.ctor(System.Object,System.IntPtr)
-extern void BeforeFunctionDelegate__ctor_m08F9C87B382BD17CDE4E9D640D7DFAA56B2B6C44 (void);
-// 0x00000026 UnityEngine.XR.OpenXR.NativeTypes.XrResult UnityEngine.XR.OpenXR.Features.Mock.MockRuntime/BeforeFunctionDelegate::Invoke(System.String)
-extern void BeforeFunctionDelegate_Invoke_m2D06321F22B1879F763318220EB83EB115AFE30E (void);
-// 0x00000027 System.IAsyncResult UnityEngine.XR.OpenXR.Features.Mock.MockRuntime/BeforeFunctionDelegate::BeginInvoke(System.String,System.AsyncCallback,System.Object)
-extern void BeforeFunctionDelegate_BeginInvoke_m25CD78D4F8DF111F6CA446B539D6027ED0CB1740 (void);
-// 0x00000028 UnityEngine.XR.OpenXR.NativeTypes.XrResult UnityEngine.XR.OpenXR.Features.Mock.MockRuntime/BeforeFunctionDelegate::EndInvoke(System.IAsyncResult)
-extern void BeforeFunctionDelegate_EndInvoke_mD485F810E416AE1F34F1FD57D4309A515FA9DF78 (void);
-// 0x00000029 System.Void UnityEngine.XR.OpenXR.Features.Mock.MockRuntime/AfterFunctionDelegate::.ctor(System.Object,System.IntPtr)
-extern void AfterFunctionDelegate__ctor_mE226AAF42B795233B0CFDF9F40E915C4407A1FA4 (void);
-// 0x0000002A System.Void UnityEngine.XR.OpenXR.Features.Mock.MockRuntime/AfterFunctionDelegate::Invoke(System.String,UnityEngine.XR.OpenXR.NativeTypes.XrResult)
-extern void AfterFunctionDelegate_Invoke_m054C6F0C6D78A08665FEFA61245E94F369799737 (void);
-// 0x0000002B System.IAsyncResult UnityEngine.XR.OpenXR.Features.Mock.MockRuntime/AfterFunctionDelegate::BeginInvoke(System.String,UnityEngine.XR.OpenXR.NativeTypes.XrResult,System.AsyncCallback,System.Object)
-extern void AfterFunctionDelegate_BeginInvoke_m1C2FE862F436BDCA0323332AA27CF4E03DA5A6E3 (void);
-// 0x0000002C System.Void UnityEngine.XR.OpenXR.Features.Mock.MockRuntime/AfterFunctionDelegate::EndInvoke(System.IAsyncResult)
-extern void AfterFunctionDelegate_EndInvoke_m45A0F3D2E4208298DC646C0FD8B7E1C23EA27B8E (void);
-static Il2CppMethodPointer s_methodPointers[44] = 
+extern void UnitySourceGeneratedAssemblyMonoScriptTypes_v1_Get_mDAD71FA06BDF8C7AD0E33D77406B63DCF4BFA04B (void);
+extern void UnitySourceGeneratedAssemblyMonoScriptTypes_v1__ctor_mC7945F740961D5FA514CE655B624B8298FF9DEE7 (void);
+extern void MockRuntime_add_onScriptEvent_m9069E77F78C10D6FEACC1E52B25723B6899FD518 (void);
+extern void MockRuntime_remove_onScriptEvent_m0DD8AD22877545F984D4B8FB9630976A7A60B49D (void);
+extern void MockRuntime_get_Instance_m2C06B5DA0B6B37B53C528CC246D6BB6C3AFDB1CD (void);
+extern void MockRuntime_ReceiveScriptEvent_m4A8AAF0A455A02262E3B74CB3DB498A88C84AD14 (void);
+extern void MockRuntime_BeforeFunctionCallback_m70AB6148D0D9FCD315ACDB6B46131514D128380D (void);
+extern void MockRuntime_AfterFunctionCallback_mFBBF94D9868CA6870E3A6A78D831145376372D46 (void);
+extern void MockRuntime_SetFunctionCallback_m476A00166B662C960AF422A999BC4AD499E2F23C (void);
+extern void MockRuntime_SetFunctionCallback_m1DF6CA20A1D945E7B4AEB0557D80FD7B31912ED6 (void);
+extern void MockRuntime_SetFunctionCallback_mE208EC432EA4A77FB43E51ABECF1674E2742EC17 (void);
+extern void MockRuntime_GetBeforeFunctionCallback_m8A4593BAA8491A259FFD295B1A9924621780188F (void);
+extern void MockRuntime_GetAfterFunctionCallback_m63FC36538AF51721A135FFB7FB206A6D2E85C2C8 (void);
+extern void MockRuntime_ClearFunctionCallbacks_m90C02869CBC305172014649CC205D02AB4A5071C (void);
+extern void MockRuntime_ResetDefaults_mD379EAC5A49E19D811C6B39438058DDCCA06E8DE (void);
+extern void MockRuntime_OnInstanceDestroy_m87D9042CA7DCD7E262D932C110546CB4458847BD (void);
+extern void MockRuntime_HookCreateInstance_mE4A794C1096A017EE20CDB40DC10FCB74C5C529E (void);
+extern void MockRuntime_SetKeepFunctionCallbacks_m8E0E300D594B6DE823AE6800E23FC829AAD55EB4 (void);
+extern void MockRuntime_SetViewPose_m2637BCEAF504A16C376848DB796F5481E126B0D1 (void);
+extern void MockRuntime_SetViewState_mF705DAE94FD37B98CA8D4EFE4869110FECF96E42 (void);
+extern void MockRuntime_SetSpace_mA64A4E84288E70ABCA4540F29A7348B55F0F09B5 (void);
+extern void MockRuntime_SetSpace_mDA5CD3C832B62544D145B905197DCF2130505B26 (void);
+extern void MockRuntime_Internal_RegisterScriptEventCallback_mA892D9EF37F87E25AD3DAEC396B1CD8289C2AA1C (void);
+extern void MockRuntime_Internal_TransitionToState_m5D9A59AAF1E0CF512791ADE220FB09DF70109BFF (void);
+extern void MockRuntime_Internal_GetSessionState_mD58FE1DDA879C6A4744F40160981F6C238D2B2F4 (void);
+extern void MockRuntime_RequestExitSession_mC6194C165F491EC79777DA2EE2631237E12B6169 (void);
+extern void MockRuntime_CauseInstanceLoss_m644A81DF5FAFDE1768A0EAACB4B32D58908C0029 (void);
+extern void MockRuntime_CauseUserPresenceChange_mEE669E74AD10E9123171576024FB4257C86F834A (void);
+extern void MockRuntime_SetReferenceSpaceBounds_mF998A5259FAB1F2888C148356379E58C68E35382 (void);
+extern void MockRuntime_GetEndFrameStats_m2CA6ACA741702E5BDA2E30C5AC8559BD2BA4FA90 (void);
+extern void MockRuntime_ActivateSecondaryView_mEA131BD49CD0DDD69B6AFCD7DCBC0250B36F19D9 (void);
+extern void MockRuntime_MockRuntime_RegisterFunctionCallbacks_m8FE38D5A0491C53530C2765EA4BA2CFDCA278A58 (void);
+extern void MockRuntime_MetaPerformanceMetrics_SeedCounterOnce_Float_m36A5817DD1A8817E727EC2389953495B6AFB5023 (void);
+extern void MockRuntime_PerformanceSettings_CauseNotification_m40E3953331B4B970C32CAFADA0E23DC9EA9D1C21 (void);
+extern void MockRuntime_PerformanceSettings_GetPerformanceLevelHint_mD4796F9E14EE3B13EEF7D253F3B65822AECD1D75 (void);
+extern void MockRuntime_IsAndroidThreadTypeRegistered_m23F1BA32646039E9BE1A6AB5C2AF4AD8656DB8D2 (void);
+extern void MockRuntime_GetRegisteredAndroidThreadsCount_m07FF19DFB4F4FF331AC889C31133F9314356D2F9 (void);
+extern void MockRuntime__ctor_mB159112DF9A71505BB0C77424F107CCF5906699F (void);
+extern void ScriptEventDelegate__ctor_mE05196985541B485AA1A5D7C97EE6370162597C6 (void);
+extern void ScriptEventDelegate_Invoke_m41274335D95A563973BC60763CF3853920443403 (void);
+extern void ScriptEventDelegate_BeginInvoke_mA01E16330527DD2C2E43DEA25B1E766572ED28B6 (void);
+extern void ScriptEventDelegate_EndInvoke_m25145EDD65EE5A0A801F0DE45587B47D73CFC353 (void);
+extern void BeforeFunctionDelegate__ctor_m42A11E8DDD8B3706497D8CF87F6853D961D0C832 (void);
+extern void BeforeFunctionDelegate_Invoke_mAA46B0A8103DF4E9C729D21D736BB9E6A38C70CA (void);
+extern void BeforeFunctionDelegate_BeginInvoke_m55800A4146677D7A22524810CA5559EF881F59C0 (void);
+extern void BeforeFunctionDelegate_EndInvoke_m680B2FC2866E4A959B218584FCEC8811CE46A4B1 (void);
+extern void AfterFunctionDelegate__ctor_m70B1A5F67C275B7064C9E1731B27326B97913F96 (void);
+extern void AfterFunctionDelegate_Invoke_mF8B0A0BF8DCC84E37AB367200F2D081B9706A115 (void);
+extern void AfterFunctionDelegate_BeginInvoke_m8850000FC36D01D205D12C3C496C66A4282322AA (void);
+extern void AfterFunctionDelegate_EndInvoke_m1F7F16FB2CF9927443DA7257E47A5418DABD7B58 (void);
+static Il2CppMethodPointer s_methodPointers[50] = 
 {
-	MockRuntime_add_onScriptEvent_mAD927DF1320B5968110B2345695A43ECA1B6BD49,
-	MockRuntime_remove_onScriptEvent_m9E6D6DF22466EDCB3BA6D114A0EEE7F75EEF27A9,
-	MockRuntime_get_Instance_mA453F86A5ABD5DC3C30927C0A253768671B7D263,
-	MockRuntime_ReceiveScriptEvent_m66F5CEF0D55D35B1E8447878C2B348426763571B,
-	MockRuntime_BeforeFunctionCallback_m5FDEF08149545E36EFDAE885A986A2A04151E5C9,
-	MockRuntime_AfterFunctionCallback_mAF8AAD83714DE1C2B13FF7FAE1CC275D15EB1001,
-	MockRuntime_SetFunctionCallback_mC9996CE21474799C6829A04CFDC7F53288613529,
-	MockRuntime_SetFunctionCallback_mF7C3166DD622AED4F3153BE63EE512170ABFA4E9,
-	MockRuntime_SetFunctionCallback_mCC1D204E03B2CC5F710C90CE16FC8C875034F074,
-	MockRuntime_GetBeforeFunctionCallback_m05963D31267222E3C40F0F405C9C76CAFB09BE3D,
-	MockRuntime_GetAfterFunctionCallback_mC41219770A22B68EFE4C1D3CD137E9BC2167A4D4,
-	MockRuntime_ClearFunctionCallbacks_mC1B35D463E7A0BC4D882061C1BBEBBF2AA8A325E,
-	MockRuntime_ResetDefaults_m8092A728A5E3E9922A3003BE71F7300F1911D8F2,
-	MockRuntime_OnInstanceDestroy_m2572FB38B64BD4DD6ACA718B3E004A055D32781F,
-	MockRuntime_HookCreateInstance_m665056C800E4667ADF26DD7CCE3196E99A5AE18A,
-	MockRuntime_SetKeepFunctionCallbacks_m7C8CF4DDD24EA5252F72E1109CF0AE8E2AAF3231,
-	MockRuntime_SetViewPose_m61EA8005FC1E20567270044741FD908E07282F53,
-	MockRuntime_SetViewState_m984A39DB23CD757C5B92DA2085397CBE24FC5D62,
-	MockRuntime_SetSpace_m2DCD13F7B5969E4030CCF5E8A2787B2A01D610F8,
-	MockRuntime_SetSpace_m701B57EC3E341548FA1D5FFBA2FD7B531552F8F5,
-	MockRuntime_Internal_RegisterScriptEventCallback_m08F551105EA0DC7AD70596A4A1A5C5AB4579FBA2,
-	MockRuntime_Internal_TransitionToState_m7EAB754B69AF18089E4D8DE5FDE77985779F89A6,
-	MockRuntime_Internal_GetSessionState_m8517DA92A695CCF2DC50CE3025CC5FB64CC0EEEC,
-	MockRuntime_RequestExitSession_mBFDDDB2A8EA874CDDC6CD561AECAB60D2A31BD71,
-	MockRuntime_CauseInstanceLoss_mDDDC8BA3C669648505DF8DF0CFF5A792D60FD7DC,
-	MockRuntime_SetReferenceSpaceBounds_mBF7BCEEA4EACA6D3BD98E6763226F5E82B05D5AF,
-	MockRuntime_GetEndFrameStats_mAEF24052D2E06F18C55EED61343DBD6E078FDB23,
-	MockRuntime_ActivateSecondaryView_m623AC4E13ABB0D2CCA017A2F501023625C5A3DF9,
-	MockRuntime_MockRuntime_RegisterFunctionCallbacks_m2A32439CC03D6BA1A35A825604DC884E51D5FBB2,
-	MockRuntime_MetaPerformanceMetrics_SeedCounterOnce_Float_mCE26F2E954F6A2B157577C471B376C6CB40ECD2A,
-	MockRuntime__ctor_m8E2086CD08568B1E7621905B54E0796308F245FD,
-	MockRuntime__cctor_mC82DE3482FA623704CFD8845F1C31887D4C81DC4,
-	ScriptEventDelegate__ctor_m5ED02D9DA8A45851ED73B535BDB65DA15F707D8A,
-	ScriptEventDelegate_Invoke_mA8CBBEA1B393B81607DD3C7874F4E37493BB46E6,
-	ScriptEventDelegate_BeginInvoke_mDA811B33970DA6BF72119EFBD8A68C47A731E61B,
-	ScriptEventDelegate_EndInvoke_m71CBE1F7B3820EBF8BB1B50B61A31BE92A6753AF,
-	BeforeFunctionDelegate__ctor_m08F9C87B382BD17CDE4E9D640D7DFAA56B2B6C44,
-	BeforeFunctionDelegate_Invoke_m2D06321F22B1879F763318220EB83EB115AFE30E,
-	BeforeFunctionDelegate_BeginInvoke_m25CD78D4F8DF111F6CA446B539D6027ED0CB1740,
-	BeforeFunctionDelegate_EndInvoke_mD485F810E416AE1F34F1FD57D4309A515FA9DF78,
-	AfterFunctionDelegate__ctor_mE226AAF42B795233B0CFDF9F40E915C4407A1FA4,
-	AfterFunctionDelegate_Invoke_m054C6F0C6D78A08665FEFA61245E94F369799737,
-	AfterFunctionDelegate_BeginInvoke_m1C2FE862F436BDCA0323332AA27CF4E03DA5A6E3,
-	AfterFunctionDelegate_EndInvoke_m45A0F3D2E4208298DC646C0FD8B7E1C23EA27B8E,
+	UnitySourceGeneratedAssemblyMonoScriptTypes_v1_Get_mDAD71FA06BDF8C7AD0E33D77406B63DCF4BFA04B,
+	UnitySourceGeneratedAssemblyMonoScriptTypes_v1__ctor_mC7945F740961D5FA514CE655B624B8298FF9DEE7,
+	MockRuntime_add_onScriptEvent_m9069E77F78C10D6FEACC1E52B25723B6899FD518,
+	MockRuntime_remove_onScriptEvent_m0DD8AD22877545F984D4B8FB9630976A7A60B49D,
+	MockRuntime_get_Instance_m2C06B5DA0B6B37B53C528CC246D6BB6C3AFDB1CD,
+	MockRuntime_ReceiveScriptEvent_m4A8AAF0A455A02262E3B74CB3DB498A88C84AD14,
+	MockRuntime_BeforeFunctionCallback_m70AB6148D0D9FCD315ACDB6B46131514D128380D,
+	MockRuntime_AfterFunctionCallback_mFBBF94D9868CA6870E3A6A78D831145376372D46,
+	MockRuntime_SetFunctionCallback_m476A00166B662C960AF422A999BC4AD499E2F23C,
+	MockRuntime_SetFunctionCallback_m1DF6CA20A1D945E7B4AEB0557D80FD7B31912ED6,
+	MockRuntime_SetFunctionCallback_mE208EC432EA4A77FB43E51ABECF1674E2742EC17,
+	MockRuntime_GetBeforeFunctionCallback_m8A4593BAA8491A259FFD295B1A9924621780188F,
+	MockRuntime_GetAfterFunctionCallback_m63FC36538AF51721A135FFB7FB206A6D2E85C2C8,
+	MockRuntime_ClearFunctionCallbacks_m90C02869CBC305172014649CC205D02AB4A5071C,
+	MockRuntime_ResetDefaults_mD379EAC5A49E19D811C6B39438058DDCCA06E8DE,
+	MockRuntime_OnInstanceDestroy_m87D9042CA7DCD7E262D932C110546CB4458847BD,
+	MockRuntime_HookCreateInstance_mE4A794C1096A017EE20CDB40DC10FCB74C5C529E,
+	MockRuntime_SetKeepFunctionCallbacks_m8E0E300D594B6DE823AE6800E23FC829AAD55EB4,
+	MockRuntime_SetViewPose_m2637BCEAF504A16C376848DB796F5481E126B0D1,
+	MockRuntime_SetViewState_mF705DAE94FD37B98CA8D4EFE4869110FECF96E42,
+	MockRuntime_SetSpace_mA64A4E84288E70ABCA4540F29A7348B55F0F09B5,
+	MockRuntime_SetSpace_mDA5CD3C832B62544D145B905197DCF2130505B26,
+	MockRuntime_Internal_RegisterScriptEventCallback_mA892D9EF37F87E25AD3DAEC396B1CD8289C2AA1C,
+	MockRuntime_Internal_TransitionToState_m5D9A59AAF1E0CF512791ADE220FB09DF70109BFF,
+	MockRuntime_Internal_GetSessionState_mD58FE1DDA879C6A4744F40160981F6C238D2B2F4,
+	MockRuntime_RequestExitSession_mC6194C165F491EC79777DA2EE2631237E12B6169,
+	MockRuntime_CauseInstanceLoss_m644A81DF5FAFDE1768A0EAACB4B32D58908C0029,
+	MockRuntime_CauseUserPresenceChange_mEE669E74AD10E9123171576024FB4257C86F834A,
+	MockRuntime_SetReferenceSpaceBounds_mF998A5259FAB1F2888C148356379E58C68E35382,
+	MockRuntime_GetEndFrameStats_m2CA6ACA741702E5BDA2E30C5AC8559BD2BA4FA90,
+	MockRuntime_ActivateSecondaryView_mEA131BD49CD0DDD69B6AFCD7DCBC0250B36F19D9,
+	MockRuntime_MockRuntime_RegisterFunctionCallbacks_m8FE38D5A0491C53530C2765EA4BA2CFDCA278A58,
+	MockRuntime_MetaPerformanceMetrics_SeedCounterOnce_Float_m36A5817DD1A8817E727EC2389953495B6AFB5023,
+	MockRuntime_PerformanceSettings_CauseNotification_m40E3953331B4B970C32CAFADA0E23DC9EA9D1C21,
+	MockRuntime_PerformanceSettings_GetPerformanceLevelHint_mD4796F9E14EE3B13EEF7D253F3B65822AECD1D75,
+	MockRuntime_IsAndroidThreadTypeRegistered_m23F1BA32646039E9BE1A6AB5C2AF4AD8656DB8D2,
+	MockRuntime_GetRegisteredAndroidThreadsCount_m07FF19DFB4F4FF331AC889C31133F9314356D2F9,
+	MockRuntime__ctor_mB159112DF9A71505BB0C77424F107CCF5906699F,
+	ScriptEventDelegate__ctor_mE05196985541B485AA1A5D7C97EE6370162597C6,
+	ScriptEventDelegate_Invoke_m41274335D95A563973BC60763CF3853920443403,
+	ScriptEventDelegate_BeginInvoke_mA01E16330527DD2C2E43DEA25B1E766572ED28B6,
+	ScriptEventDelegate_EndInvoke_m25145EDD65EE5A0A801F0DE45587B47D73CFC353,
+	BeforeFunctionDelegate__ctor_m42A11E8DDD8B3706497D8CF87F6853D961D0C832,
+	BeforeFunctionDelegate_Invoke_mAA46B0A8103DF4E9C729D21D736BB9E6A38C70CA,
+	BeforeFunctionDelegate_BeginInvoke_m55800A4146677D7A22524810CA5559EF881F59C0,
+	BeforeFunctionDelegate_EndInvoke_m680B2FC2866E4A959B218584FCEC8811CE46A4B1,
+	AfterFunctionDelegate__ctor_m70B1A5F67C275B7064C9E1731B27326B97913F96,
+	AfterFunctionDelegate_Invoke_mF8B0A0BF8DCC84E37AB367200F2D081B9706A115,
+	AfterFunctionDelegate_BeginInvoke_m8850000FC36D01D205D12C3C496C66A4282322AA,
+	AfterFunctionDelegate_EndInvoke_m1F7F16FB2CF9927443DA7257E47A5418DABD7B58,
 };
-static const int32_t s_InvokerIndices[44] = 
+static const int32_t s_InvokerIndices[50] = 
 {
-	7024,
-	7024,
-	7140,
-	6544,
-	6788,
-	6589,
-	6111,
-	6594,
-	6594,
-	6892,
-	6892,
-	7173,
-	7173,
-	3917,
-	6818,
-	7029,
-	5393,
-	6543,
-	5722,
-	5725,
-	6788,
-	6393,
-	7127,
-	7173,
-	7173,
-	6549,
-	6530,
-	6548,
-	6594,
-	6119,
-	4891,
-	7173,
-	2279,
-	2077,
-	614,
-	3952,
-	2279,
-	2826,
-	1000,
-	2826,
-	2279,
-	2277,
-	641,
-	3952,
+	13035,
+	8729,
+	12740,
+	12740,
+	12943,
+	11853,
+	12363,
+	11939,
+	10957,
+	11946,
+	11946,
+	12494,
+	12494,
+	12997,
+	12997,
+	7013,
+	12393,
+	12727,
+	9655,
+	11847,
+	10205,
+	10264,
+	12363,
+	11219,
+	12934,
+	12997,
+	12997,
+	12727,
+	11854,
+	11821,
+	11846,
+	11946,
+	10967,
+	10847,
+	12358,
+	12264,
+	12991,
+	8729,
+	3791,
+	3595,
+	1115,
+	6895,
+	3791,
+	5759,
+	1603,
+	5759,
+	3791,
+	3789,
+	1126,
+	6895,
 };
 static const Il2CppTokenIndexMethodTuple s_reversePInvokeIndices[3] = 
 {
-	{ 0x06000004, 10,  (void**)&MockRuntime_ReceiveScriptEvent_m66F5CEF0D55D35B1E8447878C2B348426763571B_RuntimeMethod_var, 0 },
-	{ 0x06000005, 9,  (void**)&MockRuntime_BeforeFunctionCallback_m5FDEF08149545E36EFDAE885A986A2A04151E5C9_RuntimeMethod_var, 0 },
-	{ 0x06000006, 8,  (void**)&MockRuntime_AfterFunctionCallback_mAF8AAD83714DE1C2B13FF7FAE1CC275D15EB1001_RuntimeMethod_var, 0 },
+	{ 0x06000006, 6,  (void**)&MockRuntime_ReceiveScriptEvent_m4A8AAF0A455A02262E3B74CB3DB498A88C84AD14_RuntimeMethod_var, 0 },
+	{ 0x06000007, 5,  (void**)&MockRuntime_BeforeFunctionCallback_m70AB6148D0D9FCD315ACDB6B46131514D128380D_RuntimeMethod_var, 0 },
+	{ 0x06000008, 4,  (void**)&MockRuntime_AfterFunctionCallback_mFBBF94D9868CA6870E3A6A78D831145376372D46_RuntimeMethod_var, 0 },
 };
-extern const CustomAttributesCacheGenerator g_Unity_XR_OpenXR_Features_MockRuntime_AttributeGenerators[];
 IL2CPP_EXTERN_C const Il2CppCodeGenModule g_Unity_XR_OpenXR_Features_MockRuntime_CodeGenModule;
 const Il2CppCodeGenModule g_Unity_XR_OpenXR_Features_MockRuntime_CodeGenModule = 
 {
 	"Unity.XR.OpenXR.Features.MockRuntime.dll",
-	44,
+	50,
 	s_methodPointers,
 	0,
 	NULL,
@@ -220,8 +193,7 @@ const Il2CppCodeGenModule g_Unity_XR_OpenXR_Features_MockRuntime_CodeGenModule =
 	0,
 	NULL,
 	NULL,
-	g_Unity_XR_OpenXR_Features_MockRuntime_AttributeGenerators,
-	NULL, // module initializer,
+	NULL,
 	NULL,
 	NULL,
 	NULL,

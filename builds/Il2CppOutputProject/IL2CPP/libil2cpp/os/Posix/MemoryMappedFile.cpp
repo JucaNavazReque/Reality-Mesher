@@ -22,8 +22,6 @@
 #define MAP_32BIT 0
 #endif
 
-#define MMAP_PAGE_SIZE 4096
-
 namespace il2cpp
 {
 namespace os
@@ -50,15 +48,22 @@ namespace os
         return buf->st_size == 0 && (buf->st_mode & (S_IFCHR | S_IFBLK | S_IFIFO | S_IFSOCK)) != 0;
     }
 
+    static int64_t GetPageSize()
+    {
+        static int64_t page_size = getpagesize();
+
+        return page_size;
+    }
+
     static int64_t AlignUpToPageSize(int64_t size)
     {
-        int64_t page_size = MMAP_PAGE_SIZE;
+        const int64_t page_size = GetPageSize();
         return (size + page_size - 1) & ~(page_size - 1);
     }
 
     static int64_t AlignDownToPageSize(int64_t size)
     {
-        int64_t page_size = MMAP_PAGE_SIZE;
+        const int64_t page_size = GetPageSize();
         return size & ~(page_size - 1);
     }
 
@@ -235,11 +240,18 @@ namespace os
             NO_UNUSED_WARNING(result);
         }
 
-        FileHandle* handle = new FileHandle;
-        handle->fd = fd;
-        handle->doesNotOwnFd = !ownsFd;
-
-        return handle;
+        if (ownsFd)
+        {
+            FileHandle* handle = new FileHandle;
+            handle->fd = fd;
+            handle->doesNotOwnFd = !ownsFd;
+            return handle;
+        }
+        else
+        {
+            file->doesNotOwnFd = true;
+            return file;
+        }
     }
 
     MemoryMappedFile::MemoryMappedFileHandle MemoryMappedFile::View(FileHandle* mappedFileHandle, int64_t* length, int64_t offset, MemoryMappedFileAccess access, int64_t* actualOffset, MemoryMappedFileError* error)
@@ -316,12 +328,11 @@ namespace os
         bool result = true;
         if (!file->doesNotOwnFd)
         {
-            int error = close(file->fd);
+            int error = 0;
+            os::File::Close(file, &error);
             if (error != 0)
                 result = false;
         }
-
-        delete file;
 
         return result;
     }
@@ -338,6 +349,11 @@ namespace os
         IL2CPP_ASSERT(result != -1);
         NO_UNUSED_WARNING(result);
 #endif
+    }
+
+    bool MemoryMappedFile::OwnsDuplicatedFileHandle(FileHandle* file)
+    {
+        return !file->doesNotOwnFd;
     }
 }
 }

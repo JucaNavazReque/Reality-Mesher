@@ -21,9 +21,20 @@ typedef struct Baselib_Semaphore
     char _cachelineSpacer2[PLATFORM_CACHE_LINE_SIZE - sizeof(int32_t)];
 } Baselib_Semaphore;
 
+BASELIB_STATIC_ASSERT(sizeof(Baselib_Semaphore) == PLATFORM_CACHE_LINE_SIZE * 2, "Baselib_Semaphore (Futex) size should match 2*cacheline size (128bytes)");
+BASELIB_STATIC_ASSERT(offsetof(Baselib_Semaphore, wakeups) ==
+    (offsetof(Baselib_Semaphore, count) - PLATFORM_CACHE_LINE_SIZE), "Baselib_Semaphore (Futex) wakeups and count shouldnt share cacheline");
+
+BASELIB_INLINE_API void Baselib_Semaphore_CreateInplace(Baselib_Semaphore* semaphoreData)
+{
+    semaphoreData->wakeups = 0;
+    semaphoreData->count = 0;
+}
+
 BASELIB_INLINE_API Baselib_Semaphore Baselib_Semaphore_Create(void)
 {
-    Baselib_Semaphore semaphore = {0, {0}, 0, {0}};
+    Baselib_Semaphore semaphore;
+    Baselib_Semaphore_CreateInplace(&semaphore);
     return semaphore;
 }
 
@@ -32,7 +43,7 @@ BASELIB_INLINE_API bool Detail_Baselib_Semaphore_ConsumeWakeup(Baselib_Semaphore
     int32_t previousCount = Baselib_atomic_load_32_relaxed(&semaphore->wakeups);
     while (previousCount > 0)
     {
-        if (Baselib_atomic_compare_exchange_weak_32_relaxed_relaxed(&semaphore->wakeups, &previousCount, previousCount - 1))
+        if (Baselib_atomic_compare_exchange_weak_32_acquire_relaxed(&semaphore->wakeups, &previousCount, previousCount - 1))
             return true;
     }
     return false;
@@ -145,4 +156,9 @@ BASELIB_INLINE_API void Baselib_Semaphore_Free(Baselib_Semaphore* semaphore)
         return;
     const int32_t count = Baselib_atomic_load_32_seq_cst(&semaphore->count);
     BaselibAssert(count >= 0, "Destruction is not allowed when there are still threads waiting on the semaphore.");
+}
+
+BASELIB_INLINE_API void Baselib_Semaphore_FreeInplace(Baselib_Semaphore* semaphore)
+{
+    Baselib_Semaphore_Free(semaphore);
 }

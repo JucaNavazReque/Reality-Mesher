@@ -35,3 +35,7 @@
 <a target="_blank" href="https://icons8.com/icon/6532/plastic">Plastic</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
 <a target="_blank" href="https://icons8.com/icon/113109/brick-wall">stone wall</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
 <a target="_blank" href="https://icons8.com/icon/AX0cgeASZsRU/construction-materials">Construction Materials</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
+<a target="_blank" href="https://icons8.com/icon/14217/camera">Camera</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
+<a target="_blank" href="https://icons8.com/icon/4511GGVppfIx/settings">Gear</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
+<a target="_blank" href="https://icons8.com/icon/AgsBKswRnV1i/forward">Arrow</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
+<a href="https://www.flaticon.com/free-icons/floor" title="floor icons">Floor icons created by andinur - Flaticon</a>

@@ -7,20 +7,13 @@
 #endif
 
 
-#include <stdint.h>
-#include <limits>
 
 
 
-// System.Char[]
-struct CharU5BU5D_t7B7FC5BC8091AA3B9CB0B29CDD80B5EE9254AA34;
-// System.String
-struct String_t;
-// System.Void
-struct Void_t700C6383A2A510C2CF4DD86DABD5CA9FF70ADAC5;
+struct CharU5BU5D_t799905CF001DD5F13F7DBB310181FC4D8B7D0AAB;
+struct Void_t4861ACF8F4594C3437BB48B6E56783494B843915;
 
-struct EVENT_FILTER_DESCRIPTOR_t59379AB6F16CCEA5C0BDF328FF5AC64040CED05B ;
-struct Guid_t ;
+struct unitytls_errorstate_tC926EE4582920BE2C1DB1F3F65619B810D5AB902;
 
 
 IL2CPP_EXTERN_C_BEGIN
@@ -31,321 +24,185 @@ IL2CPP_EXTERN_C_END
 #pragma clang diagnostic ignored "-Winvalid-offsetof"
 #pragma clang diagnostic ignored "-Wunused-variable"
 #endif
-
-// System.Object
-
-
-// System.ValueType
-struct ValueType_tDBF999C1B75C48C68621878250DBF6CDBCF51E52  : public RuntimeObject
-{
-public:
-
-public:
-};
-
-// Native definition for P/Invoke marshalling of System.ValueType
-struct ValueType_tDBF999C1B75C48C68621878250DBF6CDBCF51E52_marshaled_pinvoke
+struct ValueType_t6D9B272BD21782F0A9A14F2E41F85A50E97A986F  : public RuntimeObject
 {
 };
-// Native definition for COM marshalling of System.ValueType
-struct ValueType_tDBF999C1B75C48C68621878250DBF6CDBCF51E52_marshaled_com
+struct ValueType_t6D9B272BD21782F0A9A14F2E41F85A50E97A986F_marshaled_pinvoke
 {
 };
-
-// System.Enum
-struct Enum_t23B90B40F60E677A8025267341651C94AE079CDA  : public ValueType_tDBF999C1B75C48C68621878250DBF6CDBCF51E52
-{
-public:
-
-public:
-};
-
-struct Enum_t23B90B40F60E677A8025267341651C94AE079CDA_StaticFields
-{
-public:
-	// System.Char[] System.Enum::enumSeperatorCharArray
-	CharU5BU5D_t7B7FC5BC8091AA3B9CB0B29CDD80B5EE9254AA34* ___enumSeperatorCharArray_0;
-
-public:
-	inline static int32_t get_offset_of_enumSeperatorCharArray_0() { return static_cast<int32_t>(offsetof(Enum_t23B90B40F60E677A8025267341651C94AE079CDA_StaticFields, ___enumSeperatorCharArray_0)); }
-	inline CharU5BU5D_t7B7FC5BC8091AA3B9CB0B29CDD80B5EE9254AA34* get_enumSeperatorCharArray_0() const { return ___enumSeperatorCharArray_0; }
-	inline CharU5BU5D_t7B7FC5BC8091AA3B9CB0B29CDD80B5EE9254AA34** get_address_of_enumSeperatorCharArray_0() { return &___enumSeperatorCharArray_0; }
-	inline void set_enumSeperatorCharArray_0(CharU5BU5D_t7B7FC5BC8091AA3B9CB0B29CDD80B5EE9254AA34* value)
-	{
-		___enumSeperatorCharArray_0 = value;
-		Il2CppCodeGenWriteBarrier((void**)(&___enumSeperatorCharArray_0), (void*)value);
-	}
-};
-
-// Native definition for P/Invoke marshalling of System.Enum
-struct Enum_t23B90B40F60E677A8025267341651C94AE079CDA_marshaled_pinvoke
+struct ValueType_t6D9B272BD21782F0A9A14F2E41F85A50E97A986F_marshaled_com
 {
 };
-// Native definition for COM marshalling of System.Enum
-struct Enum_t23B90B40F60E677A8025267341651C94AE079CDA_marshaled_com
+struct Enum_t2A1A94B24E3B776EEF4E5E485E290BB9D4D072E2  : public ValueType_t6D9B272BD21782F0A9A14F2E41F85A50E97A986F
 {
 };
-
-// System.IntPtr
+struct Enum_t2A1A94B24E3B776EEF4E5E485E290BB9D4D072E2_marshaled_pinvoke
+{
+};
+struct Enum_t2A1A94B24E3B776EEF4E5E485E290BB9D4D072E2_marshaled_com
+{
+};
 struct IntPtr_t 
 {
-public:
-	// System.Void* System.IntPtr::m_value
-	void* ___m_value_0;
-
-public:
-	inline static int32_t get_offset_of_m_value_0() { return static_cast<int32_t>(offsetof(IntPtr_t, ___m_value_0)); }
-	inline void* get_m_value_0() const { return ___m_value_0; }
-	inline void** get_address_of_m_value_0() { return &___m_value_0; }
-	inline void set_m_value_0(void* value)
-	{
-		___m_value_0 = value;
-	}
+	void* ___m_value;
 };
-
-struct IntPtr_t_StaticFields
+struct RectInt_t1744D10E1063135DA9D574F95205B98DAC600CB8 
 {
-public:
-	// System.IntPtr System.IntPtr::Zero
-	intptr_t ___Zero_1;
-
-public:
-	inline static int32_t get_offset_of_Zero_1() { return static_cast<int32_t>(offsetof(IntPtr_t_StaticFields, ___Zero_1)); }
-	inline intptr_t get_Zero_1() const { return ___Zero_1; }
-	inline intptr_t* get_address_of_Zero_1() { return &___Zero_1; }
-	inline void set_Zero_1(intptr_t value)
-	{
-		___Zero_1 = value;
-	}
+	int32_t ___m_XMin;
+	int32_t ___m_YMin;
+	int32_t ___m_Width;
+	int32_t ___m_Height;
 };
-
-
-// System.Void
-struct Void_t700C6383A2A510C2CF4DD86DABD5CA9FF70ADAC5 
+struct Vector2Int_t69B2886EBAB732D9B880565E18E7568F3DE0CE6A 
 {
-public:
+	int32_t ___m_X;
+	int32_t ___m_Y;
+};
+struct Void_t4861ACF8F4594C3437BB48B6E56783494B843915 
+{
 	union
 	{
 		struct
 		{
 		};
-		uint8_t Void_t700C6383A2A510C2CF4DD86DABD5CA9FF70ADAC5__padding[1];
+		uint8_t Void_t4861ACF8F4594C3437BB48B6E56783494B843915__padding[1];
 	};
-
-public:
 };
-
-
-// Microsoft.MixedReality.OpenXR.Remoting.SecureRemotingNameValidationResult
-struct SecureRemotingNameValidationResult_t7A39C797AE4870080D2746185F1F3D9576038D45 
+struct unitytls_x509_ref_t9CEB17766B4144117333AB50379B21A357FA4333 
 {
-public:
-	// System.Int32 Microsoft.MixedReality.OpenXR.Remoting.SecureRemotingNameValidationResult::value__
-	int32_t ___value___2;
-
-public:
-	inline static int32_t get_offset_of_value___2() { return static_cast<int32_t>(offsetof(SecureRemotingNameValidationResult_t7A39C797AE4870080D2746185F1F3D9576038D45, ___value___2)); }
-	inline int32_t get_value___2() const { return ___value___2; }
-	inline int32_t* get_address_of_value___2() { return &___value___2; }
-	inline void set_value___2(int32_t value)
-	{
-		___value___2 = value;
-	}
+	uint64_t ___handle;
 };
-
-
-// UnityEngine.XR.OpenXR.NativeTypes.XrResult
-struct XrResult_t49320B26C282219A0D054D88C92230D8DDC1B89E 
+struct PerformanceDomain_t643C880E75334C144C3C4371D8908AAA8EAE68AB 
 {
-public:
-	// System.Int32 UnityEngine.XR.OpenXR.NativeTypes.XrResult::value__
-	int32_t ___value___2;
-
-public:
-	inline static int32_t get_offset_of_value___2() { return static_cast<int32_t>(offsetof(XrResult_t49320B26C282219A0D054D88C92230D8DDC1B89E, ___value___2)); }
-	inline int32_t get_value___2() const { return ___value___2; }
-	inline int32_t* get_address_of_value___2() { return &___value___2; }
-	inline void set_value___2(int32_t value)
-	{
-		___value___2 = value;
-	}
+	int32_t ___value__;
 };
-
-
-// UnityEngine.XR.OpenXR.Features.Mock.MockRuntime/ScriptEvent
-struct ScriptEvent_tD52B2D1398BCE888AEFC5A0A46FE25BE74DB5201 
+struct PerformanceNotificationLevel_t193B423AAAA756D0F214A0BD35D6F2F834236F22 
 {
-public:
-	// System.Int32 UnityEngine.XR.OpenXR.Features.Mock.MockRuntime/ScriptEvent::value__
-	int32_t ___value___2;
-
-public:
-	inline static int32_t get_offset_of_value___2() { return static_cast<int32_t>(offsetof(ScriptEvent_tD52B2D1398BCE888AEFC5A0A46FE25BE74DB5201, ___value___2)); }
-	inline int32_t get_value___2() const { return ___value___2; }
-	inline int32_t* get_address_of_value___2() { return &___value___2; }
-	inline void set_value___2(int32_t value)
-	{
-		___value___2 = value;
-	}
+	int32_t ___value__;
 };
-
-
-// UnityEngine.XR.OpenXR.Features.OpenXRFeature/NativeEvent
-struct NativeEvent_t94138199EE1CC201C255637BA0005DC42F64E440 
+struct PerformanceSubDomain_t7A62BDCAA3DB2B70953008BE33C13BE975DC9222 
 {
-public:
-	// System.Int32 UnityEngine.XR.OpenXR.Features.OpenXRFeature/NativeEvent::value__
-	int32_t ___value___2;
-
-public:
-	inline static int32_t get_offset_of_value___2() { return static_cast<int32_t>(offsetof(NativeEvent_t94138199EE1CC201C255637BA0005DC42F64E440, ___value___2)); }
-	inline int32_t get_value___2() const { return ___value___2; }
-	inline int32_t* get_address_of_value___2() { return &___value___2; }
-	inline void set_value___2(int32_t value)
-	{
-		___value___2 = value;
-	}
+	int32_t ___value__;
 };
-
-
-// Microsoft.MixedReality.OpenXR.Remoting.SecureRemotingCertificateValidationResult
+struct SecureRemotingNameValidationResult_t71C9443E3E6714E39C121463AADAC2A21177BC25 
+{
+	int32_t ___value__;
+};
+struct TextureFormat_t87A73E4A3850D3410DC211676FC14B94226C1C1D 
+{
+	int32_t ___value__;
+};
+struct XrResult_tC6E780422C0CF27153FB9B0ED7D1F60015608195 
+{
+	int32_t ___value__;
+};
+struct ScriptEvent_t98D7BEA7A83AEC5AC0316FCED0B85028D4E75DAD 
+{
+	int32_t ___value__;
+};
+struct NativeEvent_t2C54A0DE392B348B223984562B66B06F48BC7F04 
+{
+	int32_t ___value__;
+};
+struct unitytls_x509verify_result_tBD0B93AE208F14C2C6CD925F0702A269BFE66FF0 
+{
+	uint32_t ___value__;
+};
+struct AsyncConversionStatus_tB9035BBA640774DAFF34FEEE5DF141A2F24E1236 
+{
+	int32_t ___value__;
+};
+struct Transformation_t26ED8CF20E035506740A8504E00ECD67AF5FD137 
+{
+	int32_t ___value__;
+};
+struct PerformanceChangeNotification_t68CEE147E0116EB9C4506C2573D8FE5BAFD2803F 
+{
+	int32_t ___domain;
+	int32_t ___subDomain;
+	int32_t ___fromLevel;
+	int32_t ___toLevel;
+};
 #pragma pack(push, tp, 8)
-struct SecureRemotingCertificateValidationResult_tDCC26D0B0603A62F7DFB41B31AAF28F9723F9384 
+struct SecureRemotingCertificateValidationResult_tDA0C18B9901F63FBF431595385903B5FB06F7736 
 {
-public:
-	// System.Boolean Microsoft.MixedReality.OpenXR.Remoting.SecureRemotingCertificateValidationResult::TrustedRoot
-	bool ___TrustedRoot_0;
-	// System.Boolean Microsoft.MixedReality.OpenXR.Remoting.SecureRemotingCertificateValidationResult::Revoked
-	bool ___Revoked_1;
-	// System.Boolean Microsoft.MixedReality.OpenXR.Remoting.SecureRemotingCertificateValidationResult::Expired
-	bool ___Expired_2;
-	// System.Boolean Microsoft.MixedReality.OpenXR.Remoting.SecureRemotingCertificateValidationResult::WrongUsage
-	bool ___WrongUsage_3;
-	// System.Boolean Microsoft.MixedReality.OpenXR.Remoting.SecureRemotingCertificateValidationResult::RevocationCheckFailed
-	bool ___RevocationCheckFailed_4;
-	// System.Boolean Microsoft.MixedReality.OpenXR.Remoting.SecureRemotingCertificateValidationResult::InvalidCertOrChain
-	bool ___InvalidCertOrChain_5;
-	// Microsoft.MixedReality.OpenXR.Remoting.SecureRemotingNameValidationResult Microsoft.MixedReality.OpenXR.Remoting.SecureRemotingCertificateValidationResult::NameValidationResult
-	int32_t ___NameValidationResult_6;
-
-public:
-	inline static int32_t get_offset_of_TrustedRoot_0() { return static_cast<int32_t>(offsetof(SecureRemotingCertificateValidationResult_tDCC26D0B0603A62F7DFB41B31AAF28F9723F9384, ___TrustedRoot_0)); }
-	inline bool get_TrustedRoot_0() const { return ___TrustedRoot_0; }
-	inline bool* get_address_of_TrustedRoot_0() { return &___TrustedRoot_0; }
-	inline void set_TrustedRoot_0(bool value)
-	{
-		___TrustedRoot_0 = value;
-	}
-
-	inline static int32_t get_offset_of_Revoked_1() { return static_cast<int32_t>(offsetof(SecureRemotingCertificateValidationResult_tDCC26D0B0603A62F7DFB41B31AAF28F9723F9384, ___Revoked_1)); }
-	inline bool get_Revoked_1() const { return ___Revoked_1; }
-	inline bool* get_address_of_Revoked_1() { return &___Revoked_1; }
-	inline void set_Revoked_1(bool value)
-	{
-		___Revoked_1 = value;
-	}
-
-	inline static int32_t get_offset_of_Expired_2() { return static_cast<int32_t>(offsetof(SecureRemotingCertificateValidationResult_tDCC26D0B0603A62F7DFB41B31AAF28F9723F9384, ___Expired_2)); }
-	inline bool get_Expired_2() const { return ___Expired_2; }
-	inline bool* get_address_of_Expired_2() { return &___Expired_2; }
-	inline void set_Expired_2(bool value)
-	{
-		___Expired_2 = value;
-	}
-
-	inline static int32_t get_offset_of_WrongUsage_3() { return static_cast<int32_t>(offsetof(SecureRemotingCertificateValidationResult_tDCC26D0B0603A62F7DFB41B31AAF28F9723F9384, ___WrongUsage_3)); }
-	inline bool get_WrongUsage_3() const { return ___WrongUsage_3; }
-	inline bool* get_address_of_WrongUsage_3() { return &___WrongUsage_3; }
-	inline void set_WrongUsage_3(bool value)
-	{
-		___WrongUsage_3 = value;
-	}
-
-	inline static int32_t get_offset_of_RevocationCheckFailed_4() { return static_cast<int32_t>(offsetof(SecureRemotingCertificateValidationResult_tDCC26D0B0603A62F7DFB41B31AAF28F9723F9384, ___RevocationCheckFailed_4)); }
-	inline bool get_RevocationCheckFailed_4() const { return ___RevocationCheckFailed_4; }
-	inline bool* get_address_of_RevocationCheckFailed_4() { return &___RevocationCheckFailed_4; }
-	inline void set_RevocationCheckFailed_4(bool value)
-	{
-		___RevocationCheckFailed_4 = value;
-	}
-
-	inline static int32_t get_offset_of_InvalidCertOrChain_5() { return static_cast<int32_t>(offsetof(SecureRemotingCertificateValidationResult_tDCC26D0B0603A62F7DFB41B31AAF28F9723F9384, ___InvalidCertOrChain_5)); }
-	inline bool get_InvalidCertOrChain_5() const { return ___InvalidCertOrChain_5; }
-	inline bool* get_address_of_InvalidCertOrChain_5() { return &___InvalidCertOrChain_5; }
-	inline void set_InvalidCertOrChain_5(bool value)
-	{
-		___InvalidCertOrChain_5 = value;
-	}
-
-	inline static int32_t get_offset_of_NameValidationResult_6() { return static_cast<int32_t>(offsetof(SecureRemotingCertificateValidationResult_tDCC26D0B0603A62F7DFB41B31AAF28F9723F9384, ___NameValidationResult_6)); }
-	inline int32_t get_NameValidationResult_6() const { return ___NameValidationResult_6; }
-	inline int32_t* get_address_of_NameValidationResult_6() { return &___NameValidationResult_6; }
-	inline void set_NameValidationResult_6(int32_t value)
-	{
-		___NameValidationResult_6 = value;
-	}
+	bool ___TrustedRoot;
+	bool ___Revoked;
+	bool ___Expired;
+	bool ___WrongUsage;
+	bool ___RevocationCheckFailed;
+	bool ___InvalidCertOrChain;
+	int32_t ___NameValidationResult;
 };
 #pragma pack(pop, tp)
-
-// Native definition for P/Invoke marshalling of Microsoft.MixedReality.OpenXR.Remoting.SecureRemotingCertificateValidationResult
 #pragma pack(push, tp, 8)
-struct SecureRemotingCertificateValidationResult_tDCC26D0B0603A62F7DFB41B31AAF28F9723F9384_marshaled_pinvoke
+struct SecureRemotingCertificateValidationResult_tDA0C18B9901F63FBF431595385903B5FB06F7736_marshaled_pinvoke
 {
-	int32_t ___TrustedRoot_0;
-	int32_t ___Revoked_1;
-	int32_t ___Expired_2;
-	int32_t ___WrongUsage_3;
-	int32_t ___RevocationCheckFailed_4;
-	int32_t ___InvalidCertOrChain_5;
-	int32_t ___NameValidationResult_6;
+	int32_t ___TrustedRoot;
+	int32_t ___Revoked;
+	int32_t ___Expired;
+	int32_t ___WrongUsage;
+	int32_t ___RevocationCheckFailed;
+	int32_t ___InvalidCertOrChain;
+	int32_t ___NameValidationResult;
 };
 #pragma pack(pop, tp)
-// Native definition for COM marshalling of Microsoft.MixedReality.OpenXR.Remoting.SecureRemotingCertificateValidationResult
 #pragma pack(push, tp, 8)
-struct SecureRemotingCertificateValidationResult_tDCC26D0B0603A62F7DFB41B31AAF28F9723F9384_marshaled_com
+struct SecureRemotingCertificateValidationResult_tDA0C18B9901F63FBF431595385903B5FB06F7736_marshaled_com
 {
-	int32_t ___TrustedRoot_0;
-	int32_t ___Revoked_1;
-	int32_t ___Expired_2;
-	int32_t ___WrongUsage_3;
-	int32_t ___RevocationCheckFailed_4;
-	int32_t ___InvalidCertOrChain_5;
-	int32_t ___NameValidationResult_6;
+	int32_t ___TrustedRoot;
+	int32_t ___Revoked;
+	int32_t ___Expired;
+	int32_t ___WrongUsage;
+	int32_t ___RevocationCheckFailed;
+	int32_t ___InvalidCertOrChain;
+	int32_t ___NameValidationResult;
 };
 #pragma pack(pop, tp)
+struct ConversionParams_t062706B15E2C508C54473A1FD72013C4381CCB62 
+{
+	RectInt_t1744D10E1063135DA9D574F95205B98DAC600CB8 ___m_InputRect;
+	Vector2Int_t69B2886EBAB732D9B880565E18E7568F3DE0CE6A ___m_OutputDimensions;
+	int32_t ___m_Format;
+	int32_t ___m_Transformation;
+};
+struct IntPtr_t_StaticFields
+{
+	intptr_t ___Zero;
+};
 #ifdef __clang__
 #pragma clang diagnostic pop
 #endif
 
-extern "C" int32_t DEFAULT_CALL ReversePInvokeWrapper_AppRemotingSubsystem_ImplementValidateAuthenticationToken_m3DB110896A6A1BE9DA4EB2B0D0C324733511ABC3(char* ___authenticationTokenToCheck0);
-extern "C" SecureRemotingCertificateValidationResult_tDCC26D0B0603A62F7DFB41B31AAF28F9723F9384_marshaled_pinvoke DEFAULT_CALL ReversePInvokeWrapper_AppRemotingSubsystem_ImplementValidateServerCertificate_m03125264EF7908F06967031D5E130AB163F1D4CE(char* ___hostName0, SecureRemotingCertificateValidationResult_tDCC26D0B0603A62F7DFB41B31AAF28F9723F9384_marshaled_pinvoke ___systemValidationResult1);
-extern "C" uint32_t DEFAULT_CALL ReversePInvokeWrapper_Delegate_AddRef_m30A171801CD405C81C88A2C72C47202417A1D745(intptr_t ___thisPtr0);
-extern "C" int32_t DEFAULT_CALL ReversePInvokeWrapper_Delegate_QueryInterface_m7C37E717EEA9167E8335DFB00211401A7705D270(intptr_t ___thisPtr0, Guid_t * ___iid1, intptr_t* ___obj2);
-extern "C" uint32_t DEFAULT_CALL ReversePInvokeWrapper_Delegate_Release_m3D99CDC4DCEFACB88758671F75A5E198403426A2(intptr_t ___thisPtr0);
-extern "C" void DEFAULT_CALL ReversePInvokeWrapper_EventProvider_EtwEnableCallBack_m21ADE6DC652B28DDB916AC68B9FC908B18006FFD(Guid_t * ___sourceId0, int32_t ___controlCode1, uint8_t ___setLevel2, int64_t ___anyKeyword3, int64_t ___allKeyword4, EVENT_FILTER_DESCRIPTOR_t59379AB6F16CCEA5C0BDF328FF5AC64040CED05B * ___filterData5, void* ___callbackContext6);
-extern "C" int32_t DEFAULT_CALL ReversePInvokeWrapper_EventSource__invoke_m71874265067EDB834E74443057672268434BDAF9(intptr_t ___thisPtr0, intptr_t ___senderPtr1, intptr_t ___argsPtr2);
-extern "C" int32_t DEFAULT_CALL ReversePInvokeWrapper_IAsyncOperation__OnCompleted_m9162AE1D5CD8B2E9AB25B2FBCA788284776404B0(intptr_t ___thisPtr0, intptr_t ___operationPtr1, int32_t ___status2);
-extern "C" void DEFAULT_CALL ReversePInvokeWrapper_MockRuntime_AfterFunctionCallback_mAF8AAD83714DE1C2B13FF7FAE1CC275D15EB1001(char* ___function0, int32_t ___result1);
-extern "C" int32_t DEFAULT_CALL ReversePInvokeWrapper_MockRuntime_BeforeFunctionCallback_m5FDEF08149545E36EFDAE885A986A2A04151E5C9(char* ___function0);
-extern "C" void DEFAULT_CALL ReversePInvokeWrapper_MockRuntime_ReceiveScriptEvent_m66F5CEF0D55D35B1E8447878C2B348426763571B(int32_t ___evt0, uint64_t ___param1);
-extern "C" void DEFAULT_CALL ReversePInvokeWrapper_OSSpecificSynchronizationContext_InvocationEntry_m0045E44F7E960D6B4A864D5206D4116249C09BB0(intptr_t ___arg0);
-extern "C" void DEFAULT_CALL ReversePInvokeWrapper_OpenXRLoaderBase_ReceiveNativeEvent_m1B22309DB57E9CBCEE079C233A221B002F3EB651(int32_t ___e0, uint64_t ___payload1);
+extern "C" void DEFAULT_CALL ReversePInvokeWrapper_ARCameraBackground_BeforeBackgroundRenderHandler_m3B215B54CFB6F6F00A724D9A6BE66808593ABFCD(int32_t ___0_eventId);
+extern "C" int32_t DEFAULT_CALL ReversePInvokeWrapper_AppRemotingSubsystem_ImplementValidateAuthenticationToken_mFD455DE70BB982F47A6614CCF7EFFE952E11E9E0(char* ___0_authenticationTokenToCheck);
+extern "C" SecureRemotingCertificateValidationResult_tDA0C18B9901F63FBF431595385903B5FB06F7736_marshaled_pinvoke DEFAULT_CALL ReversePInvokeWrapper_AppRemotingSubsystem_ImplementValidateServerCertificate_m9BBEB3EB86689175C979D0386FD9FD65240270D5(char* ___0_hostName, SecureRemotingCertificateValidationResult_tDA0C18B9901F63FBF431595385903B5FB06F7736_marshaled_pinvoke ___1_systemValidationResult);
+extern "C" void DEFAULT_CALL ReversePInvokeWrapper_CultureInfo_OnCultureInfoChangedInAppX_m407BCFC1029A4485B7B063BC2F3601968C3BE577(Il2CppChar* ___0_language);
+extern "C" void DEFAULT_CALL ReversePInvokeWrapper_MockRuntime_AfterFunctionCallback_mFBBF94D9868CA6870E3A6A78D831145376372D46(char* ___0_function, int32_t ___1_result);
+extern "C" int32_t DEFAULT_CALL ReversePInvokeWrapper_MockRuntime_BeforeFunctionCallback_m70AB6148D0D9FCD315ACDB6B46131514D128380D(char* ___0_function);
+extern "C" void DEFAULT_CALL ReversePInvokeWrapper_MockRuntime_ReceiveScriptEvent_m4A8AAF0A455A02262E3B74CB3DB498A88C84AD14(int32_t ___0_evt, uint64_t ___1_param);
+extern "C" int32_t CDECL ReversePInvokeWrapper_MonoBtlsX509LookupMono_OnGetBySubject_m85B0F4B20C12F67DE4CD9521EC58308C9A27BA24(intptr_t ___0_instance, intptr_t ___1_name_ptr, intptr_t* ___2_x509_ptr);
+extern "C" void DEFAULT_CALL ReversePInvokeWrapper_OSSpecificSynchronizationContext_InvocationEntry_mF93C3CF6DBEC86E377576D840CAF517CB6E4D7E3(intptr_t ___0_arg);
+extern "C" void DEFAULT_CALL ReversePInvokeWrapper_OpenXRLoaderBase_ReceiveNativeEvent_m521057A79D56E2995A93CEB8B66A60B4297896F0(int32_t ___0_e, uint64_t ___1_payload);
+extern "C" uint32_t CDECL ReversePInvokeWrapper_UnityTlsProvider_x509verify_callback_mB2465D108005179B9873A37C418CD26A37194E3B(void* ___0_userData, unitytls_x509_ref_t9CEB17766B4144117333AB50379B21A357FA4333 ___1_cert, uint32_t ___2_result, unitytls_errorstate_tC926EE4582920BE2C1DB1F3F65619B810D5AB902* ___3_errorState);
+extern "C" void DEFAULT_CALL ReversePInvokeWrapper_XRCpuImage_OnAsyncConversionComplete_mDC3A0C88A34909C9D08E4BE7E94C8E27E2BB3D3C(int32_t ___0_status, ConversionParams_t062706B15E2C508C54473A1FD72013C4381CCB62 ___1_conversionParams, intptr_t ___2_dataPtr, int32_t ___3_dataLength, intptr_t ___4_context);
+extern "C" void DEFAULT_CALL ReversePInvokeWrapper_XrPerformanceSettingsFeature_OnXrPerformanceNotificationCallback_mDF4DDC25F3DA9160903A0967ABCBC0F43FF1AC44(PerformanceChangeNotification_t68CEE147E0116EB9C4506C2573D8FE5BAFD2803F ___0_notification);
 
 
 IL2CPP_EXTERN_C const Il2CppMethodPointer g_ReversePInvokeWrapperPointers[];
 const Il2CppMethodPointer g_ReversePInvokeWrapperPointers[13] = 
 {
-	reinterpret_cast<Il2CppMethodPointer>(ReversePInvokeWrapper_AppRemotingSubsystem_ImplementValidateAuthenticationToken_m3DB110896A6A1BE9DA4EB2B0D0C324733511ABC3),
-	reinterpret_cast<Il2CppMethodPointer>(ReversePInvokeWrapper_AppRemotingSubsystem_ImplementValidateServerCertificate_m03125264EF7908F06967031D5E130AB163F1D4CE),
-	reinterpret_cast<Il2CppMethodPointer>(ReversePInvokeWrapper_Delegate_AddRef_m30A171801CD405C81C88A2C72C47202417A1D745),
-	reinterpret_cast<Il2CppMethodPointer>(ReversePInvokeWrapper_Delegate_QueryInterface_m7C37E717EEA9167E8335DFB00211401A7705D270),
-	reinterpret_cast<Il2CppMethodPointer>(ReversePInvokeWrapper_Delegate_Release_m3D99CDC4DCEFACB88758671F75A5E198403426A2),
-	reinterpret_cast<Il2CppMethodPointer>(ReversePInvokeWrapper_EventProvider_EtwEnableCallBack_m21ADE6DC652B28DDB916AC68B9FC908B18006FFD),
-	reinterpret_cast<Il2CppMethodPointer>(ReversePInvokeWrapper_EventSource__invoke_m71874265067EDB834E74443057672268434BDAF9),
-	reinterpret_cast<Il2CppMethodPointer>(ReversePInvokeWrapper_IAsyncOperation__OnCompleted_m9162AE1D5CD8B2E9AB25B2FBCA788284776404B0),
-	reinterpret_cast<Il2CppMethodPointer>(ReversePInvokeWrapper_MockRuntime_AfterFunctionCallback_mAF8AAD83714DE1C2B13FF7FAE1CC275D15EB1001),
-	reinterpret_cast<Il2CppMethodPointer>(ReversePInvokeWrapper_MockRuntime_BeforeFunctionCallback_m5FDEF08149545E36EFDAE885A986A2A04151E5C9),
-	reinterpret_cast<Il2CppMethodPointer>(ReversePInvokeWrapper_MockRuntime_ReceiveScriptEvent_m66F5CEF0D55D35B1E8447878C2B348426763571B),
-	reinterpret_cast<Il2CppMethodPointer>(ReversePInvokeWrapper_OSSpecificSynchronizationContext_InvocationEntry_m0045E44F7E960D6B4A864D5206D4116249C09BB0),
-	reinterpret_cast<Il2CppMethodPointer>(ReversePInvokeWrapper_OpenXRLoaderBase_ReceiveNativeEvent_m1B22309DB57E9CBCEE079C233A221B002F3EB651),
+	reinterpret_cast<Il2CppMethodPointer>(ReversePInvokeWrapper_ARCameraBackground_BeforeBackgroundRenderHandler_m3B215B54CFB6F6F00A724D9A6BE66808593ABFCD),
+	reinterpret_cast<Il2CppMethodPointer>(ReversePInvokeWrapper_AppRemotingSubsystem_ImplementValidateAuthenticationToken_mFD455DE70BB982F47A6614CCF7EFFE952E11E9E0),
+	reinterpret_cast<Il2CppMethodPointer>(ReversePInvokeWrapper_AppRemotingSubsystem_ImplementValidateServerCertificate_m9BBEB3EB86689175C979D0386FD9FD65240270D5),
+	reinterpret_cast<Il2CppMethodPointer>(ReversePInvokeWrapper_CultureInfo_OnCultureInfoChangedInAppX_m407BCFC1029A4485B7B063BC2F3601968C3BE577),
+	reinterpret_cast<Il2CppMethodPointer>(ReversePInvokeWrapper_MockRuntime_AfterFunctionCallback_mFBBF94D9868CA6870E3A6A78D831145376372D46),
+	reinterpret_cast<Il2CppMethodPointer>(ReversePInvokeWrapper_MockRuntime_BeforeFunctionCallback_m70AB6148D0D9FCD315ACDB6B46131514D128380D),
+	reinterpret_cast<Il2CppMethodPointer>(ReversePInvokeWrapper_MockRuntime_ReceiveScriptEvent_m4A8AAF0A455A02262E3B74CB3DB498A88C84AD14),
+	reinterpret_cast<Il2CppMethodPointer>(ReversePInvokeWrapper_MonoBtlsX509LookupMono_OnGetBySubject_m85B0F4B20C12F67DE4CD9521EC58308C9A27BA24),
+	reinterpret_cast<Il2CppMethodPointer>(ReversePInvokeWrapper_OSSpecificSynchronizationContext_InvocationEntry_mF93C3CF6DBEC86E377576D840CAF517CB6E4D7E3),
+	reinterpret_cast<Il2CppMethodPointer>(ReversePInvokeWrapper_OpenXRLoaderBase_ReceiveNativeEvent_m521057A79D56E2995A93CEB8B66A60B4297896F0),
+	reinterpret_cast<Il2CppMethodPointer>(ReversePInvokeWrapper_UnityTlsProvider_x509verify_callback_mB2465D108005179B9873A37C418CD26A37194E3B),
+	reinterpret_cast<Il2CppMethodPointer>(ReversePInvokeWrapper_XRCpuImage_OnAsyncConversionComplete_mDC3A0C88A34909C9D08E4BE7E94C8E27E2BB3D3C),
+	reinterpret_cast<Il2CppMethodPointer>(ReversePInvokeWrapper_XrPerformanceSettingsFeature_OnXrPerformanceNotificationCallback_mDF4DDC25F3DA9160903A0967ABCBC0F43FF1AC44),
 };

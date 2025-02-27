@@ -8,7 +8,6 @@
 
 
 #include <limits>
-#include <stdint.h>
 
 
 
@@ -23,22 +22,9 @@ IL2CPP_EXTERN_C_END
 #pragma clang diagnostic ignored "-Winvalid-offsetof"
 #pragma clang diagnostic ignored "-Wunused-variable"
 #endif
-
-// <Module>
-struct U3CModuleU3E_t2EC47E6C21CF7E35B08C98CF1FCCCC3B1533EF9D 
+struct U3CModuleU3E_t5F17B988A4A883351013C7A41927475BF26203AC 
 {
-public:
-
-public:
 };
-
-
-// System.Object
-
-struct Il2CppArrayBounds;
-
-// System.Array
-
 #ifdef __clang__
 #pragma clang diagnostic pop
 #endif

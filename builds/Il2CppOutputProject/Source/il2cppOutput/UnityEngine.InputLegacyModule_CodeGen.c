@@ -12,233 +12,268 @@
 
 
 
-// 0x00000001 System.Int32 UnityEngine.Touch::get_fingerId()
-extern void Touch_get_fingerId_mCED0E66949120E69BFE9294DC0A11A6F9FDBD129 (void);
-// 0x00000002 UnityEngine.Vector2 UnityEngine.Touch::get_position()
-extern void Touch_get_position_mE32B04C6DA32A0965C403A31847ED7F1725EA1DE (void);
-// 0x00000003 UnityEngine.Vector2 UnityEngine.Touch::get_deltaPosition()
-extern void Touch_get_deltaPosition_mF9D60C253E41DC4E4F832F88A1041BE8A9E7C0FB (void);
-// 0x00000004 System.Int32 UnityEngine.Touch::get_tapCount()
-extern void Touch_get_tapCount_m3F2B62FA02EF54D5FA6C43ECB4A3A8854C5BA1F8 (void);
-// 0x00000005 UnityEngine.TouchPhase UnityEngine.Touch::get_phase()
-extern void Touch_get_phase_m576EA3F4FE1D12EB85510326AD8EC3C2EB267257 (void);
-// 0x00000006 UnityEngine.TouchType UnityEngine.Touch::get_type()
-extern void Touch_get_type_m33FB24B6A53A307E8AC9881ED3B483DD4B44C050 (void);
-// 0x00000007 UnityEngine.GameObject UnityEngine.CameraRaycastHelper::RaycastTry(UnityEngine.Camera,UnityEngine.Ray,System.Single,System.Int32)
-extern void CameraRaycastHelper_RaycastTry_m8AA2714ED46E79851C77B83A3916C515D7280FD1 (void);
-// 0x00000008 UnityEngine.GameObject UnityEngine.CameraRaycastHelper::RaycastTry2D(UnityEngine.Camera,UnityEngine.Ray,System.Single,System.Int32)
-extern void CameraRaycastHelper_RaycastTry2D_mAA0B0BAC7BE8A2F640A236BB6655EB47E5408C9D (void);
-// 0x00000009 UnityEngine.GameObject UnityEngine.CameraRaycastHelper::RaycastTry_Injected(UnityEngine.Camera,UnityEngine.Ray&,System.Single,System.Int32)
-extern void CameraRaycastHelper_RaycastTry_Injected_mFAED8F3DC204691A92849F36D8BC69CFE68F43E8 (void);
-// 0x0000000A UnityEngine.GameObject UnityEngine.CameraRaycastHelper::RaycastTry2D_Injected(UnityEngine.Camera,UnityEngine.Ray&,System.Single,System.Int32)
-extern void CameraRaycastHelper_RaycastTry2D_Injected_m1AB3B5B899C17D5D6FC41D8F8CF2BE549F7D9F21 (void);
-// 0x0000000B System.Boolean UnityEngine.Input::GetKeyInt(UnityEngine.KeyCode)
-extern void Input_GetKeyInt_mCBF4A2379EF913E589DFF4AE9C9407D0AC6B4E4D (void);
-// 0x0000000C System.Boolean UnityEngine.Input::GetKeyString(System.String)
-extern void Input_GetKeyString_mDD80ED27B61F349398E3C955DA99A21562298B03 (void);
-// 0x0000000D System.Boolean UnityEngine.Input::GetKeyUpInt(UnityEngine.KeyCode)
-extern void Input_GetKeyUpInt_mBF5453011D089E0D585F38D8BC72AB743CE243BE (void);
-// 0x0000000E System.Boolean UnityEngine.Input::GetKeyDownInt(UnityEngine.KeyCode)
-extern void Input_GetKeyDownInt_mEAC027107792507CA7F0B1DFBEA4E6289CDCCCBA (void);
-// 0x0000000F System.Single UnityEngine.Input::GetAxis(System.String)
-extern void Input_GetAxis_m939297DEB2ECF8D8D09AD66EB69979AAD2B62326 (void);
-// 0x00000010 System.Single UnityEngine.Input::GetAxisRaw(System.String)
-extern void Input_GetAxisRaw_mC07AC23FD8D04A69CDB07C6399C93FFFAEB0FC5B (void);
-// 0x00000011 System.Boolean UnityEngine.Input::GetButtonDown(System.String)
-extern void Input_GetButtonDown_m2001112EBCA3D5C7B0344EF62C896667F7E67DDF (void);
-// 0x00000012 System.Boolean UnityEngine.Input::GetMouseButton(System.Int32)
-extern void Input_GetMouseButton_m27BF2DDBF38A38787B83A13D3E6F0F88F7C834C1 (void);
-// 0x00000013 System.Boolean UnityEngine.Input::GetMouseButtonDown(System.Int32)
-extern void Input_GetMouseButtonDown_m466D81FDCC87C9CB07557B39DCB435EB691F1EF3 (void);
-// 0x00000014 System.Boolean UnityEngine.Input::GetMouseButtonUp(System.Int32)
-extern void Input_GetMouseButtonUp_m2BA562F8C4FE8364EEC93970093E776371DF4022 (void);
-// 0x00000015 System.String[] UnityEngine.Input::GetJoystickNames()
-extern void Input_GetJoystickNames_mBD6976AEAFB4B2930FA2AB3215C0E8ED27A7938B (void);
-// 0x00000016 UnityEngine.Touch UnityEngine.Input::GetTouch(System.Int32)
-extern void Input_GetTouch_m6A2A31482B1A7D018C3AAC188C02F5D14500C81F (void);
-// 0x00000017 System.Boolean UnityEngine.Input::GetKey(UnityEngine.KeyCode)
-extern void Input_GetKey_mFDD450A4C61F2930928B12287FFBD1ACCB71E429 (void);
-// 0x00000018 System.Boolean UnityEngine.Input::GetKey(System.String)
-extern void Input_GetKey_m77E2F3719EC63690632731872A691FF6A27C589C (void);
-// 0x00000019 System.Boolean UnityEngine.Input::GetKeyUp(UnityEngine.KeyCode)
-extern void Input_GetKeyUp_mDE9D56FE11715566D4D54FD96F8E1EF9734D225F (void);
-// 0x0000001A System.Boolean UnityEngine.Input::GetKeyDown(UnityEngine.KeyCode)
-extern void Input_GetKeyDown_m476116696E71771641BBECBAB1A4C55E69018220 (void);
-// 0x0000001B UnityEngine.Vector3 UnityEngine.Input::get_mousePosition()
-extern void Input_get_mousePosition_m79528BC2F30C57054641F709C855130AE586AC0E (void);
-// 0x0000001C UnityEngine.Vector2 UnityEngine.Input::get_mouseScrollDelta()
-extern void Input_get_mouseScrollDelta_m018B3C74FC710A166684FC8391CAC93D8EC0ADB7 (void);
-// 0x0000001D UnityEngine.IMECompositionMode UnityEngine.Input::get_imeCompositionMode()
-extern void Input_get_imeCompositionMode_m04AD6A8C7FEE55E7C4F70885DB5AF222E9F904E5 (void);
-// 0x0000001E System.Void UnityEngine.Input::set_imeCompositionMode(UnityEngine.IMECompositionMode)
-extern void Input_set_imeCompositionMode_m7D4AA771F1F616FE74A97CA186C4B55EF268E112 (void);
-// 0x0000001F System.String UnityEngine.Input::get_compositionString()
-extern void Input_get_compositionString_mF957B324E35155878D307CE2AEE0AACC9BEC25BD (void);
-// 0x00000020 UnityEngine.Vector2 UnityEngine.Input::get_compositionCursorPos()
-extern void Input_get_compositionCursorPos_m70946478FB2B607BC3BC5EC1280AA217323518B3 (void);
-// 0x00000021 System.Void UnityEngine.Input::set_compositionCursorPos(UnityEngine.Vector2)
-extern void Input_set_compositionCursorPos_mA2A9D63F782E3C75F065F031C67C2A1363D47D9C (void);
-// 0x00000022 System.Boolean UnityEngine.Input::get_mousePresent()
-extern void Input_get_mousePresent_mBCACCE1C97E146FF46C7AE7FFE693F7BAB4E4FE5 (void);
-// 0x00000023 System.Int32 UnityEngine.Input::get_touchCount()
-extern void Input_get_touchCount_mE1A06AB1973E3456AE398B3CC5105F27CC7335D6 (void);
-// 0x00000024 System.Boolean UnityEngine.Input::get_touchSupported()
-extern void Input_get_touchSupported_mE5B2F5199B4CC16D89AD2C3125B5CB38F4B4867B (void);
-// 0x00000025 UnityEngine.Touch[] UnityEngine.Input::get_touches()
-extern void Input_get_touches_m26E3034CAE32931E59A480327A3CF4BFC2045E8F (void);
-// 0x00000026 System.Void UnityEngine.Input::GetTouch_Injected(System.Int32,UnityEngine.Touch&)
-extern void Input_GetTouch_Injected_m19710838FFBDDC3E60536B0932D3B5A392BE539D (void);
-// 0x00000027 System.Void UnityEngine.Input::get_mousePosition_Injected(UnityEngine.Vector3&)
-extern void Input_get_mousePosition_Injected_m4E5460D301ECE27CC322AB79C0914A4503ABC06E (void);
-// 0x00000028 System.Void UnityEngine.Input::get_mouseScrollDelta_Injected(UnityEngine.Vector2&)
-extern void Input_get_mouseScrollDelta_Injected_m8B072340853637C9CF5A23CEA63ED51B14886EC9 (void);
-// 0x00000029 System.Void UnityEngine.Input::get_compositionCursorPos_Injected(UnityEngine.Vector2&)
-extern void Input_get_compositionCursorPos_Injected_mE31464243AB1819574A268B942B5667B03F4822E (void);
-// 0x0000002A System.Void UnityEngine.Input::set_compositionCursorPos_Injected(UnityEngine.Vector2&)
-extern void Input_set_compositionCursorPos_Injected_m4B961AC7900B41DDBFBA03BE2F65F49C030CCB4D (void);
-// 0x0000002B System.Void UnityEngine.SendMouseEvents::SetMouseMoved()
-extern void SendMouseEvents_SetMouseMoved_mEC659144183FB490A2E1F12112C8F08569A511CD (void);
-// 0x0000002C System.Void UnityEngine.SendMouseEvents::DoSendMouseEvents(System.Int32)
-extern void SendMouseEvents_DoSendMouseEvents_m21561D473C27F19BA9CDBC53B4A13D40DDFBE785 (void);
-// 0x0000002D System.Void UnityEngine.SendMouseEvents::SendEvents(System.Int32,UnityEngine.SendMouseEvents/HitInfo)
-extern void SendMouseEvents_SendEvents_m7A59BBFBB15C1BF3E47D56CDD4921599A686F9C7 (void);
-// 0x0000002E System.Void UnityEngine.SendMouseEvents::.cctor()
-extern void SendMouseEvents__cctor_m6B63654E024F338414361C995EAFEC615743A0E0 (void);
-// 0x0000002F System.Void UnityEngine.SendMouseEvents/HitInfo::SendMessage(System.String)
-extern void HitInfo_SendMessage_m2D813691948EAB9CDA487A3B8668678EABFCFA62 (void);
-// 0x00000030 System.Boolean UnityEngine.SendMouseEvents/HitInfo::op_Implicit(UnityEngine.SendMouseEvents/HitInfo)
-extern void HitInfo_op_Implicit_m8332A3930623A2248D797F3A8020FFF4E05A9420 (void);
-// 0x00000031 System.Boolean UnityEngine.SendMouseEvents/HitInfo::Compare(UnityEngine.SendMouseEvents/HitInfo,UnityEngine.SendMouseEvents/HitInfo)
-extern void HitInfo_Compare_m3AD170E7A52826C73DEF8C3C8F6507C9EAB28363 (void);
-static Il2CppMethodPointer s_methodPointers[49] = 
+extern void Touch_get_fingerId_mC1DCE93BFA0574960A3AE5329AE6C5F7E06962BD (void);
+extern void Touch_get_position_m41B9EB0F3F3E1BE98CEB388253A9E31979CB964A (void);
+extern void Touch_set_position_mF024C46352D1CB82991022138D48BC84D9248E6B (void);
+extern void Touch_get_rawPosition_m15F230BC7B4B672380BF221E9BA1DC275180863D (void);
+extern void Touch_set_rawPosition_m734916CD0826F5CD242A0C6647AC55E53272590B (void);
+extern void Touch_get_deltaPosition_m2D51F960B74C94821ED0F6A09E44C80FD796D299 (void);
+extern void Touch_set_deltaPosition_mD2323B6E679DA9CE9FE1E3F4D3E2D12A33328E7A (void);
+extern void Touch_get_deltaTime_mD07672B54CBA02C226097B54E286C1DFE96EC3BC (void);
+extern void Touch_get_tapCount_mE75D2783AC38FCF536C99F36AB9F76AFA3EB7EB6 (void);
+extern void Touch_get_phase_mB82409FB2BE1C32ABDBA6A72E52A099D28AB70B0 (void);
+extern void Touch_get_pressure_mB8214D0E920156CA4679BAC03E86106E8E4BDA5C (void);
+extern void Touch_get_maximumPossiblePressure_m2D147A58465EB39B397722D8597CF9E06AC85FAE (void);
+extern void Touch_get_type_mB505EF2DCF13160DFA0C6AAF406DCB4CBED20745 (void);
+extern void Touch_get_altitudeAngle_m26DEF010E2CDC23F4FADE8E49A986D557C07D391 (void);
+extern void Touch_get_azimuthAngle_m2F11532183492E608922A2F9D9EC9AC31D34F490 (void);
+extern void Touch_get_radius_m5BC9C50DABBB17B07742BAFC6CC36A6736AE7960 (void);
+extern void Touch_get_radiusVariance_m6F54BE964B91C3B2F8FA2A483E1FDB644B282B21 (void);
+extern void CameraRaycastHelper_RaycastTry_m79A654495BD2C09623E9067BCC70D23A0DA3BF58 (void);
+extern void CameraRaycastHelper_RaycastTry2D_m132832B9171CD030AD231A63BF70D1226ED1F373 (void);
+extern void CameraRaycastHelper_RaycastTry_Injected_m4A9EA285FB7B24B7B3D894E7EE997B41ED302DEF (void);
+extern void CameraRaycastHelper_RaycastTry2D_Injected_m2620821FE8CB793C314AAE43E3B4C7BEAE5D4C9E (void);
+extern void Input_GetAxis_m10372E6C5FF591668D2DC5F58C58D213CC598A62 (void);
+extern void Input_GetAxisRaw_m47C0CF8E090561A2F407A4E11D5F2A45044EB8E4 (void);
+extern void Input_GetButton_m2F217DAE69DB3D1324FB848B3C9C84F19A80989E (void);
+extern void Input_GetButtonDown_mEF5F80C9E8F04104E807D9CBD6F70CDB98751579 (void);
+extern void Input_GetMouseButton_m4995DD4A2D4F916565C1B1B5AAF7DF17C126B3EA (void);
+extern void Input_GetMouseButtonDown_m8DFC792D15FFF15D311614D5CC6C5D055E5A1DE3 (void);
+extern void Input_GetMouseButtonUp_mBE89CC9C69BBEA9A863819E77EA54411B0476ED6 (void);
+extern void Input_GetJoystickNames_m506FC5C5D06CE7A15EBB9ACEC9DCF546E2DDCC0B (void);
+extern void Input_GetTouch_m75D99FE801A94279874FA8DC6B6ADAD35F5123B1 (void);
+extern void Input_GetLastPenContactEvent_mAB37B70407FDE3DE8230B55D3D4828DC50EAF0BF (void);
+extern void Input_ClearLastPenContactEvent_m3240C9BA6CE089E85624BD0FA031A48CDE2664A3 (void);
+extern void Input_get_anyKey_m6FF00BB4F01FA996E2FB3F3727EBC414C8EB2CEB (void);
+extern void Input_get_mousePosition_mFF21FBD2647DAE2A23BD4C45571CA95D05A0A42C (void);
+extern void Input_get_mouseScrollDelta_mD112408E9182AA0F529179FF31E21D8DCD5CFA74 (void);
+extern void Input_get_imeCompositionMode_mAD9C0224B3845A9132D4265AF468FF203AA43BAC (void);
+extern void Input_set_imeCompositionMode_m0399964447DDFE54E04F516A01696862F7174C9A (void);
+extern void Input_get_compositionString_mC9E603E4FB61090827F77A3D509BF3AA0A48C9A9 (void);
+extern void Input_get_compositionCursorPos_mE1E48997CA0C30D206D08FAF06455123D8D24D15 (void);
+extern void Input_set_compositionCursorPos_m16A856BFBF1DAE42B0089696906F530334861E98 (void);
+extern void Input_get_mousePresent_mAD77FFD987CD5B998AFAD4DAECADBC76034026BF (void);
+extern void Input_get_touchCount_m057388BFC67A0F4CA53764B1022867ED81D01E39 (void);
+extern void Input_get_touchSupported_m2A4FA398A793861AE1BC5971A1363552AB33BEEF (void);
+extern void Input_CheckDisabled_m359B281F7F5DDAB74780E1898311AECD9B0ECCE1 (void);
+extern void Input_GetTouch_Injected_m04E25DD035583531339AB310FBDD4F5A30817F87 (void);
+extern void Input_GetLastPenContactEvent_Injected_mA7F2DE408F86C38FC15357E468645CD82D38A84A (void);
+extern void Input_get_mousePosition_Injected_m7EF43ADB535051F9182A366CA84951F946984E1A (void);
+extern void Input_get_mouseScrollDelta_Injected_m31BF633C98E1BBA4583E7FCE0573BDECB1BA4A29 (void);
+extern void Input_get_compositionCursorPos_Injected_m67C1CB8A21F4708CA76FAB39E3BC436DE33C214E (void);
+extern void Input_set_compositionCursorPos_Injected_m46E4934CD2A9F2E97B8A86D52169C848EF6D91E8 (void);
+extern void SendMouseEvents_UpdateMouse_m7EC9A21B75612D3AA9ECEE2BB142A27481147FF1 (void);
+extern void SendMouseEvents_SetMouseMoved_mDA82278267CC62E9942C9D6154610AD7F3308B51 (void);
+extern void SendMouseEvents_DoSendMouseEvents_m17FCC3A684C7BC4A7A6AA7EBB62E3F56AAB416A7 (void);
+extern void SendMouseEvents_SendEvents_m3DA609154485AAA0F9501BAA602F63A9E357D35C (void);
+extern void SendMouseEvents__cctor_m6B1E043BF3142442AC8312E9B28A54C487A5A755 (void);
+extern void HitInfo_SendMessage_m7834418ACE250BBCBA38ADCF0892E475BD1AD541 (void);
+extern void HitInfo_op_Implicit_m4162F5E6640E1D2CB82AB0AE00090AB46CE997AC (void);
+extern void HitInfo_Compare_m374F9DF7CFE9C31264CD38D42FFFCA4DB0E6CD05 (void);
+extern void InputUnsafeUtility_GetKeyString__Unmanaged_mD736022C3E6C98ED4B4AEA824AC2DA98A3A1B223 (void);
+extern void InputUnsafeUtility_GetKeyUpString__Unmanaged_mFD0D4ED74B64E565CB3F543CBBE38F6AE84AC27A (void);
+extern void InputUnsafeUtility_GetKeyDownString__Unmanaged_m53E2CCD225AC1CE7CB40002403EDC5AEF266EB8D (void);
+extern void InputUnsafeUtility_GetAxis_m034889C00C914572B94F091E8EC646E86408A29F (void);
+extern void InputUnsafeUtility_GetAxis__Unmanaged_m288AEE066E04CCFDD229629882CA42DBD1D85CF2 (void);
+extern void InputUnsafeUtility_GetAxisRaw_m0EBF75200CDA664FCCD51BDB4C8C8798CDD6097B (void);
+extern void InputUnsafeUtility_GetAxisRaw__Unmanaged_m31953D955E75028D274A75661CAB2E13E13320AE (void);
+extern void InputUnsafeUtility_GetButton_mD23EF9339E147CD6081BC4A6B45F10EE5461CEE2 (void);
+extern void InputUnsafeUtility_GetButton__Unmanaged_m270892EB7D8C88443200DF972F76076AC28952B2 (void);
+extern void InputUnsafeUtility_GetButtonDown_mB35B46B92DA28196820B996E2420E5E320088EE4 (void);
+extern void InputUnsafeUtility_GetButtonDown__Unmanaged_m411E8743768382A33B3778E734AF072F8DBDECC4 (void);
+extern void InputUnsafeUtility_GetButtonUp__Unmanaged_mCCE34158CE05432541102B1C2AEC6545E25D0732 (void);
+static Il2CppMethodPointer s_methodPointers[70] = 
 {
-	Touch_get_fingerId_mCED0E66949120E69BFE9294DC0A11A6F9FDBD129,
-	Touch_get_position_mE32B04C6DA32A0965C403A31847ED7F1725EA1DE,
-	Touch_get_deltaPosition_mF9D60C253E41DC4E4F832F88A1041BE8A9E7C0FB,
-	Touch_get_tapCount_m3F2B62FA02EF54D5FA6C43ECB4A3A8854C5BA1F8,
-	Touch_get_phase_m576EA3F4FE1D12EB85510326AD8EC3C2EB267257,
-	Touch_get_type_m33FB24B6A53A307E8AC9881ED3B483DD4B44C050,
-	CameraRaycastHelper_RaycastTry_m8AA2714ED46E79851C77B83A3916C515D7280FD1,
-	CameraRaycastHelper_RaycastTry2D_mAA0B0BAC7BE8A2F640A236BB6655EB47E5408C9D,
-	CameraRaycastHelper_RaycastTry_Injected_mFAED8F3DC204691A92849F36D8BC69CFE68F43E8,
-	CameraRaycastHelper_RaycastTry2D_Injected_m1AB3B5B899C17D5D6FC41D8F8CF2BE549F7D9F21,
-	Input_GetKeyInt_mCBF4A2379EF913E589DFF4AE9C9407D0AC6B4E4D,
-	Input_GetKeyString_mDD80ED27B61F349398E3C955DA99A21562298B03,
-	Input_GetKeyUpInt_mBF5453011D089E0D585F38D8BC72AB743CE243BE,
-	Input_GetKeyDownInt_mEAC027107792507CA7F0B1DFBEA4E6289CDCCCBA,
-	Input_GetAxis_m939297DEB2ECF8D8D09AD66EB69979AAD2B62326,
-	Input_GetAxisRaw_mC07AC23FD8D04A69CDB07C6399C93FFFAEB0FC5B,
-	Input_GetButtonDown_m2001112EBCA3D5C7B0344EF62C896667F7E67DDF,
-	Input_GetMouseButton_m27BF2DDBF38A38787B83A13D3E6F0F88F7C834C1,
-	Input_GetMouseButtonDown_m466D81FDCC87C9CB07557B39DCB435EB691F1EF3,
-	Input_GetMouseButtonUp_m2BA562F8C4FE8364EEC93970093E776371DF4022,
-	Input_GetJoystickNames_mBD6976AEAFB4B2930FA2AB3215C0E8ED27A7938B,
-	Input_GetTouch_m6A2A31482B1A7D018C3AAC188C02F5D14500C81F,
-	Input_GetKey_mFDD450A4C61F2930928B12287FFBD1ACCB71E429,
-	Input_GetKey_m77E2F3719EC63690632731872A691FF6A27C589C,
-	Input_GetKeyUp_mDE9D56FE11715566D4D54FD96F8E1EF9734D225F,
-	Input_GetKeyDown_m476116696E71771641BBECBAB1A4C55E69018220,
-	Input_get_mousePosition_m79528BC2F30C57054641F709C855130AE586AC0E,
-	Input_get_mouseScrollDelta_m018B3C74FC710A166684FC8391CAC93D8EC0ADB7,
-	Input_get_imeCompositionMode_m04AD6A8C7FEE55E7C4F70885DB5AF222E9F904E5,
-	Input_set_imeCompositionMode_m7D4AA771F1F616FE74A97CA186C4B55EF268E112,
-	Input_get_compositionString_mF957B324E35155878D307CE2AEE0AACC9BEC25BD,
-	Input_get_compositionCursorPos_m70946478FB2B607BC3BC5EC1280AA217323518B3,
-	Input_set_compositionCursorPos_mA2A9D63F782E3C75F065F031C67C2A1363D47D9C,
-	Input_get_mousePresent_mBCACCE1C97E146FF46C7AE7FFE693F7BAB4E4FE5,
-	Input_get_touchCount_mE1A06AB1973E3456AE398B3CC5105F27CC7335D6,
-	Input_get_touchSupported_mE5B2F5199B4CC16D89AD2C3125B5CB38F4B4867B,
-	Input_get_touches_m26E3034CAE32931E59A480327A3CF4BFC2045E8F,
-	Input_GetTouch_Injected_m19710838FFBDDC3E60536B0932D3B5A392BE539D,
-	Input_get_mousePosition_Injected_m4E5460D301ECE27CC322AB79C0914A4503ABC06E,
-	Input_get_mouseScrollDelta_Injected_m8B072340853637C9CF5A23CEA63ED51B14886EC9,
-	Input_get_compositionCursorPos_Injected_mE31464243AB1819574A268B942B5667B03F4822E,
-	Input_set_compositionCursorPos_Injected_m4B961AC7900B41DDBFBA03BE2F65F49C030CCB4D,
-	SendMouseEvents_SetMouseMoved_mEC659144183FB490A2E1F12112C8F08569A511CD,
-	SendMouseEvents_DoSendMouseEvents_m21561D473C27F19BA9CDBC53B4A13D40DDFBE785,
-	SendMouseEvents_SendEvents_m7A59BBFBB15C1BF3E47D56CDD4921599A686F9C7,
-	SendMouseEvents__cctor_m6B63654E024F338414361C995EAFEC615743A0E0,
-	HitInfo_SendMessage_m2D813691948EAB9CDA487A3B8668678EABFCFA62,
-	HitInfo_op_Implicit_m8332A3930623A2248D797F3A8020FFF4E05A9420,
-	HitInfo_Compare_m3AD170E7A52826C73DEF8C3C8F6507C9EAB28363,
+	Touch_get_fingerId_mC1DCE93BFA0574960A3AE5329AE6C5F7E06962BD,
+	Touch_get_position_m41B9EB0F3F3E1BE98CEB388253A9E31979CB964A,
+	Touch_set_position_mF024C46352D1CB82991022138D48BC84D9248E6B,
+	Touch_get_rawPosition_m15F230BC7B4B672380BF221E9BA1DC275180863D,
+	Touch_set_rawPosition_m734916CD0826F5CD242A0C6647AC55E53272590B,
+	Touch_get_deltaPosition_m2D51F960B74C94821ED0F6A09E44C80FD796D299,
+	Touch_set_deltaPosition_mD2323B6E679DA9CE9FE1E3F4D3E2D12A33328E7A,
+	Touch_get_deltaTime_mD07672B54CBA02C226097B54E286C1DFE96EC3BC,
+	Touch_get_tapCount_mE75D2783AC38FCF536C99F36AB9F76AFA3EB7EB6,
+	Touch_get_phase_mB82409FB2BE1C32ABDBA6A72E52A099D28AB70B0,
+	Touch_get_pressure_mB8214D0E920156CA4679BAC03E86106E8E4BDA5C,
+	Touch_get_maximumPossiblePressure_m2D147A58465EB39B397722D8597CF9E06AC85FAE,
+	Touch_get_type_mB505EF2DCF13160DFA0C6AAF406DCB4CBED20745,
+	Touch_get_altitudeAngle_m26DEF010E2CDC23F4FADE8E49A986D557C07D391,
+	Touch_get_azimuthAngle_m2F11532183492E608922A2F9D9EC9AC31D34F490,
+	Touch_get_radius_m5BC9C50DABBB17B07742BAFC6CC36A6736AE7960,
+	Touch_get_radiusVariance_m6F54BE964B91C3B2F8FA2A483E1FDB644B282B21,
+	CameraRaycastHelper_RaycastTry_m79A654495BD2C09623E9067BCC70D23A0DA3BF58,
+	CameraRaycastHelper_RaycastTry2D_m132832B9171CD030AD231A63BF70D1226ED1F373,
+	CameraRaycastHelper_RaycastTry_Injected_m4A9EA285FB7B24B7B3D894E7EE997B41ED302DEF,
+	CameraRaycastHelper_RaycastTry2D_Injected_m2620821FE8CB793C314AAE43E3B4C7BEAE5D4C9E,
+	Input_GetAxis_m10372E6C5FF591668D2DC5F58C58D213CC598A62,
+	Input_GetAxisRaw_m47C0CF8E090561A2F407A4E11D5F2A45044EB8E4,
+	Input_GetButton_m2F217DAE69DB3D1324FB848B3C9C84F19A80989E,
+	Input_GetButtonDown_mEF5F80C9E8F04104E807D9CBD6F70CDB98751579,
+	Input_GetMouseButton_m4995DD4A2D4F916565C1B1B5AAF7DF17C126B3EA,
+	Input_GetMouseButtonDown_m8DFC792D15FFF15D311614D5CC6C5D055E5A1DE3,
+	Input_GetMouseButtonUp_mBE89CC9C69BBEA9A863819E77EA54411B0476ED6,
+	Input_GetJoystickNames_m506FC5C5D06CE7A15EBB9ACEC9DCF546E2DDCC0B,
+	Input_GetTouch_m75D99FE801A94279874FA8DC6B6ADAD35F5123B1,
+	Input_GetLastPenContactEvent_mAB37B70407FDE3DE8230B55D3D4828DC50EAF0BF,
+	Input_ClearLastPenContactEvent_m3240C9BA6CE089E85624BD0FA031A48CDE2664A3,
+	Input_get_anyKey_m6FF00BB4F01FA996E2FB3F3727EBC414C8EB2CEB,
+	Input_get_mousePosition_mFF21FBD2647DAE2A23BD4C45571CA95D05A0A42C,
+	Input_get_mouseScrollDelta_mD112408E9182AA0F529179FF31E21D8DCD5CFA74,
+	Input_get_imeCompositionMode_mAD9C0224B3845A9132D4265AF468FF203AA43BAC,
+	Input_set_imeCompositionMode_m0399964447DDFE54E04F516A01696862F7174C9A,
+	Input_get_compositionString_mC9E603E4FB61090827F77A3D509BF3AA0A48C9A9,
+	Input_get_compositionCursorPos_mE1E48997CA0C30D206D08FAF06455123D8D24D15,
+	Input_set_compositionCursorPos_m16A856BFBF1DAE42B0089696906F530334861E98,
+	Input_get_mousePresent_mAD77FFD987CD5B998AFAD4DAECADBC76034026BF,
+	Input_get_touchCount_m057388BFC67A0F4CA53764B1022867ED81D01E39,
+	Input_get_touchSupported_m2A4FA398A793861AE1BC5971A1363552AB33BEEF,
+	Input_CheckDisabled_m359B281F7F5DDAB74780E1898311AECD9B0ECCE1,
+	Input_GetTouch_Injected_m04E25DD035583531339AB310FBDD4F5A30817F87,
+	Input_GetLastPenContactEvent_Injected_mA7F2DE408F86C38FC15357E468645CD82D38A84A,
+	Input_get_mousePosition_Injected_m7EF43ADB535051F9182A366CA84951F946984E1A,
+	Input_get_mouseScrollDelta_Injected_m31BF633C98E1BBA4583E7FCE0573BDECB1BA4A29,
+	Input_get_compositionCursorPos_Injected_m67C1CB8A21F4708CA76FAB39E3BC436DE33C214E,
+	Input_set_compositionCursorPos_Injected_m46E4934CD2A9F2E97B8A86D52169C848EF6D91E8,
+	SendMouseEvents_UpdateMouse_m7EC9A21B75612D3AA9ECEE2BB142A27481147FF1,
+	SendMouseEvents_SetMouseMoved_mDA82278267CC62E9942C9D6154610AD7F3308B51,
+	SendMouseEvents_DoSendMouseEvents_m17FCC3A684C7BC4A7A6AA7EBB62E3F56AAB416A7,
+	SendMouseEvents_SendEvents_m3DA609154485AAA0F9501BAA602F63A9E357D35C,
+	SendMouseEvents__cctor_m6B1E043BF3142442AC8312E9B28A54C487A5A755,
+	HitInfo_SendMessage_m7834418ACE250BBCBA38ADCF0892E475BD1AD541,
+	HitInfo_op_Implicit_m4162F5E6640E1D2CB82AB0AE00090AB46CE997AC,
+	HitInfo_Compare_m374F9DF7CFE9C31264CD38D42FFFCA4DB0E6CD05,
+	InputUnsafeUtility_GetKeyString__Unmanaged_mD736022C3E6C98ED4B4AEA824AC2DA98A3A1B223,
+	InputUnsafeUtility_GetKeyUpString__Unmanaged_mFD0D4ED74B64E565CB3F543CBBE38F6AE84AC27A,
+	InputUnsafeUtility_GetKeyDownString__Unmanaged_m53E2CCD225AC1CE7CB40002403EDC5AEF266EB8D,
+	InputUnsafeUtility_GetAxis_m034889C00C914572B94F091E8EC646E86408A29F,
+	InputUnsafeUtility_GetAxis__Unmanaged_m288AEE066E04CCFDD229629882CA42DBD1D85CF2,
+	InputUnsafeUtility_GetAxisRaw_m0EBF75200CDA664FCCD51BDB4C8C8798CDD6097B,
+	InputUnsafeUtility_GetAxisRaw__Unmanaged_m31953D955E75028D274A75661CAB2E13E13320AE,
+	InputUnsafeUtility_GetButton_mD23EF9339E147CD6081BC4A6B45F10EE5461CEE2,
+	InputUnsafeUtility_GetButton__Unmanaged_m270892EB7D8C88443200DF972F76076AC28952B2,
+	InputUnsafeUtility_GetButtonDown_mB35B46B92DA28196820B996E2420E5E320088EE4,
+	InputUnsafeUtility_GetButtonDown__Unmanaged_m411E8743768382A33B3778E734AF072F8DBDECC4,
+	InputUnsafeUtility_GetButtonUp__Unmanaged_mCCE34158CE05432541102B1C2AEC6545E25D0732,
 };
-extern void Touch_get_fingerId_mCED0E66949120E69BFE9294DC0A11A6F9FDBD129_AdjustorThunk (void);
-extern void Touch_get_position_mE32B04C6DA32A0965C403A31847ED7F1725EA1DE_AdjustorThunk (void);
-extern void Touch_get_deltaPosition_mF9D60C253E41DC4E4F832F88A1041BE8A9E7C0FB_AdjustorThunk (void);
-extern void Touch_get_tapCount_m3F2B62FA02EF54D5FA6C43ECB4A3A8854C5BA1F8_AdjustorThunk (void);
-extern void Touch_get_phase_m576EA3F4FE1D12EB85510326AD8EC3C2EB267257_AdjustorThunk (void);
-extern void Touch_get_type_m33FB24B6A53A307E8AC9881ED3B483DD4B44C050_AdjustorThunk (void);
-extern void HitInfo_SendMessage_m2D813691948EAB9CDA487A3B8668678EABFCFA62_AdjustorThunk (void);
-static Il2CppTokenAdjustorThunkPair s_adjustorThunks[7] = 
+extern void Touch_get_fingerId_mC1DCE93BFA0574960A3AE5329AE6C5F7E06962BD_AdjustorThunk (void);
+extern void Touch_get_position_m41B9EB0F3F3E1BE98CEB388253A9E31979CB964A_AdjustorThunk (void);
+extern void Touch_set_position_mF024C46352D1CB82991022138D48BC84D9248E6B_AdjustorThunk (void);
+extern void Touch_get_rawPosition_m15F230BC7B4B672380BF221E9BA1DC275180863D_AdjustorThunk (void);
+extern void Touch_set_rawPosition_m734916CD0826F5CD242A0C6647AC55E53272590B_AdjustorThunk (void);
+extern void Touch_get_deltaPosition_m2D51F960B74C94821ED0F6A09E44C80FD796D299_AdjustorThunk (void);
+extern void Touch_set_deltaPosition_mD2323B6E679DA9CE9FE1E3F4D3E2D12A33328E7A_AdjustorThunk (void);
+extern void Touch_get_deltaTime_mD07672B54CBA02C226097B54E286C1DFE96EC3BC_AdjustorThunk (void);
+extern void Touch_get_tapCount_mE75D2783AC38FCF536C99F36AB9F76AFA3EB7EB6_AdjustorThunk (void);
+extern void Touch_get_phase_mB82409FB2BE1C32ABDBA6A72E52A099D28AB70B0_AdjustorThunk (void);
+extern void Touch_get_pressure_mB8214D0E920156CA4679BAC03E86106E8E4BDA5C_AdjustorThunk (void);
+extern void Touch_get_maximumPossiblePressure_m2D147A58465EB39B397722D8597CF9E06AC85FAE_AdjustorThunk (void);
+extern void Touch_get_type_mB505EF2DCF13160DFA0C6AAF406DCB4CBED20745_AdjustorThunk (void);
+extern void Touch_get_altitudeAngle_m26DEF010E2CDC23F4FADE8E49A986D557C07D391_AdjustorThunk (void);
+extern void Touch_get_azimuthAngle_m2F11532183492E608922A2F9D9EC9AC31D34F490_AdjustorThunk (void);
+extern void Touch_get_radius_m5BC9C50DABBB17B07742BAFC6CC36A6736AE7960_AdjustorThunk (void);
+extern void Touch_get_radiusVariance_m6F54BE964B91C3B2F8FA2A483E1FDB644B282B21_AdjustorThunk (void);
+extern void HitInfo_SendMessage_m7834418ACE250BBCBA38ADCF0892E475BD1AD541_AdjustorThunk (void);
+static Il2CppTokenAdjustorThunkPair s_adjustorThunks[18] = 
 {
-	{ 0x06000001, Touch_get_fingerId_mCED0E66949120E69BFE9294DC0A11A6F9FDBD129_AdjustorThunk },
-	{ 0x06000002, Touch_get_position_mE32B04C6DA32A0965C403A31847ED7F1725EA1DE_AdjustorThunk },
-	{ 0x06000003, Touch_get_deltaPosition_mF9D60C253E41DC4E4F832F88A1041BE8A9E7C0FB_AdjustorThunk },
-	{ 0x06000004, Touch_get_tapCount_m3F2B62FA02EF54D5FA6C43ECB4A3A8854C5BA1F8_AdjustorThunk },
-	{ 0x06000005, Touch_get_phase_m576EA3F4FE1D12EB85510326AD8EC3C2EB267257_AdjustorThunk },
-	{ 0x06000006, Touch_get_type_m33FB24B6A53A307E8AC9881ED3B483DD4B44C050_AdjustorThunk },
-	{ 0x0600002F, HitInfo_SendMessage_m2D813691948EAB9CDA487A3B8668678EABFCFA62_AdjustorThunk },
+	{ 0x06000001, Touch_get_fingerId_mC1DCE93BFA0574960A3AE5329AE6C5F7E06962BD_AdjustorThunk },
+	{ 0x06000002, Touch_get_position_m41B9EB0F3F3E1BE98CEB388253A9E31979CB964A_AdjustorThunk },
+	{ 0x06000003, Touch_set_position_mF024C46352D1CB82991022138D48BC84D9248E6B_AdjustorThunk },
+	{ 0x06000004, Touch_get_rawPosition_m15F230BC7B4B672380BF221E9BA1DC275180863D_AdjustorThunk },
+	{ 0x06000005, Touch_set_rawPosition_m734916CD0826F5CD242A0C6647AC55E53272590B_AdjustorThunk },
+	{ 0x06000006, Touch_get_deltaPosition_m2D51F960B74C94821ED0F6A09E44C80FD796D299_AdjustorThunk },
+	{ 0x06000007, Touch_set_deltaPosition_mD2323B6E679DA9CE9FE1E3F4D3E2D12A33328E7A_AdjustorThunk },
+	{ 0x06000008, Touch_get_deltaTime_mD07672B54CBA02C226097B54E286C1DFE96EC3BC_AdjustorThunk },
+	{ 0x06000009, Touch_get_tapCount_mE75D2783AC38FCF536C99F36AB9F76AFA3EB7EB6_AdjustorThunk },
+	{ 0x0600000A, Touch_get_phase_mB82409FB2BE1C32ABDBA6A72E52A099D28AB70B0_AdjustorThunk },
+	{ 0x0600000B, Touch_get_pressure_mB8214D0E920156CA4679BAC03E86106E8E4BDA5C_AdjustorThunk },
+	{ 0x0600000C, Touch_get_maximumPossiblePressure_m2D147A58465EB39B397722D8597CF9E06AC85FAE_AdjustorThunk },
+	{ 0x0600000D, Touch_get_type_mB505EF2DCF13160DFA0C6AAF406DCB4CBED20745_AdjustorThunk },
+	{ 0x0600000E, Touch_get_altitudeAngle_m26DEF010E2CDC23F4FADE8E49A986D557C07D391_AdjustorThunk },
+	{ 0x0600000F, Touch_get_azimuthAngle_m2F11532183492E608922A2F9D9EC9AC31D34F490_AdjustorThunk },
+	{ 0x06000010, Touch_get_radius_m5BC9C50DABBB17B07742BAFC6CC36A6736AE7960_AdjustorThunk },
+	{ 0x06000011, Touch_get_radiusVariance_m6F54BE964B91C3B2F8FA2A483E1FDB644B282B21_AdjustorThunk },
+	{ 0x06000038, HitInfo_SendMessage_m7834418ACE250BBCBA38ADCF0892E475BD1AD541_AdjustorThunk },
 };
-static const int32_t s_InvokerIndices[49] = 
+static const int32_t s_InvokerIndices[70] = 
 {
-	4762,
-	4882,
-	4882,
-	4762,
-	4762,
-	4762,
-	5618,
-	5618,
-	5597,
-	5597,
-	6948,
-	6954,
-	6948,
-	6948,
-	6979,
-	6979,
-	6954,
-	6948,
-	6948,
-	6948,
-	7140,
-	6987,
-	6948,
-	6954,
-	6948,
-	6948,
-	7171,
-	7169,
-	7127,
+	8539,
+	8717,
 	7019,
-	7140,
-	7169,
-	7034,
-	7161,
-	7127,
-	7161,
-	7140,
-	6542,
-	7012,
-	7012,
-	7012,
-	7012,
-	7173,
+	8717,
 	7019,
-	6550,
-	7173,
-	3952,
-	6963,
-	6452,
+	8717,
+	7019,
+	8645,
+	8539,
+	8539,
+	8645,
+	8645,
+	8539,
+	8645,
+	8645,
+	8645,
+	8645,
+	10101,
+	10101,
+	10083,
+	10083,
+	12596,
+	12596,
+	12251,
+	12251,
+	12246,
+	12246,
+	12246,
+	12943,
+	12634,
+	12945,
+	12997,
+	12909,
+	12994,
+	12992,
+	12934,
+	12735,
+	12943,
+	12992,
+	12754,
+	12909,
+	12934,
+	12909,
+	12909,
+	11845,
+	12726,
+	12726,
+	12726,
+	12726,
+	12726,
+	12997,
+	12997,
+	12735,
+	11856,
+	12997,
+	6895,
+	12270,
+	11330,
+	11143,
+	11143,
+	11143,
+	12596,
+	11599,
+	12596,
+	11599,
+	12251,
+	11143,
+	12251,
+	11143,
+	11143,
 };
-extern const CustomAttributesCacheGenerator g_UnityEngine_InputLegacyModule_AttributeGenerators[];
 IL2CPP_EXTERN_C const Il2CppCodeGenModule g_UnityEngine_InputLegacyModule_CodeGenModule;
 const Il2CppCodeGenModule g_UnityEngine_InputLegacyModule_CodeGenModule = 
 {
 	"UnityEngine.InputLegacyModule.dll",
-	49,
+	70,
 	s_methodPointers,
-	7,
+	18,
 	s_adjustorThunks,
 	s_InvokerIndices,
 	0,
@@ -248,8 +283,7 @@ const Il2CppCodeGenModule g_UnityEngine_InputLegacyModule_CodeGenModule =
 	0,
 	NULL,
 	NULL,
-	g_UnityEngine_InputLegacyModule_AttributeGenerators,
-	NULL, // module initializer,
+	NULL,
 	NULL,
 	NULL,
 	NULL,

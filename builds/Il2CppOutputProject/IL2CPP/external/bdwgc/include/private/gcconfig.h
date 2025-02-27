@@ -104,19 +104,6 @@ EXTERN_C_BEGIN
 #   define LINUX
 # endif
 
-/* And one for QNX: */
-# if defined(__QNX__)
-#    define I386
-#    define OS_TYPE "QNX"
-#    define SA_RESTART 0
-#    define HEURISTIC1
-     extern char etext[];
-     extern int _end[];
-#    define DATASTART ((ptr_t)(etext))
-#    define DATAEND ((ptr_t)(_end))
-#    define mach_type_known
-# endif
-
 /* And one for NetBSD: */
 # if defined(__NetBSD__)
 #    define NETBSD
@@ -155,7 +142,7 @@ EXTERN_C_BEGIN
 # if defined(__aarch64__)
 #    define AARCH64
 #    if !defined(LINUX) && !defined(DARWIN) && !defined(FREEBSD) \
-        && !defined(NN_BUILD_TARGET_PLATFORM_NX)
+        && !defined(NN_BUILD_TARGET_PLATFORM_NX) && !defined(__QNX__)
 #      define NOSYS
 #      define mach_type_known
 #    endif
@@ -169,7 +156,7 @@ EXTERN_C_BEGIN
           && !defined(__CEGCC__) && !defined(NN_PLATFORM_CTR) \
           && !defined(NN_BUILD_TARGET_PLATFORM_NX) \
           && !defined(GC_NO_NOSYS) && !defined(SN_TARGET_PSP2) \
-          && !defined(SYMBIAN)
+          && !defined(SYMBIAN) && !defined(__QNX__)
 #      define NOSYS
 #      define mach_type_known
 #    endif
@@ -683,6 +670,22 @@ EXTERN_C_BEGIN
 #   define mach_type_known
 # endif
 
+# if defined(__QNX__)
+#   define QNX
+#   if defined(__aarch64__)
+#     define AARCH64
+#   elif defined(__arm__) || defined(__ARM__)
+#     define ARM32
+#   elif defined(__amd64) || defined(__X86_64__)
+#     define X86_64
+#   elif defined(__X86__)
+#     define I386
+#   else
+#     error Unknown QNX target architecture detected.
+#   endif
+#   define mach_type_known
+# endif
+
 /* Feel free to add more clauses here */
 
 /* Or manually define the machine type here.  A machine type is         */
@@ -895,6 +898,19 @@ EXTERN_C_BEGIN
     /* are no objects that would be found on the stack, and BDWGC is    */
     /* compiled with stack walking disabled.                            */
 #   define STACK_NOT_SCANNED
+# endif
+
+# ifdef QNX
+#   define OS_TYPE "QNX"
+#   define SA_RESTART 0
+    extern char etext[];
+    extern int _end[];
+#   define DATASTART ((ptr_t)(etext))
+#   define DATAEND ((ptr_t)(_end))
+    EXTERN_C_BEGIN
+    extern void *qnx_get_stack_bottom(void);
+    EXTERN_C_END
+#   define STACKBOTTOM ((ptr_t)qnx_get_stack_bottom())
 # endif
 
 # define STACK_GRAN 0x1000000
@@ -1530,6 +1546,8 @@ EXTERN_C_BEGIN
 #   endif
 #   ifdef CYGWIN32
 #       define OS_TYPE "CYGWIN32"
+#       define WOW64_THREAD_CONTEXT_WORKAROUND
+#       define RETRY_GET_THREAD_CONTEXT
 #       define DATASTART ((ptr_t)GC_DATASTART)  /* From gc.h */
 #       define DATAEND   ((ptr_t)GC_DATAEND)
 #       undef STACK_GRAN
@@ -1548,6 +1566,8 @@ EXTERN_C_BEGIN
 #   endif
 #   ifdef MSWIN32
 #       define OS_TYPE "MSWIN32"
+#       define WOW64_THREAD_CONTEXT_WORKAROUND
+#       define RETRY_GET_THREAD_CONTEXT
                 /* STACKBOTTOM and DATASTART are handled specially in   */
                 /* os_dep.c.                                            */
 #       define MPROTECT_VDB
@@ -1700,7 +1720,7 @@ EXTERN_C_BEGIN
       /* There seems to be some issues with trylock hanging on darwin.  */
       /* This should be looked into some more.                          */
 #     define NO_PTHREAD_TRYLOCK
-#     if TARGET_OS_IPHONE && !defined(NO_DYLD_BIND_FULLY_IMAGE)
+#     if (TARGET_OS_IPHONE || TARGET_OS_XR || TARGET_OS_VISION) && !defined(NO_DYLD_BIND_FULLY_IMAGE)
         /* iPhone/iPad simulator */
 #       define NO_DYLD_BIND_FULLY_IMAGE
 #     endif
@@ -2282,7 +2302,7 @@ EXTERN_C_BEGIN
       /* FIXME: There seems to be some issues with trylock hanging on   */
       /* darwin. This should be looked into some more.                  */
 #     define NO_PTHREAD_TRYLOCK
-#     if TARGET_OS_IPHONE && !defined(NO_DYLD_BIND_FULLY_IMAGE)
+#     if (TARGET_OS_IPHONE || TARGET_OS_XR || TARGET_OS_VISION) && !defined(NO_DYLD_BIND_FULLY_IMAGE)
 #       define NO_DYLD_BIND_FULLY_IMAGE
 #     endif
 #   endif
@@ -2412,7 +2432,7 @@ EXTERN_C_BEGIN
       /* FIXME: There seems to be some issues with trylock hanging on   */
       /* darwin. This should be looked into some more.                  */
 #     define NO_PTHREAD_TRYLOCK
-#     if TARGET_OS_IPHONE && !defined(NO_DYLD_BIND_FULLY_IMAGE)
+#     if (TARGET_OS_IPHONE || TARGET_OS_XR || TARGET_OS_VISION) && !defined(NO_DYLD_BIND_FULLY_IMAGE)
 #       define NO_DYLD_BIND_FULLY_IMAGE
 #     endif
 #   endif
@@ -2651,7 +2671,7 @@ EXTERN_C_BEGIN
       /* There seems to be some issues with trylock hanging on darwin.  */
       /* This should be looked into some more.                          */
 #     define NO_PTHREAD_TRYLOCK
-#     if TARGET_OS_IPHONE && !defined(NO_DYLD_BIND_FULLY_IMAGE)
+#     if (TARGET_OS_IPHONE || TARGET_OS_XR || TARGET_OS_VISION) && !defined(NO_DYLD_BIND_FULLY_IMAGE)
         /* iPhone/iPad simulator */
 #       define NO_DYLD_BIND_FULLY_IMAGE
 #     endif
@@ -2748,6 +2768,24 @@ EXTERN_C_BEGIN
 #         define HEAP_START DATAEND
 #       endif
 #   endif
+#   ifdef CYGWIN32
+#       define OS_TYPE "CYGWIN32"
+#       define RETRY_GET_THREAD_CONTEXT
+#       ifdef USE_WINALLOC
+#         define GWW_VDB
+#       else
+#         if defined(THREAD_LOCAL_ALLOC)
+            /* TODO: For an unknown reason, thread-local allocations    */
+            /* lead to spurious process exit after the fault handler is */
+            /* once invoked.                                            */
+#         else
+#           define MPROTECT_VDB
+#         endif
+#         ifdef USE_MMAP
+#           define USE_MMAP_ANON
+#         endif
+#       endif
+#   endif
 #   ifdef MSWIN_XBOX1
 #     define NO_GETENV
 #     define DATASTART (ptr_t)ALIGNMENT
@@ -2769,6 +2807,7 @@ EXTERN_C_BEGIN
 #   endif
 #   ifdef MSWIN32
 #       define OS_TYPE "MSWIN32"
+#       define RETRY_GET_THREAD_CONTEXT
                 /* STACKBOTTOM and DATASTART are handled specially in   */
                 /* os_dep.c.                                            */
 #       if !defined(__GNUC__) || defined(__INTEL_COMPILER) \
@@ -2861,6 +2900,10 @@ EXTERN_C_BEGIN
 #if defined(__GLIBC__) && !defined(DONT_USE_LIBC_PRIVATES)
   /* Use glibc's stack-end marker. */
 # define USE_LIBC_PRIVATES
+#endif
+
+#ifdef NO_RETRY_GET_THREAD_CONTEXT
+# undef RETRY_GET_THREAD_CONTEXT
 #endif
 
 #if defined(LINUX_STACKBOTTOM) && defined(NO_PROC_STAT) \
@@ -3022,7 +3065,7 @@ EXTERN_C_BEGIN
 #if defined(SVR4) || defined(LINUX) || defined(IRIX5) || defined(HPUX) \
     || defined(OPENBSD) || defined(NETBSD) || defined(FREEBSD) \
     || defined(DGUX) || defined(BSD) || defined(HAIKU) || defined(HURD) \
-    || defined(AIX) || defined(DARWIN) || defined(OSF1)
+    || defined(AIX) || defined(DARWIN) || defined(OSF1) || defined(QNX)
 # define UNIX_LIKE      /* Basic Unix-like system calls work.   */
 #endif
 
@@ -3146,7 +3189,7 @@ EXTERN_C_BEGIN
 
 #if ((defined(UNIX_LIKE) && (defined(DARWIN) || defined(HAIKU) \
                              || defined(HURD) || defined(OPENBSD) \
-                             || defined(ARM32) \
+                             || defined(ARM32) || defined(QNX) \
                              || defined(AVR32) || defined(MIPS) \
                              || defined(NIOS2) || defined(OR1K))) \
      || (defined(LINUX) && !defined(__gnu_linux__)) \

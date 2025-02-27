@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Time.h"
+#include "Lock.h"
 #include <cstdint>
 
 #if PLATFORM_FUTEX_NATIVE_SUPPORT
@@ -13,8 +14,6 @@ namespace baselib
 {
     BASELIB_CPP_INTERFACE
     {
-        class Lock;
-
         // Conceptually a condition variable is a queue of threads, associated with a monitor, on which a thread may wait for some condition to become true.
         //
         // Thus each condition variable c is associated with an assertion Pc. While a thread is waiting on a condition variable, that thread is not considered
@@ -68,15 +67,17 @@ namespace baselib
             // \returns true if the condition variable is available, false if timeout was reached.
             inline bool TimedWait(const timeout_ms timeoutInMilliseconds);
 
-            // Wake up threads waiting for the condition variable.
+            // Post `count` number of tokens and wake up thread(s) waiting for the condition variable to become available.
             //
+            // This function does *not* guarantee fairness so it is possible not all threads waiting are woken up if multiple tokens are consumed by one thread.
             // This function is guaranteed to emit a release barrier.
             //
             // \param count At most, `count` waiting threads will be notified, but never more than there are currently waiting.
             inline void Notify(uint16_t count);
 
-            // Wake up all threads waiting for the condition variable.
+            // Post maximum number of tokens and wake up thread(s) waiting for the condition variable to become available.
             //
+            // This function does *not* guarantee fairness so it is possible not all threads waiting are woken up if multiple tokens are consumed by one thread.
             // This function is guaranteed to emit a release barrier.
             inline void NotifyAll()
             {

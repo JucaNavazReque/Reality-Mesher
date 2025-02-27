@@ -26,7 +26,8 @@ public class CreatePosMarkers : MonoBehaviour
 // Función ejecutada al habilitar el script
     void OnEnable() {
         posWriter = new StreamWriter(Application.persistentDataPath + "/traj.txt", true);
-        posWriter.WriteLine("timestamp,x,y,z,e_x,e_y,e_z");
+        //posWriter.WriteLine("timestamp,x,y,z,qw,qx,qy,qz");
+        posWriter.WriteLine("timestamp,matrix");
     }
 
 // Función ejecutada al deshabilitar el script
@@ -43,14 +44,30 @@ public class CreatePosMarkers : MonoBehaviour
             createSphere();
             DrawLine();
             GOParent.tag = "PosMarker";
-            Vector3 eulerAngles = Camera.main.transform.rotation.eulerAngles;
-            posWriter.WriteLine(DateTime.Now.ToString("dd-MM-yyyy_HH:mm:ss", culture) + "," 
-                + (-Camera.main.transform.position.z).ToString(culture) + "," 
-                + Camera.main.transform.position.x.ToString(culture) + "," 
-                + Camera.main.transform.position.y.ToString(culture) + "," 
-                + eulerAngles.z.ToString(culture) + "," 
-                + eulerAngles.x.ToString(culture) + "," 
-                + eulerAngles.y.ToString(culture));
+            Matrix4x4 localPos = Camera.main.transform.localToWorldMatrix;
+            Vector4 temp;
+            temp = localPos.GetRow(2);
+            localPos.SetRow(2, localPos.GetRow(1));
+            localPos.SetRow(1, localPos.GetRow(0));
+            localPos.SetRow(0, -temp);
+            temp = localPos.GetColumn(2);
+            localPos.SetColumn(2, localPos.GetColumn(1));
+            localPos.SetColumn(1, localPos.GetColumn(0));
+            localPos.SetColumn(0, -temp);
+            String matrixString = localPos.ToString().Replace("\n", ",").Replace("\t", ",");
+            matrixString = matrixString[..^1];
+            posWriter.WriteLine(DateTime.Now.ToString("dd-MM-yyyy_HH:mm:ss", culture) + "," + matrixString);
+            // Quaternion exportRotation = localPos.rotation;
+            // Vector3 exportPosition = localPos.GetColumn(3);
+            // // Quaternion posRotation = Camera.main.transform.rotation;
+            // posWriter.WriteLine(DateTime.Now.ToString("dd-MM-yyyy_HH:mm:ss", culture) + "," 
+            //     + exportPosition.x.ToString(culture) + "," 
+            //     + exportPosition.y.ToString(culture) + "," 
+            //     + exportPosition.z.ToString(culture) + "," 
+            //     + exportRotation.w.ToString(culture) + "," 
+            //     + exportRotation.x.ToString(culture) + "," 
+            //     + exportRotation.y.ToString(culture) + "," 
+            //     + exportRotation.z.ToString(culture));
         }
     }
 
@@ -58,8 +75,6 @@ public class CreatePosMarkers : MonoBehaviour
     void createSphere()
     {
         GameObject _Sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        //_Sphere.AddComponent<MeshFilter>();
-        //MeshRenderer nRenderer = _Sphere.AddComponent<MeshRenderer>();
         _Sphere.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
         _Sphere.transform.position = Camera.main.transform.position;
         _Sphere.GetComponent<Renderer>().material = PosMarkerMat;
@@ -69,6 +84,7 @@ public class CreatePosMarkers : MonoBehaviour
 
     void DrawLine()
     {
+        Transform main_camera = Camera.main.transform;
         GameObject myLine = new GameObject("Line");
         LineRenderer lr = myLine.AddComponent<LineRenderer>();
         lr.startWidth = LineWidth;
@@ -76,8 +92,8 @@ public class CreatePosMarkers : MonoBehaviour
         lr.material = new Material(Shader.Find("Unlit/Color"));
         lr.material.color = LineColor;
         var points = new Vector3[2];
-        points[0] = Camera.main.transform.position;
-        points[1] = Camera.main.transform.position + Camera.main.transform.TransformDirection(Vector3.forward)*0.2f;
+        points[0] = main_camera.position;
+        points[1] = main_camera.position + main_camera.TransformDirection(Vector3.forward)*0.2f;
         lr.SetPositions(points);
         lr.transform.SetParent(GOParent.transform);
         lr.GetComponent<LineRenderer>().enabled = ShowMarkers && ShowOrientation;

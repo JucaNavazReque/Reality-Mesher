@@ -16,6 +16,7 @@ typedef struct Il2CppSequencePointExecutionContext
     void** params;
     void** locals;
     Il2CppSequencePoint* currentSequencePoint;
+    struct Il2CppThreadUnwindState* unwindState;
     int32_t tryId;
 
 #ifdef __cplusplus
@@ -31,6 +32,36 @@ typedef struct Il2CppThreadUnwindState
     uint32_t frameCount;
     uint32_t frameCapacity;
 } Il2CppThreadUnwindState;
+
+typedef int32_t (*Il2CppMonoInternalStackWalk) (void /*MonoStackFrameInfo*/ *frame, void /*MonoContext*/ *ctx, void* data);
+
+struct Il2CppMonoInterpCallbacks
+{
+    void* (*create_method_pointer) (MethodInfo *method, void /*MonoError*/ *error);
+    Il2CppObject* (*runtime_invoke) (MethodInfo *method, void *obj, void **params, Il2CppObject **exc, void /*MonoError*/  *error);
+    void (*init_delegate) (Il2CppDelegate *del);
+#ifndef DISABLE_REMOTING
+    void* (*get_remoting_invoke) (void* imethod, void /*MonoError*/  *error);
+#endif
+    void* (*create_trampoline) (Il2CppDomain *domain, MethodInfo *method, void /*MonoError*/  *error);
+    void (*walk_stack_with_ctx) (Il2CppMonoInternalStackWalk func, void /*MonoContext*/  *ctx, int32_t /*MonoUnwindOptions*/ options, void *user_data);
+    void (*set_resume_state) (void /*MonoJitTlsData*/ *jit_tls, Il2CppException *ex, void /*MonoJitExceptionInfo*/ *ei, Il2CppSequencePointExecutionContext* interp_frame, void* handler_ip);
+    int32_t (*run_finally) (void /*MonoStackFrameInfo*/  *frame, int clause_index, void* handler_ip);
+    int32_t (*run_filter) (void /*MonoStackFrameInfo*/  *frame, Il2CppException *ex, int clause_index, void* handler_ip);
+    void (*frame_iter_init) (void /*MonoInterpStackIter*/ *iter, void* interp_exit_data);
+    int32_t (*frame_iter_next) (void /*MonoInterpStackIter*/ *iter, void /*MonoStackFrameInfo*/  *frame);
+    void* /*MonoJitInfo*/ (*find_jit_info) (Il2CppDomain *domain, MethodInfo *method);
+    void (*set_breakpoint) (void /*MonoJitInfo*/ *jinfo, void* ip);
+    void (*clear_breakpoint) (void /*MonoJitInfo*/ *jinfo, void* ip);
+    void* /*MonoJitInfo*/ (*frame_get_jit_info) (Il2CppSequencePointExecutionContext* frame);
+    void* (*frame_get_ip) (Il2CppSequencePointExecutionContext* frame);
+    void* (*frame_get_arg) (Il2CppSequencePointExecutionContext* frame, int pos);
+    void* (*frame_get_local) (Il2CppSequencePointExecutionContext* frame, int pos);
+    void* (*frame_get_this) (Il2CppSequencePointExecutionContext* frame);
+    Il2CppSequencePointExecutionContext* (*frame_get_parent) (Il2CppSequencePointExecutionContext* frame);
+    void (*start_single_stepping) ();
+    void (*stop_single_stepping) ();
+};
 
 #ifdef __cplusplus
 extern "C"
@@ -65,7 +96,7 @@ namespace utils
         static void Start();
         static void StartDebuggerThread();
 
-        static inline void PushExecutionContext(Il2CppSequencePointExecutionContext* executionContext)
+        static inline Il2CppThreadUnwindState* PushExecutionContext(Il2CppSequencePointExecutionContext* executionContext)
         {
             Il2CppThreadUnwindState* unwindState;
             s_ExecutionContexts.GetValue(reinterpret_cast<void**>(&unwindState));
@@ -75,13 +106,12 @@ namespace utils
 
             unwindState->executionContexts[unwindState->frameCount] = executionContext;
             unwindState->frameCount++;
+
+            return unwindState;
         }
 
-        static inline void PopExecutionContext()
+        static inline void PopExecutionContext(Il2CppThreadUnwindState* unwindState)
         {
-            Il2CppThreadUnwindState* unwindState;
-            s_ExecutionContexts.GetValue(reinterpret_cast<void**>(&unwindState));
-
             IL2CPP_ASSERT(unwindState->frameCount > 0);
             unwindState->frameCount--;
         }
@@ -167,6 +197,17 @@ namespace utils
         // The context parameter here is really il2cpp::vm::StackFrames*. We don't want to include vm/StackTrace.h in this file,
         // as this one is included in generated code.
         static void GetStackFrames(void* context);
+
+        static void AcquireLoaderLock();
+        static void ReleaseLoaderLock();
+        static bool LoaderLockIsOwnedByThisThread();
+
+        static Il2CppMonoInterpCallbacks* GetInterpCallbacks();
+
+        static void RuntimeShutdownEnd();
+        static void ThreadStarted(uintptr_t tid);
+        static void ThreadStopped(uintptr_t tid);
+
     private:
         static os::ThreadLocalValue s_IsGlobalBreakpointActive;
         static void InitializeMethodToSequencePointMap();
@@ -185,12 +226,12 @@ inline Il2CppSequencePointExecutionContext::Il2CppSequencePointExecutionContext(
     currentSequencePoint(NULL),
     tryId(-1)
 {
-    il2cpp::utils::Debugger::PushExecutionContext(this);
+    unwindState = il2cpp::utils::Debugger::PushExecutionContext(this);
 }
 
 inline Il2CppSequencePointExecutionContext::~Il2CppSequencePointExecutionContext()
 {
-    il2cpp::utils::Debugger::PopExecutionContext();
+    il2cpp::utils::Debugger::PopExecutionContext(unwindState);
     // il2cpp_save_current_thread_context_func_exit();
 }
 

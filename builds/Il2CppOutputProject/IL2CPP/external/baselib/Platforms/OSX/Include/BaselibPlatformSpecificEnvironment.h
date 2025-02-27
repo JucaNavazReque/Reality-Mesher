@@ -1,5 +1,17 @@
 #pragma once
 
+/*
+namespace detail
+{
+    struct Semaphore
+    {
+        dispatch_semaphore_t handle;
+        baselib::atomic<int32_t> counter;
+    };
+}
+*/
+enum { Baselib_SystemSemaphore_PlatformSize = 16 }; // Size should match size of struct above
+
 #define MAX_PATH PATH_MAX
 
 #ifndef EXPORTED_SYMBOL

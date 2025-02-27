@@ -11,14 +11,25 @@
 typedef struct Baselib_HighCapacitySemaphore
 {
     int64_t count;
-    const Baselib_SystemSemaphore_Handle handle;
+    Baselib_SystemSemaphore_Handle handle;
     char _cachelineSpacer0[PLATFORM_CACHE_LINE_SIZE - sizeof(int64_t) - sizeof(Baselib_SystemSemaphore_Handle)];
+    char _systemSemaphoreData[Baselib_SystemSemaphore_PlatformSize];
 } Baselib_HighCapacitySemaphore;
+
+BASELIB_STATIC_ASSERT((offsetof(Baselib_HighCapacitySemaphore, count) + PLATFORM_CACHE_LINE_SIZE) ==
+    offsetof(Baselib_HighCapacitySemaphore, _systemSemaphoreData), "count and internalData must not share cacheline");
 
 BASELIB_INLINE_API Baselib_HighCapacitySemaphore Baselib_HighCapacitySemaphore_Create(void)
 {
-    Baselib_HighCapacitySemaphore semaphore = {0, Baselib_SystemSemaphore_Create(), {0}};
+    Baselib_HighCapacitySemaphore semaphore = {0, {0}, {0}, {0}};
+    semaphore.handle = Baselib_SystemSemaphore_Create();
     return semaphore;
+}
+
+BASELIB_INLINE_API void Baselib_HighCapacitySemaphore_CreateInplace(Baselib_HighCapacitySemaphore* semaphoreData)
+{
+    semaphoreData->count = 0;
+    semaphoreData->handle = Baselib_SystemSemaphore_CreateInplace(&semaphoreData->_systemSemaphoreData);
 }
 
 BASELIB_INLINE_API bool Baselib_HighCapacitySemaphore_TryAcquire(Baselib_HighCapacitySemaphore* semaphore)
@@ -118,4 +129,13 @@ BASELIB_INLINE_API void Baselib_HighCapacitySemaphore_Free(Baselib_HighCapacityS
     const int64_t count = Baselib_atomic_load_64_seq_cst(&semaphore->count);
     BaselibAssert(count >= 0, "Destruction is not allowed when there are still threads waiting on the semaphore.");
     Baselib_SystemSemaphore_Free(semaphore->handle);
+}
+
+BASELIB_INLINE_API void Baselib_HighCapacitySemaphore_FreeInplace(Baselib_HighCapacitySemaphore* semaphore)
+{
+    if (!semaphore)
+        return;
+    const int64_t count = Baselib_atomic_load_64_seq_cst(&semaphore->count);
+    BaselibAssert(count >= 0, "Destruction is not allowed when there are still threads waiting on the semaphore.");
+    Baselib_SystemSemaphore_FreeInplace(semaphore->handle);
 }

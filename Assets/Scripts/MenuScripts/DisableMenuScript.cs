@@ -3,19 +3,20 @@ using UnityEngine;
 public class DisableMenuScript : MonoBehaviour
 {
     Material rendMat;
+    public Renderer Backplate;
     void Start() {
-        rendMat = transform.parent.Find("Backplate").GetComponent<Renderer>().material;
+        rendMat = Backplate.material;
     }
     public void DisableMenu() {
-        rendMat.color = new Color(0.3f, 0.3f, 0.3f);
-        rendMat.SetFloat("_BorderMinValue", 0.75f);
+        rendMat.SetColor("_Base_Color_", new Color(0.2f, 0.2f, 0.2f));
+        rendMat.SetColor("_Line_Color_", new Color(0.4f,0.44f,0.53f));
         foreach (Transform child in transform) {
             child.GetComponent<BoxCollider>().enabled = false;
         }
     }
     public void EnableMenu() {
-        rendMat.color = new Color(0f, 0f, 0f);
-        rendMat.SetFloat("_BorderMinValue", 0.6f);
+        rendMat.SetColor("_Base_Color_", new Color(0f, 0f, 0f));
+        rendMat.SetColor("_Line_Color_", new Color(0.2f,0.262745f,0.4f));
         foreach (Transform child in transform) {
             child.GetComponent<BoxCollider>().enabled = true;
         }

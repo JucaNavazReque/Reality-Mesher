@@ -19,17 +19,21 @@
     </AllowedReferenceRelatedFileExtensions>
   </PropertyGroup>
   <ItemGroup>
-    <Resource Include="$(MSBuildThisFileDirectory)Resource.res">
-    </Resource>
-    <None Include="$(MSBuildThisFileDirectory)StoreManifest.xml">
+    <None Include="$(MSBuildThisFileDirectory)Data\nativePlugins.txt">
       <DeploymentContent>true</DeploymentContent>
       <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
     </None>
-    <ClCompile Include="$(MSBuildThisFileDirectory)UnityGenerated.cpp">
-    </ClCompile>
+    <Resource Include="$(MSBuildThisFileDirectory)Resource.res">
+    </Resource>
     <ClInclude Include="$(MSBuildThisFileDirectory)UnityGenerated.h">
     </ClInclude>
-    <None Include="$(MSBuildThisFileDirectory)Data\boot.config">
+    <ClCompile Include="$(MSBuildThisFileDirectory)UnityGenerated.cpp">
+    </ClCompile>
+    <None Include="$(MSBuildThisFileDirectory)Data\il2cpp_data\Metadata\global-metadata.dat">
+      <DeploymentContent>true</DeploymentContent>
+      <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Data\il2cpp_data\Resources\mscorlib.dll-resources.dat">
       <DeploymentContent>true</DeploymentContent>
       <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
     </None>
@@ -53,15 +57,15 @@
       <DeploymentContent>true</DeploymentContent>
       <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
     </None>
-    <None Include="$(MSBuildThisFileDirectory)Data\nativePlugins.txt">
-      <DeploymentContent>true</DeploymentContent>
-      <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
-    </None>
     <None Include="$(MSBuildThisFileDirectory)Data\resources.assets">
       <DeploymentContent>true</DeploymentContent>
       <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
     </None>
     <None Include="$(MSBuildThisFileDirectory)Data\resources.assets.resS">
+      <DeploymentContent>true</DeploymentContent>
+      <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Data\Resources\unity_builtin_extra">
       <DeploymentContent>true</DeploymentContent>
       <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
     </None>
@@ -85,95 +89,7 @@
       <DeploymentContent>true</DeploymentContent>
       <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
     </None>
-    <None Include="$(MSBuildThisFileDirectory)Data\il2cpp_data\etc\mono\browscap.ini">
-      <DeploymentContent>true</DeploymentContent>
-      <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)Data\il2cpp_data\etc\mono\config">
-      <DeploymentContent>true</DeploymentContent>
-      <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)Data\il2cpp_data\etc\mono\2.0\DefaultWsdlHelpGenerator.aspx">
-      <DeploymentContent>true</DeploymentContent>
-      <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)Data\il2cpp_data\etc\mono\2.0\machine.config">
-      <DeploymentContent>true</DeploymentContent>
-      <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)Data\il2cpp_data\etc\mono\2.0\settings.map">
-      <DeploymentContent>true</DeploymentContent>
-      <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)Data\il2cpp_data\etc\mono\2.0\web.config">
-      <DeploymentContent>true</DeploymentContent>
-      <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)Data\il2cpp_data\etc\mono\2.0\Browsers\Compat.browser">
-      <DeploymentContent>true</DeploymentContent>
-      <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)Data\il2cpp_data\etc\mono\4.0\DefaultWsdlHelpGenerator.aspx">
-      <DeploymentContent>true</DeploymentContent>
-      <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)Data\il2cpp_data\etc\mono\4.0\machine.config">
-      <DeploymentContent>true</DeploymentContent>
-      <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)Data\il2cpp_data\etc\mono\4.0\settings.map">
-      <DeploymentContent>true</DeploymentContent>
-      <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)Data\il2cpp_data\etc\mono\4.0\web.config">
-      <DeploymentContent>true</DeploymentContent>
-      <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)Data\il2cpp_data\etc\mono\4.0\Browsers\Compat.browser">
-      <DeploymentContent>true</DeploymentContent>
-      <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)Data\il2cpp_data\etc\mono\4.5\DefaultWsdlHelpGenerator.aspx">
-      <DeploymentContent>true</DeploymentContent>
-      <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)Data\il2cpp_data\etc\mono\4.5\machine.config">
-      <DeploymentContent>true</DeploymentContent>
-      <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)Data\il2cpp_data\etc\mono\4.5\settings.map">
-      <DeploymentContent>true</DeploymentContent>
-      <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)Data\il2cpp_data\etc\mono\4.5\web.config">
-      <DeploymentContent>true</DeploymentContent>
-      <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)Data\il2cpp_data\etc\mono\4.5\Browsers\Compat.browser">
-      <DeploymentContent>true</DeploymentContent>
-      <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)Data\il2cpp_data\etc\mono\mconfig\config.xml">
-      <DeploymentContent>true</DeploymentContent>
-      <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)Data\il2cpp_data\Metadata\global-metadata.dat">
-      <DeploymentContent>true</DeploymentContent>
-      <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)Data\il2cpp_data\Resources\I18N.CJK.dll-resources.dat">
-      <DeploymentContent>true</DeploymentContent>
-      <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)Data\il2cpp_data\Resources\mscorlib.dll-resources.dat">
-      <DeploymentContent>true</DeploymentContent>
-      <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)Data\Resources\unity default resources">
-      <DeploymentContent>true</DeploymentContent>
-      <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)Data\Resources\unity_builtin_extra">
+    <None Include="$(MSBuildThisFileDirectory)Data\boot.config">
       <DeploymentContent>true</DeploymentContent>
       <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
     </None>
@@ -185,19 +101,23 @@
       <DeploymentContent>true</DeploymentContent>
       <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
     </None>
-    <None Include="$(MSBuildThisFileDirectory)UnityOpenXR.dll" Condition="Exists('$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\UnityOpenXR.dll')">
+    <None Include="$(MSBuildThisFileDirectory)Data\Resources\unity default resources">
       <DeploymentContent>true</DeploymentContent>
       <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
     </None>
-    <None Include="$(MSBuildThisFileDirectory)UnityOpenXR.pdb" Condition="Exists('$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\UnityOpenXR.pdb')">
+    <None Include="$(MSBuildThisFileDirectory)openxr_loader.dll" Condition="Exists('$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\openxr_loader.dll')">
       <DeploymentContent>true</DeploymentContent>
       <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
     </None>
-    <None Include="$(MSBuildThisFileDirectory)Microsoft.MixedReality.Input.dll" Condition="Exists('$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\Microsoft.MixedReality.Input.dll')">
+    <None Include="$(MSBuildThisFileDirectory)openxr_loader.pdb" Condition="Exists('$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\openxr_loader.pdb')">
       <DeploymentContent>true</DeploymentContent>
       <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
     </None>
-    <None Include="$(MSBuildThisFileDirectory)Microsoft.MixedReality.Input.pdb" Condition="Exists('$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\Microsoft.MixedReality.Input.pdb')">
+    <None Include="$(MSBuildThisFileDirectory)UnityOpenXRHands.dll" Condition="Exists('$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\UnityOpenXRHands.dll')">
+      <DeploymentContent>true</DeploymentContent>
+      <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)UnityOpenXRHands.pdb" Condition="Exists('$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\UnityOpenXRHands.pdb')">
       <DeploymentContent>true</DeploymentContent>
       <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
     </None>
@@ -209,11 +129,11 @@
       <DeploymentContent>true</DeploymentContent>
       <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
     </None>
-    <None Include="$(MSBuildThisFileDirectory)openxr_loader.dll" Condition="Exists('$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\openxr_loader.dll')">
+    <None Include="$(MSBuildThisFileDirectory)UnityOpenXR.dll" Condition="Exists('$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\UnityOpenXR.dll')">
       <DeploymentContent>true</DeploymentContent>
       <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
     </None>
-    <None Include="$(MSBuildThisFileDirectory)openxr_loader.pdb" Condition="Exists('$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\openxr_loader.pdb')">
+    <None Include="$(MSBuildThisFileDirectory)UnityOpenXR.pdb" Condition="Exists('$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\UnityOpenXR.pdb')">
       <DeploymentContent>true</DeploymentContent>
       <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
     </None>
@@ -249,17 +169,17 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <Target Name="BeforeResolveReferences" Condition="'$(BuildingProject)' == 'true'">
-        <Copy SourceFiles="$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\UnityOpenXR.dll" DestinationFiles="$(MSBuildThisFileDirectory)UnityOpenXR.dll" Condition="Exists('$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\UnityOpenXR.dll')" />
-        <Delete Files="$(MSBuildThisFileDirectory)UnityOpenXR.pdb" Condition="Exists('$(MSBuildThisFileDirectory)UnityOpenXR.pdb')" />
-        <Copy SourceFiles="$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\UnityOpenXR.pdb" DestinationFiles="$(MSBuildThisFileDirectory)UnityOpenXR.pdb" Condition="Exists('$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\UnityOpenXR.pdb')" />
-        <Copy SourceFiles="$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\Microsoft.MixedReality.Input.dll" DestinationFiles="$(MSBuildThisFileDirectory)Microsoft.MixedReality.Input.dll" Condition="Exists('$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\Microsoft.MixedReality.Input.dll')" />
-        <Delete Files="$(MSBuildThisFileDirectory)Microsoft.MixedReality.Input.pdb" Condition="Exists('$(MSBuildThisFileDirectory)Microsoft.MixedReality.Input.pdb')" />
-        <Copy SourceFiles="$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\Microsoft.MixedReality.Input.pdb" DestinationFiles="$(MSBuildThisFileDirectory)Microsoft.MixedReality.Input.pdb" Condition="Exists('$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\Microsoft.MixedReality.Input.pdb')" />
-        <Copy SourceFiles="$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\MicrosoftOpenXRPlugin.dll" DestinationFiles="$(MSBuildThisFileDirectory)MicrosoftOpenXRPlugin.dll" Condition="Exists('$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\MicrosoftOpenXRPlugin.dll')" />
-        <Delete Files="$(MSBuildThisFileDirectory)MicrosoftOpenXRPlugin.pdb" Condition="Exists('$(MSBuildThisFileDirectory)MicrosoftOpenXRPlugin.pdb')" />
-        <Copy SourceFiles="$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\MicrosoftOpenXRPlugin.pdb" DestinationFiles="$(MSBuildThisFileDirectory)MicrosoftOpenXRPlugin.pdb" Condition="Exists('$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\MicrosoftOpenXRPlugin.pdb')" />
-        <Copy SourceFiles="$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\openxr_loader.dll" DestinationFiles="$(MSBuildThisFileDirectory)openxr_loader.dll" Condition="Exists('$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\openxr_loader.dll')" />
-        <Delete Files="$(MSBuildThisFileDirectory)openxr_loader.pdb" Condition="Exists('$(MSBuildThisFileDirectory)openxr_loader.pdb')" />
-        <Copy SourceFiles="$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\openxr_loader.pdb" DestinationFiles="$(MSBuildThisFileDirectory)openxr_loader.pdb" Condition="Exists('$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\openxr_loader.pdb')" />
+    <Copy SourceFiles="$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\openxr_loader.dll" DestinationFiles="$(MSBuildThisFileDirectory)openxr_loader.dll" Condition="Exists('$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\openxr_loader.dll')" />
+    <Delete Files="$(MSBuildThisFileDirectory)openxr_loader.pdb" Condition="Exists('$(MSBuildThisFileDirectory)openxr_loader.pdb')" />
+    <Copy SourceFiles="$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\openxr_loader.pdb" DestinationFiles="$(MSBuildThisFileDirectory)openxr_loader.pdb" Condition="Exists('$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\openxr_loader.pdb')" />
+    <Copy SourceFiles="$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\UnityOpenXRHands.dll" DestinationFiles="$(MSBuildThisFileDirectory)UnityOpenXRHands.dll" Condition="Exists('$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\UnityOpenXRHands.dll')" />
+    <Delete Files="$(MSBuildThisFileDirectory)UnityOpenXRHands.pdb" Condition="Exists('$(MSBuildThisFileDirectory)UnityOpenXRHands.pdb')" />
+    <Copy SourceFiles="$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\UnityOpenXRHands.pdb" DestinationFiles="$(MSBuildThisFileDirectory)UnityOpenXRHands.pdb" Condition="Exists('$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\UnityOpenXRHands.pdb')" />
+    <Copy SourceFiles="$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\MicrosoftOpenXRPlugin.dll" DestinationFiles="$(MSBuildThisFileDirectory)MicrosoftOpenXRPlugin.dll" Condition="Exists('$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\MicrosoftOpenXRPlugin.dll')" />
+    <Delete Files="$(MSBuildThisFileDirectory)MicrosoftOpenXRPlugin.pdb" Condition="Exists('$(MSBuildThisFileDirectory)MicrosoftOpenXRPlugin.pdb')" />
+    <Copy SourceFiles="$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\MicrosoftOpenXRPlugin.pdb" DestinationFiles="$(MSBuildThisFileDirectory)MicrosoftOpenXRPlugin.pdb" Condition="Exists('$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\MicrosoftOpenXRPlugin.pdb')" />
+    <Copy SourceFiles="$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\UnityOpenXR.dll" DestinationFiles="$(MSBuildThisFileDirectory)UnityOpenXR.dll" Condition="Exists('$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\UnityOpenXR.dll')" />
+    <Delete Files="$(MSBuildThisFileDirectory)UnityOpenXR.pdb" Condition="Exists('$(MSBuildThisFileDirectory)UnityOpenXR.pdb')" />
+    <Copy SourceFiles="$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\UnityOpenXR.pdb" DestinationFiles="$(MSBuildThisFileDirectory)UnityOpenXR.pdb" Condition="Exists('$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\UnityOpenXR.pdb')" />
   </Target>
 </Project>

@@ -4,6 +4,7 @@ struct Il2CppGuid;
 struct Il2CppIUnknown;
 struct Il2CppObject;
 struct Il2CppThread;
+struct Il2CppInternalThread;
 
 namespace il2cpp
 {
@@ -36,6 +37,7 @@ namespace gc
 #if !RUNTIME_TINY
         static void InitializeFinalizer();
         static bool IsFinalizerThread(Il2CppThread* thread);
+        static bool IsFinalizerInternalThread(Il2CppInternalThread* thread);
         static void UninitializeFinalizers();
         static void NotifyFinalizers();
         static void RunFinalizer(void *obj, void *data);
@@ -74,12 +76,13 @@ namespace gc
 
 #if RUNTIME_TINY
         static void* Allocate(size_t size);
+        static void* AllocateObject(size_t size, void* type);
 #endif
 
         static void* AllocateFixed(size_t size, void *descr);
         static void FreeFixed(void* addr);
 
-        static bool RegisterThread(void *baseptr);
+        static void RegisterThread();
         static bool UnregisterThread();
 
 #if !RUNTIME_TINY
@@ -106,6 +109,8 @@ namespace gc
         static void UnregisterRoot(char* start);
 
         static void SetSkipThread(bool skip);
+
+        static bool EphemeronArrayAdd(Il2CppObject* obj);
     };
 } /* namespace vm */
 } /* namespace il2cpp */

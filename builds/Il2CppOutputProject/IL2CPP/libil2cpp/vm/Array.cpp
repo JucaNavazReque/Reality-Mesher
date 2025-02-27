@@ -132,7 +132,7 @@ namespace vm
 #endif
         }
 #if !RUNTIME_TINY
-        else if (klass->element_class->valuetype &&
+        else if (klass->element_class->byval_arg.valuetype &&
                  ((GC_descr)klass->element_class->gc_desc & GC_DS_TAGS) == GC_DS_BITMAP)
         {
             o = (Il2CppObject*)GC_gcj_vector_malloc(byte_len, klass);
@@ -271,14 +271,23 @@ namespace vm
     {
         return reinterpret_cast<char*>(array) + kIl2CppSizeOfArray;
     }
+
+    il2cpp_array_size_t Array::IndexFromIndices(Il2CppArray* thisPtr, int32_t const * indices)
+    {
+        int32_t i;
+        il2cpp_array_size_t pos;
+        Il2CppClass* ac;
+        ac = thisPtr->klass;
+
+        pos = indices[0] - thisPtr->bounds[0].lower_bound;
+        for (i = 1; i < ac->rank; i++)
+            pos = pos * thisPtr->bounds[i].length + indices[i] -
+                thisPtr->bounds[i].lower_bound;
+
+        return pos;
+    }
 } /* namespace vm */
 } /* namespace il2cpp */
-
-LIBIL2CPP_CODEGEN_API char*
-il2cpp_array_addr_with_size(Il2CppArray *array, int32_t size, uintptr_t idx)
-{
-    return ((char*)array) + kIl2CppSizeOfArray + size * idx;
-}
 
 LIBIL2CPP_CODEGEN_API int32_t
 il2cpp_array_element_size(Il2CppClass *ac)

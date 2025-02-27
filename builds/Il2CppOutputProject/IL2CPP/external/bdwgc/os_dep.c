@@ -2045,6 +2045,8 @@ void GC_register_data_segments(void)
           if ((word)DATASTART < (word)p)
             GC_add_roots_inner(DATASTART, p, FALSE);
         }
+#     elif defined(GC_DONT_REGISTER_MAIN_STATIC_DATA)
+        /* avoid referencing DATASTART & DATAEND as they may be invalid */
 #     else
         if ((word)DATASTART - 1U >= (word)DATAEND) {
                                 /* Subtract one to check also for NULL  */
@@ -2796,6 +2798,18 @@ void GC_reset_default_push_other_roots(void)
 #else
     GC_push_other_roots = 0;
 #endif
+}
+
+GC_mark_stack_empty_proc GC_on_mark_stack_empty;
+
+GC_API void GC_CALL GC_set_mark_stack_empty (GC_mark_stack_empty_proc fn)
+{
+	GC_on_mark_stack_empty = fn;
+}
+
+GC_API GC_mark_stack_empty_proc GC_CALL GC_get_mark_stack_empty (void)
+{
+	return GC_on_mark_stack_empty;
 }
 
 /*

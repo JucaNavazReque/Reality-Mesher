@@ -51,6 +51,7 @@ struct MonoContext;
 extern "C"
 {
     void mono_debugger_agent_parse_options(const char *options);
+    void mono_debugger_agent_init_minimal();
     void mono_debugger_agent_init();
     void mono_debugger_run_debugger_thread_func(void* arg);
     void debugger_agent_single_step_from_context(MonoContext *ctx, Il2CppSequencePoint* sequencePoint);
@@ -58,20 +59,28 @@ extern "C"
     void unity_debugger_agent_breakpoint(Il2CppSequencePoint* sequencePoint);
     void unity_debugger_agent_pausepoint();
     void mono_debugger_install_runtime_callbacks(MonoDebuggerRuntimeCallbacks* cbs);
-    int32_t unity_debugger_agent_is_global_breakpoint_active();
+    int32_t unity_debugger_agent_is_global_breakpoint_active(void* singleStepRequest);
     int32_t unity_debugger_agent_is_single_stepping();
     void unity_debugger_agent_handle_exception(Il2CppException *exc);
     int32_t il2cpp_mono_methods_match(const MethodInfo* left, const MethodInfo* right);
-    void mono_debugger_agent_user_break();
-    int32_t mono_debugger_agent_debug_log_is_enabled();
-    void mono_debugger_agent_debug_log(int level, Il2CppString *category, Il2CppString *message);
+    void debugger_agent_user_break();
+    int32_t debugger_agent_debug_log_is_enabled();
+    void debugger_agent_debug_log(int level, Il2CppString *category, Il2CppString *message);
     int32_t unity_pause_point_active();
     void il2cpp_save_current_thread_context_func_exit();
     void mono_debugger_agent_register_transport(DebuggerTransport *trans);
+    void unity_debugger_agent_thread_startup(uintptr_t tid);
+    void unity_debugger_agent_thread_end(uintptr_t tid);
+    void unity_debugger_agent_runtime_shutdown();
 
-    void* il2cpp_malloc(size_t size)
+    static void* il2cpp_malloc(size_t size)
     {
         return IL2CPP_MALLOC(size);
+    }
+
+    static void il2cpp_mfree(void* memory)
+    {
+        IL2CPP_FREE(memory);
     }
 }
 
@@ -85,6 +94,11 @@ namespace utils
     static bool s_IsDebuggerAttached = false;
     static bool s_IsDebuggerInitialized = false;
     static std::string s_AgentOptions;
+
+    static os::Mutex s_Il2CppMonoLoaderLock(false);
+    static uint64_t s_Il2CppMonoLoaderLockThreadId = 0;
+
+    static Il2CppMonoInterpCallbacks s_InterpCallbacks;
 
     typedef dynamic_array<Il2CppSequencePoint*> SequencePointList;
     typedef Il2CppHashMap<const MethodInfo*, SequencePointList*, il2cpp::utils::PointerHash<MethodInfo> > MethodToSequencePointsMap;
@@ -104,6 +118,27 @@ namespace utils
 
     static MethodToSequencePointsMap::const_iterator GetMethodSequencePointIterator(const MethodInfo *method);
 
+    static void* FrameGetArg(Il2CppSequencePointExecutionContext* frame, int pos)
+    {
+        return frame->params[pos];
+    }
+
+    static void* FrameGetLocal(Il2CppSequencePointExecutionContext* frame, int pos)
+    {
+        return frame->locals[pos];
+    }
+
+    static void* FrameGetThis(Il2CppSequencePointExecutionContext* frame)
+    {
+        return *frame->thisArg;
+    }
+
+    static void InitializeInterpCallbacks()
+    {
+        s_InterpCallbacks.frame_get_arg = FrameGetArg;
+        s_InterpCallbacks.frame_get_local = FrameGetLocal;
+        s_InterpCallbacks.frame_get_this = FrameGetThis;
+    }
 
     void Debugger::RegisterMetadata(const Il2CppDebuggerMetadataRegistration *data)
     {
@@ -126,6 +161,7 @@ namespace utils
     static void InitializeMonoSoftDebugger(const char* options)
     {
 #if defined(RUNTIME_IL2CPP)
+        InitializeInterpCallbacks();
 
         os::SocketBridge::WaitForInitialization();
 
@@ -142,7 +178,7 @@ namespace utils
 
         il2cpp::utils::Debugger::RegisterCallbacks(breakpoint_callback, pausepoint_callback);
 
-        register_allocator(il2cpp_malloc);
+        register_allocator(il2cpp_malloc, il2cpp_mfree);
 
         s_IsDebuggerInitialized = true;
 #else
@@ -228,9 +264,10 @@ namespace utils
 
     void Debugger::Init()
     {
+        bool debuggerIsInitialized = false;
         if (!s_AgentOptions.empty())
         {
-            TryInitializeDebugger(s_AgentOptions);
+            debuggerIsInitialized = TryInitializeDebugger(s_AgentOptions);
         }
         else
         {
@@ -238,10 +275,14 @@ namespace utils
             for (std::vector<UTF16String>::const_iterator arg = args.begin(); arg != args.end(); ++arg)
             {
                 std::string argument = StringUtils::Utf16ToUtf8(*arg);
-                if (TryInitializeDebugger(argument))
+                debuggerIsInitialized = TryInitializeDebugger(argument);
+                if (debuggerIsInitialized)
                     break;
             }
         }
+
+        if (!debuggerIsInitialized)
+            mono_debugger_agent_init_minimal();
     }
 
     static Debugger::OnBreakPointHitCallback s_BreakCallback;
@@ -255,6 +296,7 @@ namespace utils
     void Debugger::StartDebuggerThread()
     {
 #if defined(RUNTIME_IL2CPP)
+        // This thread is allocated here once and never deallocated.
         s_DebuggerThread = new os::Thread();
         s_DebuggerThread->Run(mono_debugger_run_debugger_thread_func, NULL);
 #else
@@ -322,7 +364,7 @@ namespace utils
         if (!Debugger::GetIsDebuggerAttached())
             return false;
 #if defined(RUNTIME_IL2CPP)
-        return unity_debugger_agent_is_global_breakpoint_active();
+        return unity_debugger_agent_is_global_breakpoint_active(NULL);
 #else
         IL2CPP_ASSERT(0 && "The managed debugger is only supported for the libil2cpp runtime backend.");
         return false;
@@ -666,18 +708,18 @@ namespace utils
     void Debugger::UserBreak()
     {
         if (s_IsDebuggerAttached)
-            mono_debugger_agent_user_break();
+            debugger_agent_user_break();
     }
 
     bool Debugger::IsLoggingEnabled()
     {
-        return mono_debugger_agent_debug_log_is_enabled();
+        return debugger_agent_debug_log_is_enabled();
     }
 
     void Debugger::Log(int level, Il2CppString *category, Il2CppString *message)
     {
         if (s_IsDebuggerAttached)
-            mono_debugger_agent_debug_log(level, category, message);
+            debugger_agent_debug_log(level, category, message);
     }
 
     bool Debugger::IsPausePointActive()
@@ -755,10 +797,57 @@ namespace utils
             {
                 Il2CppStackFrameInfo frameInfo = { 0 };
                 frameInfo.method = method;
-                frameInfo.raw_ip = (uintptr_t)method->methodPointer;
+                if (unwindState->executionContexts[i]->currentSequencePoint != NULL)
+                {
+                    const Il2CppDebuggerMetadataRegistration* debuggerMetadata = method->klass->image->codeGenModule->debuggerMetadata;
+                    if (debuggerMetadata != NULL)
+                    {
+                        int32_t sourceFileIndex = unwindState->executionContexts[i]->currentSequencePoint->sourceFileIndex;
+                        frameInfo.filePath = debuggerMetadata->sequencePointSourceFiles[sourceFileIndex].file;
+                        frameInfo.sourceCodeLineNumber = unwindState->executionContexts[i]->currentSequencePoint->lineStart;
+                        frameInfo.ilOffset = unwindState->executionContexts[i]->currentSequencePoint->ilOffset;
+                    }
+                }
                 stackFrames->push_back(frameInfo);
             }
         }
+    }
+
+    void Debugger::AcquireLoaderLock()
+    {
+        s_Il2CppMonoLoaderLock.Lock();
+        s_Il2CppMonoLoaderLockThreadId = os::Thread::CurrentThreadId();
+    }
+
+    void Debugger::ReleaseLoaderLock()
+    {
+        s_Il2CppMonoLoaderLockThreadId = 0;
+        s_Il2CppMonoLoaderLock.Unlock();
+    }
+
+    bool Debugger::LoaderLockIsOwnedByThisThread()
+    {
+        return s_Il2CppMonoLoaderLockThreadId == os::Thread::CurrentThreadId();
+    }
+
+    Il2CppMonoInterpCallbacks* Debugger::GetInterpCallbacks()
+    {
+        return &s_InterpCallbacks;
+    }
+
+    void Debugger::RuntimeShutdownEnd()
+    {
+        unity_debugger_agent_runtime_shutdown();
+    }
+
+    void Debugger::ThreadStarted(uintptr_t tid)
+    {
+        unity_debugger_agent_thread_startup(tid);
+    }
+
+    void Debugger::ThreadStopped(uintptr_t tid)
+    {
+        unity_debugger_agent_thread_end(tid);
     }
 }
 }

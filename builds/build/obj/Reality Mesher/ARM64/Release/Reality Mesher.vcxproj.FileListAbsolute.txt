@@ -21,4 +21,4 @@ C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\build\obj\Reality Mesher\ARM
 C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\build\obj\Reality Mesher\ARM64\Release\qualifiers.txt.intermediate
 C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\build\obj\Reality Mesher\ARM64\Release\MultipleQualifiersPerDimensionFound.txt
 C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\build\obj\Reality Mesher\ARM64\Release\ProjectArchitectures.txt
-C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\build\obj\Reality Mesher\ARM64\Release\.winmd_cache\$UnityPlayer.winmd_637804802260000000.json
+C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\build\obj\Reality Mesher\ARM64\Release\.winmd_cache\$UnityPlayer.winmd_638574131420000000.json

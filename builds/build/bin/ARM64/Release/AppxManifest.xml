@@ -7,11 +7,11 @@
 
     For more information on package manifest files, see http://go.microsoft.com/fwlink/?LinkID=241727
   -->
-  <Identity Name="reality-mesher-pkg" Publisher="CN=Geotech" Version="1.0.0.0" ProcessorArchitecture="arm64" />
+  <Identity Name="reality-mesher-pkg" Publisher="CN=Geotech" Version="1.1.4.0" ProcessorArchitecture="arm64" />
   <mp:PhoneIdentity PhoneProductId="12dd6865-f3b0-4620-95a3-b710dd381554" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Reality Mesher</DisplayName>
-    <PublisherDisplayName>Geotech</PublisherDisplayName>
+    <PublisherDisplayName>UVigo - GeoTECH</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Dependencies>
@@ -37,6 +37,8 @@
   </Applications>
   <Capabilities>
     <Capability Name="internetClient" />
+    <Capability Name="internetClientServer" />
+    <Capability Name="privateNetworkClientServer" />
     <uap2:Capability Name="spatialPerception" />
     <DeviceCapability Name="webcam" />
     <DeviceCapability Name="microphone" />

@@ -1,3 +1,4 @@
+#include "il2cpp-config.h"
 #include "os/c-api/il2cpp-config-platforms.h"
 
 #if !RUNTIME_TINY
@@ -12,11 +13,6 @@ extern "C"
     void UnityPalLocaleInitialize()
     {
         il2cpp::os::Locale::Initialize();
-    }
-
-    void UnityPalLocaleUnInitialize()
-    {
-        il2cpp::os::Locale::UnInitialize();
     }
 
     char* UnityPalGetLocale()
