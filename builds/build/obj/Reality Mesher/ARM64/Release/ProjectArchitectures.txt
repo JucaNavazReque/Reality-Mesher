@@ -1,1 +1,0 @@
-C:\Users\UVigo\Documents\Apps\Reality-Mesher\builds\Reality Mesher\Reality Mesher.vcxproj;arm64
