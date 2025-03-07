@@ -7,7 +7,7 @@ public class SetMarkerParameters : MonoBehaviour
     public GameObject FireMarkerGO;
 
     public void SetParameters() {
-        FireMarkerScript script = FireMarkerGO.transform.Find("FireButton").GetComponent<FireMarkerScript>();
+        FireMarkerScript script = FireMarkerGO.GetComponent<FireMarkerScript>();
         script.MarkerName = MarkerName;
         script.MarkerColor = MarkerColor;
         Debug.Log("Marker parameters set");
