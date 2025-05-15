@@ -7,7 +7,7 @@ public class SettingsMenuScript : MonoBehaviour
     public Shader HighlightShader;
     public CreatePosMarkers CPMScript;
     public FireMarkerScript FMScript;
-    public DialogPool DialogPool;
+    public DialogPool dialogPool;
 
 // Alterna la habilitación del registro de posición
     public void ReadPosClick() {
@@ -52,7 +52,7 @@ public class SettingsMenuScript : MonoBehaviour
 
 // Muestra el cuadro de diálogo para confirmar borrado del registro de posición
     public void DeletePosClick() {
-        IDialog dialog = DialogPool.Get()
+        IDialog dialog = dialogPool.Get()
             .SetHeader("Delete position registry")
             .SetBody("Are you sure you want to delete the position registry? This action cannot be undone.")
             .SetPositive("Yes", ( args ) => DeletePos(args.ButtonType))
@@ -76,7 +76,7 @@ public class SettingsMenuScript : MonoBehaviour
 
 // Muestra el cuadro de diálogo para confirmar borrado de las etiquetas posicionadas
     public void DeleteMarkersClick() {
-        IDialog dialog = DialogPool.Get()
+        IDialog dialog = dialogPool.Get()
             .SetHeader("Delete tags")
             .SetBody("Are you sure you want to delete all positioned tags? This action cannot be undone.")
             .SetPositive("Yes", ( args ) => DeleteMarkers(args.ButtonType))
@@ -87,9 +87,7 @@ public class SettingsMenuScript : MonoBehaviour
 // Ejecuta el borrado de las etiquetas posicionadas. Función llamada desde el cuadro de diálogo correspondiente
     private void DeleteMarkers(DialogButtonType ans) {
         if (ans == 0) { // 0 for positive
-            foreach (GameObject go in GameObject.FindGameObjectsWithTag("Marker")) {
-                Destroy(go);
-            }
+            MarkerManager.Instance.DestroyAllMarkers();
         }
     }
 }
