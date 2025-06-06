@@ -16,26 +16,29 @@ public class CreatePosMarkers : MonoBehaviour
     StreamWriter posWriter;
     GameObject GOParent;
     CultureInfo culture = CultureInfo.InvariantCulture;
+    [HideInInspector]
+    public string session;
+    string savingPath;
 
-// Función ejecutada al iniciar la aplicación
     void Awake() {
-        posWriter = new StreamWriter(Application.persistentDataPath + "/traj.txt", false);
+        savingPath = string.Format(CultureInfo.InvariantCulture, "{0}/{1}", Application.persistentDataPath, session);
+        if (!Directory.Exists(savingPath))
+        {
+            Directory.CreateDirectory(savingPath);
+        }
+        posWriter = new StreamWriter(string.Format(CultureInfo.InvariantCulture,"{0}/{1}_traj.txt",savingPath,session), false);
         posWriter.Close();
     }
 
-// Función ejecutada al habilitar el script
     void OnEnable() {
-        posWriter = new StreamWriter(Application.persistentDataPath + "/traj.txt", true);
-        //posWriter.WriteLine("timestamp,x,y,z,qw,qx,qy,qz");
+        posWriter = new StreamWriter(string.Format(CultureInfo.InvariantCulture,"{0}/{1}_traj.txt",savingPath,session), true);
         posWriter.WriteLine("timestamp,matrix");
     }
 
-// Función ejecutada al deshabilitar el script
     public void OnDisable() {
         posWriter.Close();
     }
 
-// Función ejecutada cada ciclo de la aplicación
     void Update() {
         if (Time.time > nextActionTime)
 	    {
@@ -45,33 +48,12 @@ public class CreatePosMarkers : MonoBehaviour
             DrawLine();
             GOParent.tag = "PosMarker";
             Matrix4x4 localPos = Camera.main.transform.localToWorldMatrix;
-            // Vector4 temp;
-            // temp = localPos.GetRow(2);
-            // localPos.SetRow(2, localPos.GetRow(1));
-            // localPos.SetRow(1, localPos.GetRow(0));
-            // localPos.SetRow(0, -temp);
-            // temp = localPos.GetColumn(2);
-            // localPos.SetColumn(2, localPos.GetColumn(1));
-            // localPos.SetColumn(1, localPos.GetColumn(0));
-            // localPos.SetColumn(0, -temp);
-            String matrixString = localPos.ToString().Replace("\n", ",").Replace("\t", ",");
+            string matrixString = localPos.ToString().Replace("\n", ",").Replace("\t", ",");
             matrixString = matrixString[..^1];
             posWriter.WriteLine(DateTime.Now.ToString("dd-MM-yyyy_HH:mm:ss", culture) + "," + matrixString);
-            // Quaternion exportRotation = localPos.rotation;
-            // Vector3 exportPosition = localPos.GetColumn(3);
-            // // Quaternion posRotation = Camera.main.transform.rotation;
-            // posWriter.WriteLine(DateTime.Now.ToString("dd-MM-yyyy_HH:mm:ss", culture) + "," 
-            //     + exportPosition.x.ToString(culture) + "," 
-            //     + exportPosition.y.ToString(culture) + "," 
-            //     + exportPosition.z.ToString(culture) + "," 
-            //     + exportRotation.w.ToString(culture) + "," 
-            //     + exportRotation.x.ToString(culture) + "," 
-            //     + exportRotation.y.ToString(culture) + "," 
-            //     + exportRotation.z.ToString(culture));
         }
     }
 
-// Funciones para crear los marcadores visuales
     void createSphere()
     {
         GameObject _Sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);

@@ -14,21 +14,28 @@ using System.IO.Compression;
 public class MainMenuScript : MonoBehaviour
 {
     public DialogPool dialogPool;
-    string session;
+    [HideInInspector]
+    public string session;
     GameObject meshParent;
     MeshFilter[] meshFilters;
     CombineInstance[] combine;
     Mesh combinedMesh;
     private string imagePath;
     private string zipPath;
+    private int meshCount = 0;
 
-    public void Start() {
-        session = "session_" + DateTime.Now.ToString("dd-MM-yyyy_HH-mm-ss");
+    public void Start()
+    {
+        if (string.IsNullOrEmpty(session))
+        {
+            session = "session_" + DateTime.Now.ToString("dd-MM-yyyy_HH-mm-ss");
+        }
         meshParent = GameObject.Find("Trackables");
-        zipPath = string.Format("{0}/{1}_pictures.zip", Application.persistentDataPath, session);
+        zipPath = string.Format("{0}/{1}/{1}_pictures.zip", Application.persistentDataPath, session);
 
         // Register existing markers
-        foreach (var marker in GameObject.FindGameObjectsWithTag("Marker")) {
+        foreach (var marker in GameObject.FindGameObjectsWithTag("Marker"))
+        {
             MarkerManager.Instance.AddMarker(marker);
         }
 
@@ -59,9 +66,8 @@ public class MainMenuScript : MonoBehaviour
 
     // Saves all tag markers positioned. Format: name,x,y,z
     private void SaveMarkers() {
-        using (StreamWriter markerWriter = new StreamWriter(string.Format(CultureInfo.InvariantCulture, "{0}/{1}_markers.txt", Application.persistentDataPath, session), false)) {
+        using (StreamWriter markerWriter = new StreamWriter(string.Format(CultureInfo.InvariantCulture, "{0}/{1}/{1}_markers.txt", Application.persistentDataPath, session), false)) {
             foreach (var marker in MarkerManager.Instance.GetAllMarkers()) {
-                //markerWriter.WriteLine(string.Format(CultureInfo.InvariantCulture, "{0},{1},{2},{3}", marker.name, (-marker.transform.position.z).ToString("f3"), marker.transform.position.x.ToString("f3"), marker.transform.position.y.ToString("f3")));
                 markerWriter.WriteLine(string.Format(CultureInfo.InvariantCulture, "{0},{1},{2},{3}", marker.name, marker.transform.position.x.ToString("f3"), marker.transform.position.y.ToString("f3"), marker.transform.position.z.ToString("f3")));
             }
         }
@@ -77,7 +83,6 @@ public class MainMenuScript : MonoBehaviour
             return;
         }
         combine = new CombineInstance[meshFilters.Length];
-        //await Task.Run(() => MeshCombiner(meshFilters, ref combine));
         MeshCombiner(meshFilters, ref combine);
         combinedMesh.CombineMeshes(combine);
         string savingPath = Application.persistentDataPath;
@@ -93,14 +98,25 @@ public class MainMenuScript : MonoBehaviour
         }
     }
 
-    private void MeshWriter(string savingPath, Vector3[] vertices) {
-        using (StreamWriter sw = new StreamWriter(string.Format("{0}/{1}_mesh.txt", savingPath, session), true)) {
-            StringBuilder sb = new StringBuilder();
-            foreach (Vector3 v in vertices) {
-                sb.AppendFormat(CultureInfo.InvariantCulture, "{0},{1},{2}\n", v.x, v.y, v.z);
-            }
+    private void MeshWriter(string savingPath, Vector3[] vertices)
+    {
+        StringBuilder sb = new StringBuilder();
+        foreach (Vector3 v in vertices)
+        {
+            sb.AppendFormat(CultureInfo.InvariantCulture, "{0},{1},{2}\n", v.x, v.y, v.z);
+        }
+        if (!Directory.Exists(string.Format("{0}/{1}/meshes", savingPath, session))) {
+            Directory.CreateDirectory(string.Format("{0}/{1}/meshes", savingPath, session));
+        }
+        using (StreamWriter sw = new StreamWriter(string.Format("{0}/{1}/{1}_mesh.txt", savingPath, session), true))
+        {
             sw.Write(sb.ToString());
         }
+        using (StreamWriter sw = new StreamWriter(string.Format("{0}/{1}/meshes/{2}_mesh.txt", savingPath, session, meshCount), true))
+        {
+            sw.Write(sb.ToString());
+        }
+        meshCount++;
     }
 
     PhotoCapture photoCaptureObject = null;
@@ -113,32 +129,21 @@ public class MainMenuScript : MonoBehaviour
             c.cameraResolutionHeight = cameraResolution.height;
             c.pixelFormat = CapturePixelFormat.BGRA32;
 
-            if (!Directory.Exists(Application.persistentDataPath + "/pictures")) {
-                Directory.CreateDirectory(Application.persistentDataPath + "/pictures");
+            if (!Directory.Exists(string.Format("{0}/{1}/pictures", Application.persistentDataPath, session))) {
+                Directory.CreateDirectory(string.Format("{0}/{1}/pictures", Application.persistentDataPath, session));
             }
 
             // Activate the camera
             captureObject.StartPhotoModeAsync(c, delegate (PhotoCapture.PhotoCaptureResult result) {
                 Debug.Log("Taking Picture...");
                 Matrix4x4 localPos = Camera.main.transform.localToWorldMatrix;
-                // Vector4 temp;
-                // temp = localPos.GetRow(2);
-                // localPos.SetRow(2, localPos.GetRow(1));
-                // localPos.SetRow(1, localPos.GetRow(0));
-                // localPos.SetRow(0, -temp);
-                // temp = localPos.GetColumn(2);
-                // localPos.SetColumn(2, localPos.GetColumn(1));
-                // localPos.SetColumn(1, localPos.GetColumn(0));
-                // localPos.SetColumn(0, -temp);
-                // temp = localPos.GetColumn(2);
-                // localPos.SetColumn(2, localPos.GetColumn(1));
-                // localPos.SetColumn(1, temp);
                 string matrixString = localPos.ToString().Replace("\n", ",").Replace("\t", ",");
                 matrixString = matrixString[..^1];
                 string pictureTime = DateTime.Now.ToString("dd-MM-yyyy_HH-mm-ss");
-                imagePath = string.Format("{0}/pictures/{1}.jpg", Application.persistentDataPath, pictureTime);
-                using (StreamWriter imagePosWriter = new StreamWriter(string.Format(CultureInfo.InvariantCulture, "{0}/{1}_pictures_pos.txt", Application.persistentDataPath, session), true)) {
-                    imagePosWriter.WriteLine(string.Format(CultureInfo.InvariantCulture, "{0} {1}", pictureTime, matrixString));
+                imagePath = string.Format("{0}/{1}/pictures/{2}.jpg", Application.persistentDataPath, session, pictureTime);
+                using (StreamWriter imagePosWriter = new StreamWriter(string.Format(CultureInfo.InvariantCulture, "{0}/{1}/{1}_pictures_pos.txt", Application.persistentDataPath, session), true))
+                {
+                    imagePosWriter.WriteLine(string.Format(CultureInfo.InvariantCulture, "{0},{1}", pictureTime, matrixString));
                 }
                 captureObject.TakePhotoAsync(
                     imagePath, PhotoCaptureFileOutputFormat.JPG, OnCapturedPhotoToDisk);
