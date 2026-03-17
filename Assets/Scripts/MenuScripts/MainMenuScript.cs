@@ -9,6 +9,55 @@ using System.Globalization;
 using MixedReality.Toolkit.UX;
 using System.Threading.Tasks;
 using System.IO.Compression;
+using UnityEngine.Networking;
+using System.Collections.Generic;
+using ProtoBuf;
+
+[ProtoContract]
+public class ClassifiedPointProto
+{
+    [ProtoMember(1)]
+    public float x { get; set; }
+
+    [ProtoMember(2)]
+    public float y { get; set; }
+
+    [ProtoMember(3)]
+    public float z { get; set; }
+
+    [ProtoMember(4)]
+    public int c { get; set; } = -1;
+
+    public ClassifiedPointProto() { }
+
+    public ClassifiedPointProto(float x, float y, float z, int c)
+    {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.c = c;
+    }
+}
+
+[ProtoContract]
+public class PointCloudProto
+{
+    [ProtoMember(1)]
+    public List<ClassifiedPointProto> points { get; set; } = new();
+}
+
+[Serializable]
+public class ClassifiedPoint
+{
+    public Vector3 position;
+    public int pointClass;
+
+    public ClassifiedPoint(Vector3 position, int pointClass)
+    {
+        this.position = position;
+        this.pointClass = pointClass;
+    }
+}
 
 
 public class MainMenuScript : MonoBehaviour
@@ -23,6 +72,10 @@ public class MainMenuScript : MonoBehaviour
     private string imagePath;
     private string zipPath;
     private int meshCount = 0;
+    [SerializeField] private string processingUrl;
+    [HideInInspector] string savingPath;
+    private readonly List<ClassifiedPoint> latestClassifiedPoints = new();
+    public IReadOnlyList<ClassifiedPoint> LatestClassifiedPoints => latestClassifiedPoints;
 
     public void Start()
     {
@@ -32,6 +85,9 @@ public class MainMenuScript : MonoBehaviour
         }
         meshParent = GameObject.Find("Trackables");
         zipPath = string.Format("{0}/{1}/{1}_pictures.zip", Application.persistentDataPath, session);
+        if (savingPath == "" || savingPath == null) {
+            savingPath = Application.persistentDataPath;
+        }
 
         // Register existing markers
         foreach (var marker in GameObject.FindGameObjectsWithTag("Marker"))
@@ -54,19 +110,29 @@ public class MainMenuScript : MonoBehaviour
         }
     }
 
-    public void SaveData() {
+    public void ManageData() {
         IDialog dialog = dialogPool.Get()
             .SetHeader("Save data")
-            .SetBody("What data do you want to save?")
-            .SetPositive("Markers", _ => SaveMarkers())
-            .SetNegative("Mesh", _ => SaveMesh())
+            .SetBody("Select action")
+            .SetPositive("Save scan", _ => SaveScan())
+            .SetNegative("Remote process", _ => Send2Remote())
+            .SetNeutral("Cancel");
+        dialog.Show();
+    }
+
+    public void SaveScan() {
+        IDialog dialog = dialogPool.Get()
+            .SetHeader("Save scan")
+            .SetBody("Select action")
+            .SetPositive("Save markers", _ => SaveMarkers())
+            .SetNegative("Save environment", _ => SaveMesh())
             .SetNeutral("Cancel");
         dialog.Show();
     }
 
     // Saves all tag markers positioned. Format: name,x,y,z
     private void SaveMarkers() {
-        using (StreamWriter markerWriter = new StreamWriter(string.Format(CultureInfo.InvariantCulture, "{0}/{1}/{1}_markers.txt", Application.persistentDataPath, session), false)) {
+        using (StreamWriter markerWriter = new StreamWriter(string.Format(CultureInfo.InvariantCulture, "{0}/{1}/{1}_markers.txt", savingPath, session), false)) {
             foreach (var marker in MarkerManager.Instance.GetAllMarkers()) {
                 markerWriter.WriteLine(string.Format(CultureInfo.InvariantCulture, "{0},{1},{2},{3}", marker.name, marker.transform.position.x.ToString("f3"), marker.transform.position.y.ToString("f3"), marker.transform.position.z.ToString("f3")));
             }
@@ -76,19 +142,144 @@ public class MainMenuScript : MonoBehaviour
 
     // Saves the mesh of the environment. Format: x,y,z
     private async void SaveMesh() {
-        Debug.Log("Saving mesh...");
+        Vector3[] vertices = GetPointCloud();
+        await Task.Run(() => MeshWriter(savingPath, vertices));
+        Debug.Log("Mesh saved.");
+    }
+
+    private async void Send2Remote() {
+        string urlToUse = (processingUrl ?? string.Empty).Trim();
+        string meshFilePath = string.Format("{0}/{1}/{1}_mesh.txt", savingPath, session);
+
+        if (!File.Exists(meshFilePath)) {
+            Debug.Log("Remote process skipped: no mesh has been saved yet.");
+            return;
+        }
+
+        // Read file and serialize on a background thread: large mesh files can freeze the
+        // rendering thread long enough to trigger the HoloLens 2 watchdog before SendWebRequest is reached.
+        byte[] binaryData;
+        try
+        {
+            binaryData = await Task.Run(() =>
+            {
+                List<ClassifiedPointProto> pts = new();
+                // using StreamReader reader = new StreamReader(meshFilePath);
+                // string line;
+                // while ((line = reader.ReadLine()) != null) // While loop is used to avoid loading the entire file into memory
+                // {
+                //     var coords = line.Split(',');
+                //     pts.Add(new ClassifiedPointProto(
+                //         float.Parse(coords[0], CultureInfo.InvariantCulture),
+                //         float.Parse(coords[1], CultureInfo.InvariantCulture),
+                //         float.Parse(coords[2], CultureInfo.InvariantCulture),
+                //         -1)); // c = -1 means unclassified, default for original points
+                // }
+
+                for (int i = 0; i < 150; i++) {
+                    pts.Add(new ClassifiedPointProto((float)(i*4%6*0.9),(float)(i*6%2*1.02),(float)(i*3.5%6*1.29), -1));
+                }
+
+                if (pts.Count == 0)
+                {
+                    return null;
+                }
+
+                Debug.Log($"Loaded {pts.Count} vertices from saved mesh file. Serializing...");
+
+                PointCloudProto payload = new() { points = pts };
+                using MemoryStream stream = new();
+                ProtoBuf.Serializer.Serialize(stream, payload);
+                return stream.ToArray();
+            });
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"Failed to read/serialize mesh file: {e.Message}");
+            return;
+        }
+
+        if (binaryData == null)
+        {
+            Debug.Log("Remote process skipped: point cloud is empty.");
+            return;
+        }
+
+        // Prepare request information
+        Debug.Log($"Sending {binaryData.Length} bytes to remote server: {urlToUse}");
+        using var request = new UnityWebRequest(urlToUse, UnityWebRequest.kHttpVerbPOST);
+        request.uploadHandler = new UploadHandlerRaw(binaryData);
+        request.uploadHandler.contentType = "application/x-protobuf";
+        request.downloadHandler = new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/x-protobuf");
+        request.SetRequestHeader("Accept", "application/x-protobuf");
+        request.chunkedTransfer = false;
+        request.useHttpContinue = false;
+        request.redirectLimit = 0;
+        request.timeout = 60;
+        request.certificateHandler = new AcceptAllCertificates();
+        request.disposeCertificateHandlerOnDispose = true;
+
+            // Poll isDone instead of relying on AsyncOperation.completed, which does not fire
+            // reliably on UWP IL2CPP (deployed HoloLens). The completed event works in the Unity
+            // editor / Holographic Remoting (Mono) but silently stalls on IL2CPP UWP builds.
+            UnityWebRequestAsyncOperation operation = request.SendWebRequest();
+            while (!operation.isDone)
+            {
+                await Task.Yield();
+            }
+
+        if (request.result != UnityWebRequest.Result.Success)
+        {
+            Debug.LogError($"Remote request failed: {request.error} (result: {request.result}, HTTP {request.responseCode}, URL: {urlToUse})");
+            return;
+        }
+
+        byte[] responseData = request.downloadHandler.data;
+        if (responseData == null || responseData.Length == 0)
+        {
+            Debug.LogWarning("Server returned empty response.");
+            return;
+        }
+
+        try
+        {
+            PointCloudProto response = await Task.Run(() =>
+            {
+                using MemoryStream stream = new(responseData);
+                return ProtoBuf.Serializer.Deserialize<PointCloudProto>(stream);
+            });
+
+            latestClassifiedPoints.Clear();
+            foreach (ClassifiedPointProto point in response.points)
+            {
+                latestClassifiedPoints.Add(new ClassifiedPoint(
+                    new Vector3(point.x, point.y, point.z),
+                    point.c));
+            }
+
+            Debug.Log($"Remote response received with {latestClassifiedPoints.Count(p => p.pointClass != -1)}/{latestClassifiedPoints.Count} classified points.");
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"Response deserialization failed: {e.Message}");
+        }
+    }
+
+    // Combines all meshes in the scene and returns the vertices as a point cloud (Vector3[]).
+    // Used for saving the environment and sending it to remote.
+    private Vector3[] GetPointCloud() {
+        Debug.Log("Generating point cloud...");
         meshFilters = meshParent.GetComponentsInChildren<MeshFilter>();
         if (meshFilters.Length == 0) {
             Debug.Log("No mesh found to save.");
-            return;
+            return Array.Empty<Vector3>();
         }
         combine = new CombineInstance[meshFilters.Length];
         MeshCombiner(meshFilters, ref combine);
         combinedMesh.CombineMeshes(combine);
-        string savingPath = Application.persistentDataPath;
-        Vector3[] vertices = combinedMesh.vertices;
-        await Task.Run(() => MeshWriter(savingPath, vertices));
-        Debug.Log("Mesh saved.");
+        Debug.Log("Point cloud generated with " + combinedMesh.vertexCount + " vertices.");
+        return combinedMesh.vertices;
     }
 
     private void MeshCombiner(MeshFilter[] meshFilters, ref CombineInstance[] combine) {
@@ -200,5 +391,13 @@ public class MainMenuScript : MonoBehaviour
     private void OnStoppedPhotoMode(PhotoCapture.PhotoCaptureResult result) {
         photoCaptureObject.Dispose();
         photoCaptureObject = null;
+    }
+
+    private class AcceptAllCertificates : CertificateHandler
+    {
+        protected override bool ValidateCertificate(byte[] certificateData)
+        {
+            return true;
+        }
     }
 }
