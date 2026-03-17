@@ -156,47 +156,44 @@ public class MainMenuScript : MonoBehaviour
             return;
         }
 
-        // Read file and serialize on a background thread: large mesh files can freeze the
-        // rendering thread long enough to trigger the HoloLens 2 watchdog before SendWebRequest is reached.
-        byte[] binaryData;
-        try
+        // Read file on background thread to avoid freezing main thread with large files
+        List<ClassifiedPointProto> pts = await Task.Run(() =>
         {
-            binaryData = await Task.Run(() =>
-            {
-                List<ClassifiedPointProto> pts = new();
-                // using StreamReader reader = new StreamReader(meshFilePath);
-                // string line;
-                // while ((line = reader.ReadLine()) != null) // While loop is used to avoid loading the entire file into memory
-                // {
-                //     var coords = line.Split(',');
-                //     pts.Add(new ClassifiedPointProto(
-                //         float.Parse(coords[0], CultureInfo.InvariantCulture),
-                //         float.Parse(coords[1], CultureInfo.InvariantCulture),
-                //         float.Parse(coords[2], CultureInfo.InvariantCulture),
-                //         -1)); // c = -1 means unclassified, default for original points
-                // }
+            List<ClassifiedPointProto> pts = new();
+            // using StreamReader reader = new StreamReader(meshFilePath);
+            // string line;
+            // while ((line = reader.ReadLine()) != null)
+            // {
+            //     var coords = line.Split(',');
+            //     pts.Add(new ClassifiedPointProto(
+            //         float.Parse(coords[0], CultureInfo.InvariantCulture),
+            //         float.Parse(coords[1], CultureInfo.InvariantCulture),
+            //         float.Parse(coords[2], CultureInfo.InvariantCulture),
+            //         -1));
+            // }
 
-                for (int i = 0; i < 150; i++) {
-                    pts.Add(new ClassifiedPointProto((float)(i*4%6*0.9),(float)(i*6%2*1.02),(float)(i*3.5%6*1.29), -1));
-                }
+            for (int i = 0; i < 150; i++) {
+                pts.Add(new ClassifiedPointProto((float)(i*4%6*0.9),(float)(i*6%2*1.02),(float)(i*3.5%6*1.29), -1));
+            }
 
-                if (pts.Count == 0)
-                {
-                    return null;
-                }
+            return pts;
+        });
 
-                Debug.Log($"Loaded {pts.Count} vertices from saved mesh file. Serializing...");
-
-                PointCloudProto payload = new() { points = pts };
-                using MemoryStream stream = new();
-                ProtoBuf.Serializer.Serialize(stream, payload);
-                return stream.ToArray();
-            });
-        }
-        catch (Exception e)
+        if (pts.Count == 0)
         {
-            Debug.LogError($"Failed to read/serialize mesh file: {e.Message}");
+            Debug.Log("Remote process skipped: point cloud is empty.");
             return;
+        }
+
+        Debug.Log($"Loaded {pts.Count} vertices from saved mesh file. Serializing on main thread...");
+
+        // Serialize on main thread to avoid byte array reference issues with UploadHandlerRaw on UWP IL2CPP
+        byte[] binaryData;
+        PointCloudProto payload = new() { points = pts };
+        using (MemoryStream stream = new())
+        {
+            ProtoBuf.Serializer.Serialize(stream, payload);
+            binaryData = stream.ToArray();
         }
 
         if (binaryData == null)
