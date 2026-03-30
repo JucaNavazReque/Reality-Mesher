@@ -1,0 +1,9 @@
+<linker>
+  <assembly fullname="Assembly-CSharp">
+    <type fullname="ClassifiedPointProto" preserve="all" />
+    <type fullname="PointCloudProto" preserve="all" />
+    <type fullname="MainMenuScript" preserve="all" />
+  </assembly>
+  <assembly fullname="protobuf-net" preserve="all" />
+  <assembly fullname="protobuf-net.Core" preserve="all" />
+</linker>

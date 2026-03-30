@@ -12,21 +12,28 @@ using System.IO.Compression;
 using UnityEngine.Networking;
 using System.Collections.Generic;
 using ProtoBuf;
+using UnityEngine.Scripting;
+using System.Collections;
 
+[Preserve]
 [ProtoContract]
 public class ClassifiedPointProto
 {
-    [ProtoMember(1)]
-    public float x { get; set; }
+    [Preserve]
+    [ProtoMember(1, IsRequired = true)]
+    public float x;
 
-    [ProtoMember(2)]
-    public float y { get; set; }
+    [Preserve]
+    [ProtoMember(2, IsRequired = true)]
+    public float y;
 
-    [ProtoMember(3)]
-    public float z { get; set; }
+    [Preserve]
+    [ProtoMember(3, IsRequired = true)]
+    public float z;
 
-    [ProtoMember(4)]
-    public int c { get; set; } = -1;
+    [Preserve]
+    [ProtoMember(4, IsRequired = true)]
+    public int c = -1;
 
     public ClassifiedPointProto() { }
 
@@ -39,11 +46,13 @@ public class ClassifiedPointProto
     }
 }
 
+[Preserve]
 [ProtoContract]
 public class PointCloudProto
 {
-    [ProtoMember(1)]
-    public List<ClassifiedPointProto> points { get; set; } = new();
+    [Preserve]
+    [ProtoMember(1, IsRequired = true)]
+    public List<ClassifiedPointProto> points = new();
 }
 
 [Serializable]
@@ -147,7 +156,7 @@ public class MainMenuScript : MonoBehaviour
         Debug.Log("Mesh saved.");
     }
 
-    private async void Send2Remote() {
+    private void Send2Remote() {
         string urlToUse = (processingUrl ?? string.Empty).Trim();
         string meshFilePath = string.Format("{0}/{1}/{1}_mesh.txt", savingPath, session);
 
@@ -156,109 +165,106 @@ public class MainMenuScript : MonoBehaviour
             return;
         }
 
-        // Read file on background thread to avoid freezing main thread with large files
-        List<ClassifiedPointProto> pts = await Task.Run(() =>
-        {
-            List<ClassifiedPointProto> pts = new();
-            // using StreamReader reader = new StreamReader(meshFilePath);
-            // string line;
-            // while ((line = reader.ReadLine()) != null)
-            // {
-            //     var coords = line.Split(',');
-            //     pts.Add(new ClassifiedPointProto(
-            //         float.Parse(coords[0], CultureInfo.InvariantCulture),
-            //         float.Parse(coords[1], CultureInfo.InvariantCulture),
-            //         float.Parse(coords[2], CultureInfo.InvariantCulture),
-            //         -1));
-            // }
+        // Build dummy points (all on main thread — no Task.Run)
+        List<ClassifiedPointProto> pts = new();
+        // using StreamReader reader = new StreamReader(meshFilePath);
+        // string line;
+        // while ((line = reader.ReadLine()) != null)
+        // {
+        //     var coords = line.Split(',');
+        //     pts.Add(new ClassifiedPointProto(
+        //         float.Parse(coords[0], CultureInfo.InvariantCulture),
+        //         float.Parse(coords[1], CultureInfo.InvariantCulture),
+        //         float.Parse(coords[2], CultureInfo.InvariantCulture),
+        //         -1));
+        // }
+        for (int i = 0; i < 150; i++) {
+            pts.Add(new ClassifiedPointProto((float)(i*4%6*0.9),(float)(i*6%2*1.02),(float)(i*3.5%6*1.29), -1));
+        }
 
-            for (int i = 0; i < 150; i++) {
-                pts.Add(new ClassifiedPointProto((float)(i*4%6*0.9),(float)(i*6%2*1.02),(float)(i*3.5%6*1.29), -1));
-            }
-
-            return pts;
-        });
-
-        if (pts.Count == 0)
-        {
+        if (pts.Count == 0) {
             Debug.Log("Remote process skipped: point cloud is empty.");
             return;
         }
 
-        Debug.Log($"Loaded {pts.Count} vertices from saved mesh file. Serializing on main thread...");
+        Debug.Log($"Loaded {pts.Count} vertices. Serializing...");
 
-        // Serialize on main thread to avoid byte array reference issues with UploadHandlerRaw on UWP IL2CPP
         byte[] binaryData;
-        PointCloudProto payload = new() { points = pts };
-        using (MemoryStream stream = new())
-        {
-            ProtoBuf.Serializer.Serialize(stream, payload);
+        using (MemoryStream stream = new MemoryStream()) {
+            ProtoBuf.Serializer.Serialize(stream, new PointCloudProto { points = pts });
             binaryData = stream.ToArray();
         }
 
-        if (binaryData == null)
+        if (binaryData == null || binaryData.Length == 0)
         {
-            Debug.Log("Remote process skipped: point cloud is empty.");
+            Debug.LogError($"ERROR: Serialized payload is 0 bytes. Check link.xml IL2CPP stripping and protobuf asset preservation.");
             return;
         }
 
-        // Prepare request information
-        Debug.Log($"Sending {binaryData.Length} bytes to remote server: {urlToUse}");
-        using var request = new UnityWebRequest(urlToUse, UnityWebRequest.kHttpVerbPOST);
+        int threadId = System.Threading.Thread.CurrentThread.ManagedThreadId;
+        Debug.Log($"[Send2Remote] Thread: {threadId}, Payload: {binaryData.Length} bytes");
+
+        // Validate payload shape locally before sending to isolate transport issues.
+        try
+        {
+            using MemoryStream validateStream = new MemoryStream(binaryData);
+            PointCloudProto localPayload = ProtoBuf.Serializer.Deserialize<PointCloudProto>(validateStream);
+            int count = localPayload?.points?.Count ?? 0;
+            Debug.Log($"[Send2Remote] Local protobuf round-trip count: {count}");
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"[Send2Remote] Local protobuf round-trip failed: {e.Message}");
+            return;
+        }
+
+        Debug.Log($"Sending {binaryData.Length} bytes to {urlToUse}");
+        SessionManager.Instance.RunCoroutine(SendCoroutine(binaryData, urlToUse));
+    }
+
+    private IEnumerator SendCoroutine(byte[] binaryData, string urlToUse) {
+        using UnityWebRequest request = new UnityWebRequest(urlToUse, UnityWebRequest.kHttpVerbPOST);
         request.uploadHandler = new UploadHandlerRaw(binaryData);
         request.uploadHandler.contentType = "application/x-protobuf";
         request.downloadHandler = new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/x-protobuf");
-        request.SetRequestHeader("Accept", "application/x-protobuf");
+        request.SetRequestHeader("X-Payload-Bytes", binaryData.Length.ToString());
         request.chunkedTransfer = false;
         request.useHttpContinue = false;
-        request.redirectLimit = 0;
         request.timeout = 60;
         request.certificateHandler = new AcceptAllCertificates();
         request.disposeCertificateHandlerOnDispose = true;
 
-            // Poll isDone instead of relying on AsyncOperation.completed, which does not fire
-            // reliably on UWP IL2CPP (deployed HoloLens). The completed event works in the Unity
-            // editor / Holographic Remoting (Mono) but silently stalls on IL2CPP UWP builds.
-            UnityWebRequestAsyncOperation operation = request.SendWebRequest();
-            while (!operation.isDone)
-            {
-                await Task.Yield();
-            }
+        yield return request.SendWebRequest();  // Unity's native, main-thread, all-platform safe pattern
 
-        if (request.result != UnityWebRequest.Result.Success)
-        {
+        if (request.result != UnityWebRequest.Result.Success) {
             Debug.LogError($"Remote request failed: {request.error} (result: {request.result}, HTTP {request.responseCode}, URL: {urlToUse})");
-            return;
+            yield break;
+        }
+
+        if (request.responseCode >= 300 && request.responseCode < 400)
+        {
+            string location = request.GetResponseHeader("Location");
+            Debug.LogWarning($"Remote request redirected (HTTP {request.responseCode}) to: {location}");
+            yield break;
         }
 
         byte[] responseData = request.downloadHandler.data;
-        if (responseData == null || responseData.Length == 0)
-        {
+        if (responseData == null || responseData.Length == 0) {
             Debug.LogWarning("Server returned empty response.");
-            return;
+            yield break;
         }
 
-        try
-        {
-            PointCloudProto response = await Task.Run(() =>
-            {
-                using MemoryStream stream = new(responseData);
-                return ProtoBuf.Serializer.Deserialize<PointCloudProto>(stream);
-            });
-
+        try {
+            using MemoryStream stream = new MemoryStream(responseData);
+            PointCloudProto response = ProtoBuf.Serializer.Deserialize<PointCloudProto>(stream);
             latestClassifiedPoints.Clear();
-            foreach (ClassifiedPointProto point in response.points)
-            {
-                latestClassifiedPoints.Add(new ClassifiedPoint(
-                    new Vector3(point.x, point.y, point.z),
-                    point.c));
+            foreach (ClassifiedPointProto point in response.points) {
+                latestClassifiedPoints.Add(new ClassifiedPoint(new Vector3(point.x, point.y, point.z), point.c));
             }
-
             Debug.Log($"Remote response received with {latestClassifiedPoints.Count(p => p.pointClass != -1)}/{latestClassifiedPoints.Count} classified points.");
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             Debug.LogError($"Response deserialization failed: {e.Message}");
         }
     }
