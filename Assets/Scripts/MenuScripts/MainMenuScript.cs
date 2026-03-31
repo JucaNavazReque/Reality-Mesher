@@ -15,6 +15,10 @@ using ProtoBuf;
 using UnityEngine.Scripting;
 using System.Collections;
 
+#if ENABLE_WINMD_SUPPORT
+using Windows.Foundation.Diagnostics;
+#endif
+
 [Preserve]
 [ProtoContract]
 public class ClassifiedPointProto
@@ -68,9 +72,12 @@ public class ClassifiedPoint
     }
 }
 
-
 public class MainMenuScript : MonoBehaviour
 {
+#if ENABLE_WINMD_SUPPORT
+    LoggingChannel lc = new LoggingChannel("RealityMesherLogger", null, new Guid("2df964bb-cd29-4ac0-a462-59b4c484ae3d"));
+#endif
+
     public DialogPool dialogPool;
     [HideInInspector]
     public string session;
@@ -116,6 +123,9 @@ public class MainMenuScript : MonoBehaviour
         }
         else {
             Debug.Log("No remaining markers to delete.");
+            #if ENABLE_WINMD_SUPPORT
+                lc.LogMessage("No remaining markers to delete.");
+            #endif
         }
     }
 
@@ -147,6 +157,9 @@ public class MainMenuScript : MonoBehaviour
             }
         }
         Debug.Log("Tag markers saved.");
+        #if ENABLE_WINMD_SUPPORT
+            lc.LogMessage("Tag markers saved.");
+        #endif
     }
 
     // Saves the mesh of the environment. Format: x,y,z
@@ -154,6 +167,9 @@ public class MainMenuScript : MonoBehaviour
         Vector3[] vertices = GetPointCloud();
         await Task.Run(() => MeshWriter(savingPath, vertices));
         Debug.Log("Mesh saved.");
+        #if ENABLE_WINMD_SUPPORT
+            lc.LogMessage("Mesh saved.");
+        #endif
     }
 
     private void Send2Remote() {
@@ -162,6 +178,9 @@ public class MainMenuScript : MonoBehaviour
 
         if (!File.Exists(meshFilePath)) {
             Debug.Log("Remote process skipped: no mesh has been saved yet.");
+            #if ENABLE_WINMD_SUPPORT
+                lc.LogMessage("Remote process skipped: no mesh has been saved yet.");
+            #endif
             return;
         }
 
@@ -184,10 +203,16 @@ public class MainMenuScript : MonoBehaviour
 
         if (pts.Count == 0) {
             Debug.Log("Remote process skipped: point cloud is empty.");
+            #if ENABLE_WINMD_SUPPORT
+                lc.LogMessage("Remote process skipped: point cloud is empty.");
+            #endif
             return;
         }
 
         Debug.Log($"Loaded {pts.Count} vertices. Serializing...");
+        #if ENABLE_WINMD_SUPPORT
+            lc.LogMessage($"Loaded {pts.Count} vertices. Serializing...");
+        #endif
 
         byte[] binaryData;
         using (MemoryStream stream = new MemoryStream()) {
@@ -198,11 +223,18 @@ public class MainMenuScript : MonoBehaviour
         if (binaryData == null || binaryData.Length == 0)
         {
             Debug.LogError($"ERROR: Serialized payload is 0 bytes. Check link.xml IL2CPP stripping and protobuf asset preservation.");
+            #if ENABLE_WINMD_SUPPORT
+                lc.LogMessage("ERROR: Serialized payload is 0 bytes. Check link.xml IL2CPP stripping and protobuf asset preservation.");
+            #endif
+
             return;
         }
 
         int threadId = System.Threading.Thread.CurrentThread.ManagedThreadId;
         Debug.Log($"[Send2Remote] Thread: {threadId}, Payload: {binaryData.Length} bytes");
+        #if ENABLE_WINMD_SUPPORT
+            lc.LogMessage($"[Send2Remote] Thread: {threadId}, Payload: {binaryData.Length} bytes");
+        #endif
 
         // Validate payload shape locally before sending to isolate transport issues.
         try
@@ -211,14 +243,23 @@ public class MainMenuScript : MonoBehaviour
             PointCloudProto localPayload = ProtoBuf.Serializer.Deserialize<PointCloudProto>(validateStream);
             int count = localPayload?.points?.Count ?? 0;
             Debug.Log($"[Send2Remote] Local protobuf round-trip count: {count}");
+            #if ENABLE_WINMD_SUPPORT
+                lc.LogMessage($"[Send2Remote] Local protobuf round-trip count: {count}");
+            #endif
         }
         catch (Exception e)
         {
             Debug.LogError($"[Send2Remote] Local protobuf round-trip failed: {e.Message}");
+            #if ENABLE_WINMD_SUPPORT
+                lc.LogMessage($"[Send2Remote] Local protobuf round-trip failed: {e.Message}");
+            #endif
             return;
         }
 
         Debug.Log($"Sending {binaryData.Length} bytes to {urlToUse}");
+        #if ENABLE_WINMD_SUPPORT
+            lc.LogMessage($"Sending {binaryData.Length} bytes to {urlToUse}");
+        #endif
         SessionManager.Instance.RunCoroutine(SendCoroutine(binaryData, urlToUse));
     }
 
@@ -239,6 +280,9 @@ public class MainMenuScript : MonoBehaviour
 
         if (request.result != UnityWebRequest.Result.Success) {
             Debug.LogError($"Remote request failed: {request.error} (result: {request.result}, HTTP {request.responseCode}, URL: {urlToUse})");
+            #if ENABLE_WINMD_SUPPORT
+                lc.LogMessage($"Remote request failed: {request.error} (result: {request.result}, HTTP {request.responseCode}, URL: {urlToUse})");
+            #endif
             yield break;
         }
 
@@ -246,12 +290,18 @@ public class MainMenuScript : MonoBehaviour
         {
             string location = request.GetResponseHeader("Location");
             Debug.LogWarning($"Remote request redirected (HTTP {request.responseCode}) to: {location}");
+            #if ENABLE_WINMD_SUPPORT
+                lc.LogMessage($"Remote request redirected (HTTP {request.responseCode}) to: {location}");
+            #endif
             yield break;
         }
 
         byte[] responseData = request.downloadHandler.data;
         if (responseData == null || responseData.Length == 0) {
             Debug.LogWarning("Server returned empty response.");
+            #if ENABLE_WINMD_SUPPORT
+                lc.LogMessage("Server returned empty response.");
+            #endif
             yield break;
         }
 
@@ -263,9 +313,15 @@ public class MainMenuScript : MonoBehaviour
                 latestClassifiedPoints.Add(new ClassifiedPoint(new Vector3(point.x, point.y, point.z), point.c));
             }
             Debug.Log($"Remote response received with {latestClassifiedPoints.Count(p => p.pointClass != -1)}/{latestClassifiedPoints.Count} classified points.");
+            #if ENABLE_WINMD_SUPPORT
+                lc.LogMessage($"Remote response received with {latestClassifiedPoints.Count(p => p.pointClass != -1)}/{latestClassifiedPoints.Count} classified points.");
+            #endif
         }
         catch (Exception e) {
             Debug.LogError($"Response deserialization failed: {e.Message}");
+            #if ENABLE_WINMD_SUPPORT
+                lc.LogMessage($"Response deserialization failed: {e.Message}");
+            #endif
         }
     }
 
@@ -273,15 +329,26 @@ public class MainMenuScript : MonoBehaviour
     // Used for saving the environment and sending it to remote.
     private Vector3[] GetPointCloud() {
         Debug.Log("Generating point cloud...");
+        #if ENABLE_WINMD_SUPPORT
+            lc.LogMessage("Generating point cloud...");
+        #endif
         meshFilters = meshParent.GetComponentsInChildren<MeshFilter>();
         if (meshFilters.Length == 0) {
             Debug.Log("No mesh found to save.");
+            #if ENABLE_WINMD_SUPPORT
+                lc.LogMessage("No mesh found to save.");
+            #endif
+
             return Array.Empty<Vector3>();
         }
         combine = new CombineInstance[meshFilters.Length];
         MeshCombiner(meshFilters, ref combine);
         combinedMesh.CombineMeshes(combine);
-        Debug.Log("Point cloud generated with " + combinedMesh.vertexCount + " vertices.");
+        Debug.Log($"Point cloud generated with {combinedMesh.vertexCount} vertices.");
+        #if ENABLE_WINMD_SUPPORT
+            lc.LogMessage($"Point cloud generated with {combinedMesh.vertexCount} vertices.");
+        #endif
+
         return combinedMesh.vertices;
     }
 
@@ -329,7 +396,10 @@ public class MainMenuScript : MonoBehaviour
 
             // Activate the camera
             captureObject.StartPhotoModeAsync(c, delegate (PhotoCapture.PhotoCaptureResult result) {
-                Debug.Log("Taking Picture...");
+                Debug.Log("Taking picture...");
+                #if ENABLE_WINMD_SUPPORT
+                    lc.LogMessage("Taking picture...");
+                #endif
                 Matrix4x4 localPos = Camera.main.transform.localToWorldMatrix;
                 string matrixString = localPos.ToString().Replace("\n", ",").Replace("\t", ",");
                 matrixString = matrixString[..^1];
@@ -388,6 +458,9 @@ public class MainMenuScript : MonoBehaviour
         }
 
         Debug.Log("Saved picture.");
+        #if ENABLE_WINMD_SUPPORT
+            lc.LogMessage("Saved picture.");
+        #endif
         photoCaptureObject.StopPhotoModeAsync(OnStoppedPhotoMode);
     }
 
