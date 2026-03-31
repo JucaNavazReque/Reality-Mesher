@@ -10,9 +10,16 @@ using MixedReality.Toolkit.UX;
 using System.Threading.Tasks;
 using System.IO.Compression;
 
+#if ENABLE_WINMD_SUPPORT
+using Windows.Foundation.Diagnostics;
+#endif
 
 public class MainMenuScript : MonoBehaviour
 {
+#if ENABLE_WINMD_SUPPORT
+    LoggingChannel lc = new LoggingChannel("RealityMesherLogger", null, new Guid("2df964bb-cd29-4ac0-a462-59b4c484ae3d"));
+#endif
+
     public DialogPool dialogPool;
     [HideInInspector]
     public string session;
@@ -51,6 +58,9 @@ public class MainMenuScript : MonoBehaviour
         }
         else {
             Debug.Log("No remaining markers to delete.");
+            #if ENABLE_WINMD_SUPPORT
+                lc.LogMessage("No remaining markers to delete.");
+            #endif
         }
     }
 
@@ -72,14 +82,23 @@ public class MainMenuScript : MonoBehaviour
             }
         }
         Debug.Log("Tag markers saved.");
+        #if ENABLE_WINMD_SUPPORT
+            lc.LogMessage("Tag markers saved.");
+        #endif
     }
 
     // Saves the mesh of the environment. Format: x,y,z
     private async void SaveMesh() {
         Debug.Log("Saving mesh...");
+        #if ENABLE_WINMD_SUPPORT
+            lc.LogMessage("Saving mesh...");
+        #endif
         meshFilters = meshParent.GetComponentsInChildren<MeshFilter>();
         if (meshFilters.Length == 0) {
             Debug.Log("No mesh found to save.");
+            #if ENABLE_WINMD_SUPPORT
+                lc.LogMessage("No mesh found to save.");
+            #endif
             return;
         }
         combine = new CombineInstance[meshFilters.Length];
@@ -89,6 +108,9 @@ public class MainMenuScript : MonoBehaviour
         Vector3[] vertices = combinedMesh.vertices;
         await Task.Run(() => MeshWriter(savingPath, vertices));
         Debug.Log("Mesh saved.");
+        #if ENABLE_WINMD_SUPPORT
+            lc.LogMessage("Mesh saved.");
+        #endif
     }
 
     private void MeshCombiner(MeshFilter[] meshFilters, ref CombineInstance[] combine) {
@@ -135,7 +157,10 @@ public class MainMenuScript : MonoBehaviour
 
             // Activate the camera
             captureObject.StartPhotoModeAsync(c, delegate (PhotoCapture.PhotoCaptureResult result) {
-                Debug.Log("Taking Picture...");
+                Debug.Log("Taking picture...");
+                #if ENABLE_WINMD_SUPPORT
+                    lc.LogMessage("Taking picture...");
+                #endif
                 Matrix4x4 localPos = Camera.main.transform.localToWorldMatrix;
                 string matrixString = localPos.ToString().Replace("\n", ",").Replace("\t", ",");
                 matrixString = matrixString[..^1];
@@ -194,6 +219,9 @@ public class MainMenuScript : MonoBehaviour
         }
 
         Debug.Log("Saved picture.");
+        #if ENABLE_WINMD_SUPPORT
+            lc.LogMessage("Saved picture.");
+        #endif
         photoCaptureObject.StopPhotoModeAsync(OnStoppedPhotoMode);
     }
 
