@@ -11,9 +11,11 @@ using System.Threading.Tasks;
 using System.IO.Compression;
 using UnityEngine.Networking;
 using System.Collections.Generic;
+using ProtoBuf;
 using ProtoBuf.Meta;
 using System.Reflection;
 using System.Collections;
+using UnityEngine.Scripting;
 using ProtoContracts;
 
 #if ENABLE_WINMD_SUPPORT
@@ -33,8 +35,44 @@ public class ClassifiedPoint
     }
 }
 
+[Preserve]
+[ProtoContract]
+public class LocalClassifiedPointProto
+{
+    [Preserve]
+    [ProtoMember(1, IsRequired = true)]
+    public float X;
+
+    [Preserve]
+    [ProtoMember(2, IsRequired = true)]
+    public float Y;
+
+    [Preserve]
+    [ProtoMember(3, IsRequired = true)]
+    public float Z;
+
+    [Preserve]
+    [ProtoMember(4, IsRequired = true)]
+    public int C = -1;
+}
+
+[Preserve]
+[ProtoContract]
+public class LocalPointCloudProto
+{
+    [Preserve]
+    [ProtoMember(1, IsRequired = true)]
+    public List<LocalClassifiedPointProto> Vectors = new();
+}
+
 public class MainMenuScript : MonoBehaviour
 {
+    private enum ProtoSerializationMode
+    {
+        LocalDecorated = 0,
+        ExternalPrecompiled = 1
+    }
+
     private void Log(string message, int level = 0)
     {
         if (level == 2)
@@ -62,9 +100,79 @@ public class MainMenuScript : MonoBehaviour
         }
     }
 
-    private static string _modelSelection = "runtime fallback";
-    private static string _modelSelectionReason = "precompiled model not found";
-    private static readonly TypeModel ProtobufModel = BuildPreferredModel();
+    private static string _modelSelection = "not initialized";
+    private static string _modelSelectionReason = "model not initialized";
+    private static TypeModel _protobufModel;
+    private static bool _modelInitAttempted;
+    private static RuntimeTypeModel _localDecoratedModel;
+    private static bool _localModelInitAttempted;
+    private static string _localModelReason = "model not initialized";
+
+    [SerializeField] private ProtoSerializationMode serializationMode = ProtoSerializationMode.LocalDecorated;
+
+    private static bool TryGetLocalDecoratedModel(out RuntimeTypeModel model)
+    {
+        if (_localDecoratedModel != null)
+        {
+            model = _localDecoratedModel;
+            return true;
+        }
+
+        if (_localModelInitAttempted)
+        {
+            model = null;
+            return false;
+        }
+
+        _localModelInitAttempted = true;
+
+        try
+        {
+            _localDecoratedModel = BuildLocalDecoratedModel();
+            _localModelReason = "ok";
+            model = _localDecoratedModel;
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Exception root = ex.InnerException ?? ex;
+            _localModelReason = $"{root.GetType().Name}: {root.Message}";
+            model = null;
+            return false;
+        }
+    }
+
+    private static bool TryGetProtobufModel(out TypeModel model)
+    {
+        if (_protobufModel != null)
+        {
+            model = _protobufModel;
+            return true;
+        }
+
+        if (_modelInitAttempted)
+        {
+            model = null;
+            return false;
+        }
+
+        _modelInitAttempted = true;
+
+        try
+        {
+            _protobufModel = BuildPreferredModel();
+            model = _protobufModel;
+            return model != null;
+        }
+        catch (Exception ex)
+        {
+            Exception root = ex.InnerException ?? ex;
+            _modelSelection = "initialization failed";
+            _modelSelectionReason = $"{root.GetType().Name}: {root.Message}";
+            model = null;
+            return false;
+        }
+    }
 
     private static TypeModel BuildPreferredModel()
     {
@@ -121,32 +229,144 @@ public class MainMenuScript : MonoBehaviour
         return model;
     }
 
-    private byte[] SerializePointCloud(PointCloudProto payload)
+    private static RuntimeTypeModel BuildLocalDecoratedModel()
     {
-        float startTime = Time.realtimeSinceStartup;
+        RuntimeTypeModel model = RuntimeTypeModel.Create();
+        model.AutoAddMissingTypes = false;
+
+        MetaType pointType = model.Add(typeof(LocalClassifiedPointProto), false);
+        pointType.Add(1, nameof(LocalClassifiedPointProto.X));
+        pointType.Add(2, nameof(LocalClassifiedPointProto.Y));
+        pointType.Add(3, nameof(LocalClassifiedPointProto.Z));
+        pointType.Add(4, nameof(LocalClassifiedPointProto.C));
+
+        MetaType cloudType = model.Add(typeof(LocalPointCloudProto), false);
+        cloudType.Add(1, nameof(LocalPointCloudProto.Vectors));
+
+        return model;
+    }
+
+    private byte[] SerializePointCloud(List<ClassifiedPoint> points)
+    {
+        if (serializationMode == ProtoSerializationMode.LocalDecorated)
+        {
+            try
+            {
+                if (!TryGetLocalDecoratedModel(out RuntimeTypeModel localModel) || localModel == null)
+                {
+                    Log($"Serialization failed (LocalDecorated): no model available ({_localModelReason}).", 2);
+                    return Array.Empty<byte>();
+                }
+
+                LocalPointCloudProto payload = new LocalPointCloudProto();
+                foreach (ClassifiedPoint point in points)
+                {
+                    payload.Vectors.Add(new LocalClassifiedPointProto
+                    {
+                        X = point.position.x,
+                        Y = point.position.y,
+                        Z = point.position.z,
+                        C = point.pointClass
+                    });
+                }
+
+                using MemoryStream stream = new MemoryStream();
+                localModel.Serialize(stream, payload);
+                return stream.ToArray();
+            }
+            catch (Exception ex)
+            {
+                Exception root = ex.InnerException ?? ex;
+                Log($"Serialization failed (LocalDecorated): {root.GetType().Name}: {root.Message}", 2);
+                return Array.Empty<byte>();
+            }
+        }
 
         try
         {
-            Log("[Serialize] Step 1/3: Resolving protobuf model...");
-            TypeModel model = ProtobufModel;
-            Log($"[Serialize] Step 2/3: Model resolved: {model.GetType().FullName}");
+            if (!TryGetProtobufModel(out TypeModel model) || model == null)
+            {
+                Log($"Serialization failed (ExternalPrecompiled): no protobuf model available ({_modelSelectionReason}).", 2);
+                return Array.Empty<byte>();
+            }
+
+            PointCloudProto payload = new PointCloudProto { Vectors = new List<ClassifiedPointProto>() };
+            foreach (ClassifiedPoint point in points)
+            {
+                payload.Vectors.Add(new ClassifiedPointProto
+                {
+                    X = point.position.x,
+                    Y = point.position.y,
+                    Z = point.position.z,
+                    C = point.pointClass
+                });
+            }
 
             using MemoryStream stream = new MemoryStream();
-            Log("[Serialize] Step 3/3: Invoking model serialize...");
             model.Serialize(stream, payload);
-            byte[] bytes = stream.ToArray();
-
-            float ms = (Time.realtimeSinceStartup - startTime) * 1000f;
-            Log($"[Serialize] Model serialize completed in {ms:F1} ms ({bytes.Length} bytes).");
-            return bytes;
+            return stream.ToArray();
         }
         catch (Exception ex)
         {
             Exception root = ex.InnerException ?? ex;
-            Log($"[Serialize] Model serialize failed: {root.GetType().Name}: {root.Message}", 2);
+            Log($"Serialization failed (ExternalPrecompiled): {root.GetType().Name}: {root.Message}", 2);
         }
 
         return Array.Empty<byte>();
+    }
+
+    private bool TryDeserializePointCloud(byte[] responseData)
+    {
+        if (serializationMode == ProtoSerializationMode.LocalDecorated)
+        {
+            try
+            {
+                if (!TryGetLocalDecoratedModel(out RuntimeTypeModel localModel) || localModel == null)
+                {
+                    Log($"Deserialization failed (LocalDecorated): no model available ({_localModelReason}).", 2);
+                    return false;
+                }
+
+                using MemoryStream stream = new MemoryStream(responseData);
+                LocalPointCloudProto response = (LocalPointCloudProto)localModel.Deserialize(stream, null, typeof(LocalPointCloudProto));
+                latestClassifiedPoints.Clear();
+                foreach (LocalClassifiedPointProto point in response.Vectors)
+                {
+                    latestClassifiedPoints.Add(new ClassifiedPoint(new Vector3(point.X, point.Y, point.Z), point.C));
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Exception root = ex.InnerException ?? ex;
+                Log($"Deserialization failed (LocalDecorated): {root.GetType().Name}: {root.Message}", 2);
+                return false;
+            }
+        }
+
+        try
+        {
+            if (!TryGetProtobufModel(out TypeModel model) || model == null)
+            {
+                Log($"Deserialization failed (ExternalPrecompiled): no protobuf model available ({_modelSelectionReason}).", 2);
+                return false;
+            }
+
+            using MemoryStream stream = new MemoryStream(responseData);
+            PointCloudProto response = (PointCloudProto)model.Deserialize(stream, null, typeof(PointCloudProto));
+            latestClassifiedPoints.Clear();
+            foreach (ClassifiedPointProto point in response.Vectors)
+            {
+                latestClassifiedPoints.Add(new ClassifiedPoint(new Vector3(point.X, point.Y, point.Z), point.C));
+            }
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Exception root = ex.InnerException ?? ex;
+            Log($"Deserialization failed (ExternalPrecompiled): {root.GetType().Name}: {root.Message}", 2);
+            return false;
+        }
     }
 
 #if ENABLE_WINMD_SUPPORT
@@ -170,7 +390,21 @@ public class MainMenuScript : MonoBehaviour
 
     public void Start()
     {
-        Log($"[ProtoModel] Using {_modelSelection} model ({_modelSelectionReason}).");
+        if (serializationMode == ProtoSerializationMode.ExternalPrecompiled)
+        {
+            if (_modelSelection == "not initialized")
+            {
+                // Attempt initialization once at startup, but keep app functional if it fails.
+                TryGetProtobufModel(out _);
+            }
+
+            Log($"[ProtoModel] Mode: ExternalPrecompiled ({_modelSelectionReason}).");
+        }
+        else
+        {
+            TryGetLocalDecoratedModel(out _);
+            Log($"[ProtoModel] Mode: LocalDecorated ({_localModelReason}).");
+        }
 
         if (string.IsNullOrEmpty(session))
         {
@@ -250,7 +484,7 @@ public class MainMenuScript : MonoBehaviour
 //         }
 
         // Build dummy points (all on main thread — no Task.Run)
-        List<ClassifiedPointProto> pts = new();
+        List<ClassifiedPoint> pts = new();
         // using StreamReader reader = new StreamReader(meshFilePath);
         // string line;
         // while ((line = reader.ReadLine()) != null)
@@ -263,12 +497,9 @@ public class MainMenuScript : MonoBehaviour
         //         -1));
         // }
         for (int i = 0; i < 150; i++) {
-            pts.Add(new ClassifiedPointProto {
-                X = (float)(i * 4 % 6 * 0.9),
-                Y = (float)(i * 6 % 2 * 1.02),
-                Z = (float)(i * 3.5 % 6 * 1.29),
-                C = -1
-            });
+            pts.Add(new ClassifiedPoint(
+                new Vector3((float)(i * 4 % 6 * 0.9), (float)(i * 6 % 2 * 1.02), (float)(i * 3.5 % 6 * 1.29)),
+                -1));
         }
 
 //         if (pts.Count == 0) {
@@ -278,7 +509,7 @@ public class MainMenuScript : MonoBehaviour
 
         Log($"Loaded {pts.Count} vertices. Serializing...");
 
-        byte[] binaryData = SerializePointCloud(new PointCloudProto { Vectors = pts });
+        byte[] binaryData = SerializePointCloud(pts);
 
         if (binaryData == null || binaryData.Length == 0)
         {
@@ -324,12 +555,11 @@ public class MainMenuScript : MonoBehaviour
         }
 
         try {
-            using MemoryStream stream = new MemoryStream(responseData);
-            PointCloudProto response = (PointCloudProto)ProtobufModel.Deserialize(stream, null, typeof(PointCloudProto));
-            latestClassifiedPoints.Clear();
-            foreach (ClassifiedPointProto point in response.Vectors) {
-                latestClassifiedPoints.Add(new ClassifiedPoint(new Vector3(point.X, point.Y, point.Z), point.C));
+            if (!TryDeserializePointCloud(responseData))
+            {
+                yield break;
             }
+
             int classifiedCount = latestClassifiedPoints.Count(p => p.pointClass != -1);
             Log($"Response received: {classifiedCount}/{latestClassifiedPoints.Count} classified points.");
         }
