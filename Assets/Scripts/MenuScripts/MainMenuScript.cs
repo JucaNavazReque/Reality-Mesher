@@ -16,6 +16,34 @@ using Windows.Foundation.Diagnostics;
 
 public class MainMenuScript : MonoBehaviour
 {
+
+        private void Log(string message, int level = 0)
+    {
+        if (level == 2)
+        {
+            Debug.LogError(message);
+            #if ENABLE_WINMD_SUPPORT
+            lc.LogMessage(message, LoggingLevel.Error);
+            #endif
+
+        }
+        else if (level == 1)
+        {
+            Debug.LogWarning(message);
+            #if ENABLE_WINMD_SUPPORT
+            lc.LogMessage(message, LoggingLevel.Warning);
+            #endif
+        }
+        else
+        {
+            Debug.Log(message);
+            #if ENABLE_WINMD_SUPPORT
+            lc.LogMessage(message);
+            #endif
+
+        }
+    }
+
 #if ENABLE_WINMD_SUPPORT
     LoggingChannel lc = new LoggingChannel("RealityMesherLogger", null, new Guid("2df964bb-cd29-4ac0-a462-59b4c484ae3d"));
 #endif
@@ -57,10 +85,7 @@ public class MainMenuScript : MonoBehaviour
             Destroy(lastMarker);
         }
         else {
-            Debug.Log("No remaining markers to delete.");
-            #if ENABLE_WINMD_SUPPORT
-                lc.LogMessage("No remaining markers to delete.");
-            #endif
+            Log("No remaining markers to delete.");
         }
     }
 
@@ -81,24 +106,15 @@ public class MainMenuScript : MonoBehaviour
                 markerWriter.WriteLine(string.Format(CultureInfo.InvariantCulture, "{0},{1},{2},{3}", marker.name, marker.transform.position.x.ToString("f3"), marker.transform.position.y.ToString("f3"), marker.transform.position.z.ToString("f3")));
             }
         }
-        Debug.Log("Tag markers saved.");
-        #if ENABLE_WINMD_SUPPORT
-            lc.LogMessage("Tag markers saved.");
-        #endif
+        Log("Tag markers saved.");
     }
 
     // Saves the mesh of the environment. Format: x,y,z
     private async void SaveMesh() {
-        Debug.Log("Saving mesh...");
-        #if ENABLE_WINMD_SUPPORT
-            lc.LogMessage("Saving mesh...");
-        #endif
+        Log("Saving mesh...");
         meshFilters = meshParent.GetComponentsInChildren<MeshFilter>();
         if (meshFilters.Length == 0) {
-            Debug.Log("No mesh found to save.");
-            #if ENABLE_WINMD_SUPPORT
-                lc.LogMessage("No mesh found to save.");
-            #endif
+            Log("No mesh found to save.");
             return;
         }
         combine = new CombineInstance[meshFilters.Length];
@@ -107,10 +123,7 @@ public class MainMenuScript : MonoBehaviour
         string savingPath = Application.persistentDataPath;
         Vector3[] vertices = combinedMesh.vertices;
         await Task.Run(() => MeshWriter(savingPath, vertices));
-        Debug.Log("Mesh saved.");
-        #if ENABLE_WINMD_SUPPORT
-            lc.LogMessage("Mesh saved.");
-        #endif
+        Log("Mesh saved.");
     }
 
     private void MeshCombiner(MeshFilter[] meshFilters, ref CombineInstance[] combine) {
@@ -157,10 +170,7 @@ public class MainMenuScript : MonoBehaviour
 
             // Activate the camera
             captureObject.StartPhotoModeAsync(c, delegate (PhotoCapture.PhotoCaptureResult result) {
-                Debug.Log("Taking picture...");
-                #if ENABLE_WINMD_SUPPORT
-                    lc.LogMessage("Taking picture...");
-                #endif
+                Log("Taking picture...");
                 Matrix4x4 localPos = Camera.main.transform.localToWorldMatrix;
                 string matrixString = localPos.ToString().Replace("\n", ",").Replace("\t", ",");
                 matrixString = matrixString[..^1];
@@ -218,10 +228,7 @@ public class MainMenuScript : MonoBehaviour
             File.Move(tempZip, zipPath);
         }
 
-        Debug.Log("Saved picture.");
-        #if ENABLE_WINMD_SUPPORT
-            lc.LogMessage("Saved picture.");
-        #endif
+        Log("Saved picture.");
         photoCaptureObject.StopPhotoModeAsync(OnStoppedPhotoMode);
     }
 
