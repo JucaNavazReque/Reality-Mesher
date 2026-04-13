@@ -462,7 +462,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2381766503070149263, guid: e5b53b02ddc453d49a3a36a85164095f, type: 3}
       propertyPath: <OnClicked>k__BackingField.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SaveData
+      value: ManageData
       objectReference: {fileID: 0}
     - target: {fileID: 2381766503070149263, guid: e5b53b02ddc453d49a3a36a85164095f, type: 3}
       propertyPath: <OnClicked>k__BackingField.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
@@ -534,7 +534,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3095349753031523352, guid: e5b53b02ddc453d49a3a36a85164095f, type: 3}
       propertyPath: m_text
-      value: Save data
+      value: Manage data
       objectReference: {fileID: 0}
     - target: {fileID: 3095349753031523352, guid: e5b53b02ddc453d49a3a36a85164095f, type: 3}
       propertyPath: m_ActiveFontFeatures.Array.data[0]
@@ -546,7 +546,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3095349753484799464, guid: e5b53b02ddc453d49a3a36a85164095f, type: 3}
       propertyPath: m_Name
-      value: SaveButton
+      value: ManageDataButton
       objectReference: {fileID: 0}
     - target: {fileID: 3095349753484799464, guid: e5b53b02ddc453d49a3a36a85164095f, type: 3}
       propertyPath: m_IsActive
@@ -3544,6 +3544,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogPool: {fileID: 773826663}
   session: 
+  processingUrl: https://localhost:5000/hl2pcp
 --- !u!4 &530608096 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 463105470572649040, guid: 35f4f70e6c175f544a0f00654eedbf34, type: 3}

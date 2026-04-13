@@ -9,6 +9,8 @@ using System.Globalization;
 using MixedReality.Toolkit.UX;
 using System.Threading.Tasks;
 using System.IO.Compression;
+using UnityEngine.Networking;
+using Game.Network;
 
 #if ENABLE_WINMD_SUPPORT
 using Windows.Foundation.Diagnostics;
@@ -16,38 +18,6 @@ using Windows.Foundation.Diagnostics;
 
 public class MainMenuScript : MonoBehaviour
 {
-
-        private void Log(string message, int level = 0)
-    {
-        if (level == 2)
-        {
-            Debug.LogError(message);
-            #if ENABLE_WINMD_SUPPORT
-            lc.LogMessage(message, LoggingLevel.Error);
-            #endif
-
-        }
-        else if (level == 1)
-        {
-            Debug.LogWarning(message);
-            #if ENABLE_WINMD_SUPPORT
-            lc.LogMessage(message, LoggingLevel.Warning);
-            #endif
-        }
-        else
-        {
-            Debug.Log(message);
-            #if ENABLE_WINMD_SUPPORT
-            lc.LogMessage(message);
-            #endif
-
-        }
-    }
-
-#if ENABLE_WINMD_SUPPORT
-    LoggingChannel lc = new LoggingChannel("RealityMesherLogger", null, new Guid("2df964bb-cd29-4ac0-a462-59b4c484ae3d"));
-#endif
-
     public DialogPool dialogPool;
     [HideInInspector]
     public string session;
@@ -58,6 +28,35 @@ public class MainMenuScript : MonoBehaviour
     private string imagePath;
     private string zipPath;
     private int meshCount = 0;
+    [SerializeField] private string processingUrl;
+    [HideInInspector] string savingPath;
+
+#if ENABLE_WINMD_SUPPORT
+    LoggingChannel lc = new LoggingChannel("RealityMesherLogger", null, new Guid("2df964bb-cd29-4ac0-a462-59b4c484ae3d"));
+#endif
+    private enum LogType {Info, Warning, Error}
+    private void Log(string message, LogType level = LogType.Info)
+    {
+        if (level == LogType.Error) {
+            Debug.LogError(message);
+            #if ENABLE_WINMD_SUPPORT
+            lc.LogMessage(message, LoggingLevel.Error);
+            #endif
+        }
+        else if (level == LogType.Warning) {
+            Debug.LogWarning(message);
+            #if ENABLE_WINMD_SUPPORT
+            lc.LogMessage(message, LoggingLevel.Warning);
+            #endif
+        }
+        else {
+            Debug.Log(message);
+            #if ENABLE_WINMD_SUPPORT
+            lc.LogMessage(message);
+            #endif
+
+        }
+    }
 
     public void Start()
     {
@@ -67,6 +66,10 @@ public class MainMenuScript : MonoBehaviour
         }
         meshParent = GameObject.Find("Trackables");
         zipPath = string.Format("{0}/{1}/{1}_pictures.zip", Application.persistentDataPath, session);
+        
+        if (savingPath == "" || savingPath == null) {
+            savingPath = Application.persistentDataPath;
+        }
 
         // Register existing markers
         foreach (var marker in GameObject.FindGameObjectsWithTag("Marker"))
@@ -89,10 +92,19 @@ public class MainMenuScript : MonoBehaviour
         }
     }
 
-    public void SaveData() {
+    public void ManageData() {
+        IDialog dialog = dialogPool.Get()
+            .SetHeader("Manage data")
+            .SetBody("Select action")
+            .SetPositive("Save scan", _ => SaveScan())
+            .SetNegative("Remote process", _ => Send2Remote())
+            .SetNeutral("Cancel");
+        dialog.Show();
+    }
+    public void SaveScan() {
         IDialog dialog = dialogPool.Get()
             .SetHeader("Save data")
-            .SetBody("What data do you want to save?")
+            .SetBody("Select action")
             .SetPositive("Markers", _ => SaveMarkers())
             .SetNegative("Mesh", _ => SaveMesh())
             .SetNeutral("Cancel");
@@ -111,19 +123,23 @@ public class MainMenuScript : MonoBehaviour
 
     // Saves the mesh of the environment. Format: x,y,z
     private async void SaveMesh() {
-        Log("Saving mesh...");
+        Vector3[] vertices = GetPointCloud();
+        await Task.Run(() => MeshWriter(savingPath, vertices));
+        Log("Mesh saved.");
+    }
+
+    private Vector3[] GetPointCloud() {
+        Log("Generating point cloud...");
         meshFilters = meshParent.GetComponentsInChildren<MeshFilter>();
         if (meshFilters.Length == 0) {
             Log("No mesh found to save.");
-            return;
+            return Array.Empty<Vector3>();
         }
         combine = new CombineInstance[meshFilters.Length];
         MeshCombiner(meshFilters, ref combine);
         combinedMesh.CombineMeshes(combine);
-        string savingPath = Application.persistentDataPath;
-        Vector3[] vertices = combinedMesh.vertices;
-        await Task.Run(() => MeshWriter(savingPath, vertices));
-        Log("Mesh saved.");
+        Log($"Point cloud generated with {combinedMesh.vertexCount} vertices.");
+        return combinedMesh.vertices;
     }
 
     private void MeshCombiner(MeshFilter[] meshFilters, ref CombineInstance[] combine) {
@@ -235,5 +251,118 @@ public class MainMenuScript : MonoBehaviour
     private void OnStoppedPhotoMode(PhotoCapture.PhotoCaptureResult result) {
         photoCaptureObject.Dispose();
         photoCaptureObject = null;
+    }
+
+    private class AcceptAllCertificates : CertificateHandler
+    {
+        protected override bool ValidateCertificate(byte[] certificateData)
+        {
+            return true;
+        }
+    }
+
+    private async void Send2Remote() {
+        string urlTrimmed = processingUrl.Trim();
+        string meshFilePath = string.Format("{0}/{1}/{1}_mesh.txt", savingPath, session);
+
+        if (!File.Exists(meshFilePath)) {
+            Log("No environment has been saved yet.", LogType.Warning);
+        }
+
+        ClassifiedPointCloud pc = new ClassifiedPointCloud();
+        await Task.Run(async () =>
+        {
+            Log("Loading saved environment vertices...");
+            // using StreamReader reader = new StreamReader(meshFilePath);
+            // string line;
+            // while ((line = reader.ReadLine()) != null) // While loop is used to avoid loading the entire file into memory
+            // {
+            //     var coords = line.Split(',');
+            //     pc.point_cloud.Add(new Vector3(
+            //         float.Parse(coords[0], CultureInfo.InvariantCulture),
+            //         float.Parse(coords[1], CultureInfo.InvariantCulture),
+            //         float.Parse(coords[2], CultureInfo.InvariantCulture)
+            //     ));
+            //     pc.classification.Add((byte) 0); // c = 0 means unclassified, default for original points
+            // }
+            // DESCOMENTAR RETURN DEBAJO DE "if (pc.classification.Count == 0)".
+
+            for (int i = 0; i < 150; i++) {
+                pc.point_cloud.Add(new Vector3((float)(i*4%6*0.9),(float)(i*6%2*1.02),(float)(i*3.5%6*1.29))); // Dummy data to test with.
+                pc.classification.Add((byte) 0);
+            }
+        });
+        Log($"Loaded {pc.classification.Count} vertices from saved environment file.");
+
+        if (pc.classification.Count == 0)
+        {
+            Log("Point cloud is empty. Please save the environment before sending to remote processing.", LogType.Warning);
+            // return;
+        }
+        Log("Serializing data...");
+        byte[] binaryData = pc.Serialize();
+        Log("Data serialized.");
+
+        // Prepare request information
+        Log($"Sending {binaryData.Length} bytes to remote server: {urlTrimmed}");
+        using var request = new UnityWebRequest(urlTrimmed, UnityWebRequest.kHttpVerbPOST);
+        request.uploadHandler = new UploadHandlerRaw(binaryData);
+        request.downloadHandler = new DownloadHandlerBuffer();
+        // Certificate bypass (self-signed).
+        request.certificateHandler = new AcceptAllCertificates();
+        request.disposeCertificateHandlerOnDispose = true;
+
+        // Polling is preferred over AsyncOperation.completed since the latter is not reliable on IL2CPP builds.
+        UnityWebRequestAsyncOperation operation = request.SendWebRequest();
+        while (!operation.isDone) {await Task.Yield();}
+
+        if (request.result != UnityWebRequest.Result.Success)
+        {
+            Log($"Remote request failed: {request.error} (result: {request.result}, HTTP {request.responseCode}, URL: {urlTrimmed})", LogType.Error);
+            return;
+        }
+
+        byte[] responseData = request.downloadHandler.data;
+        if (responseData == null || responseData.Length == 0)
+        {
+            Log("Server returned empty response.", LogType.Warning);
+            return;
+        }
+
+        try
+        {
+            ClassifiedPointCloud response = await Task.Run(() =>
+            {
+                return ClassifiedPointCloud.Deserialize(responseData);
+            });
+
+            Log($"Remote response received with {response.classification.Count(p => p != 0)}/{response.classification.Count} classified points.");
+        }
+        catch (Exception e)
+        {
+            Log($"Response deserialization failed: {e.Message}",LogType.Error);
+        }
+
+        // // Create message
+        // var msg = new GameMessage();
+        // msg.PlayerId = 42;
+        // msg.Position = new Vector3(10f, 20f, 30f);
+        // msg.Health = 100f;
+
+        // // Add items
+        // var item = new InventoryItem();
+        // item.ItemId = 1;
+        // item.Name = "Sword";
+        // item.Quantity = 1;
+        // msg.Items = new List<InventoryItem> { item };
+
+        // // Serialize to bytes
+        // byte[] data = msg.Serialize();
+
+        // // Send to server via HTTP POST...
+
+        // // Receive response bytes and deserialize
+        // var response = GameMessage.Deserialize(responseBytes);
+        // Debug.Log($"Response health: {response.Health}");
     }
 }
