@@ -10,11 +10,9 @@ using MixedReality.Toolkit.UX;
 using System.Threading.Tasks;
 using System.IO.Compression;
 using UnityEngine.Networking;
+using static GeoTECH.Logger.AppLogger;
+// Serializer
 using Game.Network;
-
-#if ENABLE_WINMD_SUPPORT
-using Windows.Foundation.Diagnostics;
-#endif
 
 public class MainMenuScript : MonoBehaviour
 {
@@ -30,33 +28,6 @@ public class MainMenuScript : MonoBehaviour
     private int meshCount = 0;
     [SerializeField] private string processingUrl;
     [HideInInspector] string savingPath;
-
-#if ENABLE_WINMD_SUPPORT
-    LoggingChannel lc = new LoggingChannel("RealityMesherLogger", null, new Guid("2df964bb-cd29-4ac0-a462-59b4c484ae3d"));
-#endif
-    private enum LogType {Info, Warning, Error}
-    private void Log(string message, LogType level = LogType.Info)
-    {
-        if (level == LogType.Error) {
-            Debug.LogError(message);
-            #if ENABLE_WINMD_SUPPORT
-            lc.LogMessage(message, LoggingLevel.Error);
-            #endif
-        }
-        else if (level == LogType.Warning) {
-            Debug.LogWarning(message);
-            #if ENABLE_WINMD_SUPPORT
-            lc.LogMessage(message, LoggingLevel.Warning);
-            #endif
-        }
-        else {
-            Debug.Log(message);
-            #if ENABLE_WINMD_SUPPORT
-            lc.LogMessage(message);
-            #endif
-
-        }
-    }
 
     public void Start()
     {
@@ -266,7 +237,7 @@ public class MainMenuScript : MonoBehaviour
         string meshFilePath = string.Format("{0}/{1}/{1}_mesh.txt", savingPath, session);
 
         if (!File.Exists(meshFilePath)) {
-            Log("No environment has been saved yet.", LogType.Warning);
+            Log("No environment has been saved yet.", GeoTECH.Logger.LogType.Warning);
         }
 
         ClassifiedPointCloud pc = new ClassifiedPointCloud();
@@ -296,7 +267,7 @@ public class MainMenuScript : MonoBehaviour
 
         if (pc.classification.Count == 0)
         {
-            Log("Point cloud is empty. Please save the environment before sending to remote processing.", LogType.Warning);
+            Log("Point cloud is empty. Please save the environment before sending to remote processing.", GeoTECH.Logger.LogType.Warning);
             // return;
         }
         Log("Serializing data...");
@@ -318,14 +289,14 @@ public class MainMenuScript : MonoBehaviour
 
         if (request.result != UnityWebRequest.Result.Success)
         {
-            Log($"Remote request failed: {request.error} (result: {request.result}, HTTP {request.responseCode}, URL: {urlTrimmed})", LogType.Error);
+            Log($"Remote request failed: {request.error} (result: {request.result}, HTTP {request.responseCode}, URL: {urlTrimmed})", GeoTECH.Logger.LogType.Error);
             return;
         }
 
         byte[] responseData = request.downloadHandler.data;
         if (responseData == null || responseData.Length == 0)
         {
-            Log("Server returned empty response.", LogType.Warning);
+            Log("Server returned empty response.", GeoTECH.Logger.LogType.Warning);
             return;
         }
 
@@ -340,29 +311,7 @@ public class MainMenuScript : MonoBehaviour
         }
         catch (Exception e)
         {
-            Log($"Response deserialization failed: {e.Message}",LogType.Error);
+            Log($"Response deserialization failed: {e.Message}", GeoTECH.Logger.LogType.Error);
         }
-
-        // // Create message
-        // var msg = new GameMessage();
-        // msg.PlayerId = 42;
-        // msg.Position = new Vector3(10f, 20f, 30f);
-        // msg.Health = 100f;
-
-        // // Add items
-        // var item = new InventoryItem();
-        // item.ItemId = 1;
-        // item.Name = "Sword";
-        // item.Quantity = 1;
-        // msg.Items = new List<InventoryItem> { item };
-
-        // // Serialize to bytes
-        // byte[] data = msg.Serialize();
-
-        // // Send to server via HTTP POST...
-
-        // // Receive response bytes and deserialize
-        // var response = GameMessage.Deserialize(responseBytes);
-        // Debug.Log($"Response health: {response.Health}");
     }
 }
