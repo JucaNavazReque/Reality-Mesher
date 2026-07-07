@@ -1,3 +1,4 @@
+using System; // Needed for Guid
 using UnityEngine;
 
 #if ENABLE_WINMD_SUPPORT

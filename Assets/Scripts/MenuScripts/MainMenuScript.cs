@@ -10,6 +10,8 @@ using MixedReality.Toolkit.UX;
 using System.Threading.Tasks;
 using System.IO.Compression;
 using UnityEngine.Networking;
+using System.Collections.Generic;
+using UnityEngine.XR.ARFoundation;
 using static GeoTECH.Logger.AppLogger;
 // Serializer
 using Game.Network;
@@ -19,13 +21,13 @@ public class MainMenuScript : MonoBehaviour
     public DialogPool dialogPool;
     [HideInInspector]
     public string session;
-    GameObject meshParent;
-    MeshFilter[] meshFilters;
+    ARMeshManager meshManager;
+    IList<MeshFilter> meshFilters;
     CombineInstance[] combine;
     Mesh combinedMesh;
     private string imagePath;
     private string zipPath;
-    private int meshCount = 0;
+    private int savedDataCount = 0;
     [SerializeField] private string processingUrl;
     [HideInInspector] string savingPath;
 
@@ -35,7 +37,7 @@ public class MainMenuScript : MonoBehaviour
         {
             session = "session_" + DateTime.Now.ToString("dd-MM-yyyy_HH-mm-ss");
         }
-        meshParent = GameObject.Find("Trackables");
+        meshManager = GameObject.Find("ARMeshManager").GetComponent<ARMeshManager>();
         zipPath = string.Format("{0}/{1}/{1}_pictures.zip", Application.persistentDataPath, session);
         
         if (savingPath == "" || savingPath == null) {
@@ -77,7 +79,7 @@ public class MainMenuScript : MonoBehaviour
             .SetHeader("Save data")
             .SetBody("Select action")
             .SetPositive("Markers", _ => SaveMarkers())
-            .SetNegative("Mesh", _ => SaveMesh())
+            .SetNegative("Mesh", _ => SaveSpatialData())
             .SetNeutral("Cancel");
         dialog.Show();
     }
@@ -92,54 +94,133 @@ public class MainMenuScript : MonoBehaviour
         Log("Tag markers saved.");
     }
 
-    // Saves the mesh of the environment. Format: x,y,z
-    private async void SaveMesh() {
-        Vector3[] vertices = GetPointCloud();
-        await Task.Run(() => MeshWriter(savingPath, vertices));
+    // Saves the spatial data of the environment. Format: (x,y,z) and .obj
+    private async void SaveSpatialData() {
+        Vector3[] vertices = GetSpatialData();
+        MeshSnapshot mesh_snap = new MeshSnapshot(combinedMesh);
+        await Task.Run(() => DataWriter(savingPath, vertices, mesh_snap));
         Log("Mesh saved.");
     }
 
-    private Vector3[] GetPointCloud() {
-        Log("Generating point cloud...");
-        meshFilters = meshParent.GetComponentsInChildren<MeshFilter>();
-        if (meshFilters.Length == 0) {
+    // Combines meshes into "combinedMesh" and extracts its vertices.
+    private Vector3[] GetSpatialData() {
+        Log("Generating mesh...");
+        meshFilters = meshManager.meshes;
+        if (meshFilters.Count == 0) {
             Log("No mesh found to save.");
             return Array.Empty<Vector3>();
         }
-        combine = new CombineInstance[meshFilters.Length];
+        combine = new CombineInstance[meshFilters.Count];
         MeshCombiner(meshFilters, ref combine);
+        combinedMesh.Clear();
         combinedMesh.CombineMeshes(combine);
-        Log($"Point cloud generated with {combinedMesh.vertexCount} vertices.");
+        Log($"Mesh generated with {combinedMesh.vertexCount} vertices.");
         return combinedMesh.vertices;
     }
 
-    private void MeshCombiner(MeshFilter[] meshFilters, ref CombineInstance[] combine) {
-        for (int i = 0; i < meshFilters.Length; ++i) {
+    private void MeshCombiner(IList<MeshFilter> meshFilters, ref CombineInstance[] combine) {
+        for (int i = 0; i < meshFilters.Count; ++i) {
+            meshFilters[i].sharedMesh.RecalculateNormals();
             combine[i].mesh = meshFilters[i].sharedMesh;
             combine[i].transform = meshFilters[i].transform.localToWorldMatrix;
         }
     }
 
-    private void MeshWriter(string savingPath, Vector3[] vertices)
+    private void DataWriter(string savingPath, Vector3[] vertices, MeshSnapshot mesh = null)
     {
+        if (vertices.Length == 0)
+        {
+            Log("No data available to save.", GeoTECH.Logger.LogType.Warning);
+            return;
+        }
+
+        string sessionFolder = Path.Combine(savingPath, session);
+        string meshesFolder = Path.Combine(sessionFolder, "meshes");
+        if (!Directory.Exists(meshesFolder)) {
+            Directory.CreateDirectory(meshesFolder);
+        }
+
         StringBuilder sb = new StringBuilder();
         foreach (Vector3 v in vertices)
         {
             sb.AppendFormat(CultureInfo.InvariantCulture, "{0},{1},{2}\n", v.x, v.y, v.z);
         }
-        if (!Directory.Exists(string.Format("{0}/{1}/meshes", savingPath, session))) {
-            Directory.CreateDirectory(string.Format("{0}/{1}/meshes", savingPath, session));
-        }
-        using (StreamWriter sw = new StreamWriter(string.Format("{0}/{1}/{1}_mesh.txt", savingPath, session), true))
+        using (StreamWriter sw = new StreamWriter(Path.Combine(sessionFolder, $"{session}_points.txt"), true))
         {
             sw.Write(sb.ToString());
         }
-        using (StreamWriter sw = new StreamWriter(string.Format("{0}/{1}/meshes/{2}_mesh.txt", savingPath, session, meshCount), true))
+        using (StreamWriter sw = new StreamWriter(Path.Combine(meshesFolder, $"{savedDataCount}_points.txt"), true))
         {
             sw.Write(sb.ToString());
         }
-        meshCount++;
+
+        if (mesh != null)
+        {
+            string objPath = Path.Combine(meshesFolder, $"{savedDataCount}_mesh.obj");
+
+            Vector3[] meshVertices = mesh.meshVertices;
+            Vector2[] meshUVs = mesh.meshUVs;
+            Vector3[] meshNormals = mesh.meshNormals;
+            int[] meshTriangles = mesh.meshTriangles;
+            bool hasUVs = meshUVs != null && meshUVs.Length == meshVertices.Length;
+            bool hasNormals = meshNormals != null && meshNormals.Length == meshVertices.Length;
+
+            using StreamWriter writer = new StreamWriter(objPath, false);
+            writer.WriteLine($"o {Path.GetFileNameWithoutExtension(objPath)}");
+
+            foreach (Vector3 vertex in meshVertices) {
+                writer.WriteLine(string.Format(CultureInfo.InvariantCulture, "v {0} {1} {2}", vertex.x, vertex.y, vertex.z));
+            }
+
+            if (hasUVs) {
+                foreach (Vector2 uv in meshUVs) {
+                    writer.WriteLine(string.Format(CultureInfo.InvariantCulture, "vt {0} {1}", uv.x, uv.y));
+                }
+            }
+
+            if (hasNormals) {
+                foreach (Vector3 normal in meshNormals) {
+                    writer.WriteLine(string.Format(CultureInfo.InvariantCulture, "vn {0} {1} {2}", normal.x, normal.y, normal.z));
+                }
+            }
+
+            for (int i = 0; i < meshTriangles.Length; i += 3) {
+                int a = meshTriangles[i] + 1;
+                int b = meshTriangles[i + 1] + 1;
+                int c = meshTriangles[i + 2] + 1;
+
+                if (hasUVs && hasNormals) {
+                    writer.WriteLine($"f {a}/{a}/{a} {b}/{b}/{b} {c}/{c}/{c}");
+                }
+                else if (hasUVs) {
+                    writer.WriteLine($"f {a}/{a} {b}/{b} {c}/{c}");
+                }
+                else if (hasNormals) {
+                    writer.WriteLine($"f {a}//{a} {b}//{b} {c}//{c}");
+                }
+                else {
+                    writer.WriteLine($"f {a} {b} {c}");
+                }
+            }
+        }
+
+        savedDataCount++;
     }
+
+    private class MeshSnapshot {
+            public Vector3[] meshVertices {get;}
+            public Vector2[] meshUVs {get;}
+            public Vector3[] meshNormals {get;}
+            public int[] meshTriangles {get;}
+        public MeshSnapshot(Mesh mesh)
+        {
+            meshVertices = mesh.vertices;
+            meshUVs = mesh.uv;
+            meshNormals = mesh.normals;
+            meshTriangles = mesh.triangles;
+        }
+    }
+
 
     PhotoCapture photoCaptureObject = null;
     public void TakePicture()     {
@@ -234,33 +315,28 @@ public class MainMenuScript : MonoBehaviour
 
     private async void Send2Remote() {
         string urlTrimmed = processingUrl.Trim();
-        string meshFilePath = string.Format("{0}/{1}/{1}_mesh.txt", savingPath, session);
+        string meshFilePath = string.Format("{0}/{1}/{1}_points.txt", savingPath, session);
 
         if (!File.Exists(meshFilePath)) {
             Log("No environment has been saved yet.", GeoTECH.Logger.LogType.Warning);
+            return;
         }
 
         ClassifiedPointCloud pc = new ClassifiedPointCloud();
-        await Task.Run(async () =>
+        await Task.Run(() =>
         {
             Log("Loading saved environment vertices...");
-            // using StreamReader reader = new StreamReader(meshFilePath);
-            // string line;
-            // while ((line = reader.ReadLine()) != null) // While loop is used to avoid loading the entire file into memory
-            // {
-            //     var coords = line.Split(',');
-            //     pc.point_cloud.Add(new Vector3(
-            //         float.Parse(coords[0], CultureInfo.InvariantCulture),
-            //         float.Parse(coords[1], CultureInfo.InvariantCulture),
-            //         float.Parse(coords[2], CultureInfo.InvariantCulture)
-            //     ));
-            //     pc.classification.Add((byte) 0); // c = 0 means unclassified, default for original points
-            // }
-            // DESCOMENTAR RETURN DEBAJO DE "if (pc.classification.Count == 0)".
-
-            for (int i = 0; i < 150; i++) {
-                pc.point_cloud.Add(new Vector3((float)(i*4%6*0.9),(float)(i*6%2*1.02),(float)(i*3.5%6*1.29))); // Dummy data to test with.
-                pc.classification.Add((byte) 0);
+            using StreamReader reader = new StreamReader(meshFilePath);
+            string line;
+            while ((line = reader.ReadLine()) != null) // While loop is used to avoid loading the entire file into memory
+            {
+                var coords = line.Split(',');
+                pc.point_cloud.Add(new Vector3(
+                    float.Parse(coords[0], CultureInfo.InvariantCulture),
+                    float.Parse(coords[1], CultureInfo.InvariantCulture),
+                    float.Parse(coords[2], CultureInfo.InvariantCulture)
+                ));
+                pc.classification.Add((byte) 0); // c = 0 means unclassified, default for original points
             }
         });
         Log($"Loaded {pc.classification.Count} vertices from saved environment file.");
@@ -268,7 +344,7 @@ public class MainMenuScript : MonoBehaviour
         if (pc.classification.Count == 0)
         {
             Log("Point cloud is empty. Please save the environment before sending to remote processing.", GeoTECH.Logger.LogType.Warning);
-            // return;
+            return;
         }
         Log("Serializing data...");
         byte[] binaryData = pc.Serialize();
