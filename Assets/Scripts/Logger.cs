@@ -15,8 +15,10 @@ namespace GeoTECH.Logger
         private static readonly LoggingChannel lc = new LoggingChannel("RealityMesherLogger", null, new Guid("2df964bb-cd29-4ac0-a462-59b4c484ae3d"));
 #endif
 
-        public static void Log(string message, LogType level = LogType.Info)
+        public static void Log(object input, LogType level = LogType.Info)
         {
+            string message = input?.ToString() ?? "[Logged object cannot be converted to string]";
+
             if (level == LogType.Error)
             {
                 Debug.LogError(message);

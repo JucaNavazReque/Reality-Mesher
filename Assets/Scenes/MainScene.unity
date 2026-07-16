@@ -3544,7 +3544,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogPool: {fileID: 773826663}
   session: 
-  processingUrl: https://193.147.83.221:5000/hl2pcp
+  processingUrl: https://193.147.83.221:5000/hl2com
 --- !u!4 &530608096 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 463105470572649040, guid: 35f4f70e6c175f544a0f00654eedbf34, type: 3}
@@ -13662,7 +13662,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MeshPrefab: {fileID: 4796050236921567913, guid: cc4b68ce1da5fa94eb1d630ad2e93e57, type: 3}
   m_Density: 0
-  m_Normals: 0
+  m_Normals: 1
   m_Tangents: 0
   m_TextureCoordinates: 0
   m_Colors: 0

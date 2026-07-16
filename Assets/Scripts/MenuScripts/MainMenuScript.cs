@@ -14,7 +14,8 @@ using System.Collections.Generic;
 using UnityEngine.XR.ARFoundation;
 using static GeoTECH.Logger.AppLogger;
 // Serializer
-using Game.Network;
+using HL2Com.Messages;
+using UnityEngine.UIElements;
 
 public class MainMenuScript : MonoBehaviour
 {
@@ -24,7 +25,7 @@ public class MainMenuScript : MonoBehaviour
     ARMeshManager meshManager;
     IList<MeshFilter> meshFilters;
     CombineInstance[] combine;
-    Mesh combinedMesh;
+    UnityEngine.Mesh combinedMesh;
     private string imagePath;
     private string zipPath;
     private int savedDataCount = 0;
@@ -212,7 +213,7 @@ public class MainMenuScript : MonoBehaviour
             public Vector2[] meshUVs {get;}
             public Vector3[] meshNormals {get;}
             public int[] meshTriangles {get;}
-        public MeshSnapshot(Mesh mesh)
+        public MeshSnapshot(UnityEngine.Mesh mesh)
         {
             meshVertices = mesh.vertices;
             meshUVs = mesh.uv;
@@ -316,13 +317,19 @@ public class MainMenuScript : MonoBehaviour
     private async void Send2Remote() {
         string urlTrimmed = processingUrl.Trim();
         string meshFilePath = string.Format("{0}/{1}/{1}_points.txt", savingPath, session);
+        string markersFilePath = string.Format("{0}/{1}/{1}_markers.txt", savingPath, session);
+        string meshesFolder = Path.Combine(savingPath, session, "meshes");
 
         if (!File.Exists(meshFilePath)) {
             Log("No environment has been saved yet.", GeoTECH.Logger.LogType.Warning);
             return;
         }
 
-        ClassifiedPointCloud pc = new ClassifiedPointCloud();
+        RealityMesherBundle bundle = new RealityMesherBundle {
+            classified_point_cloud = new ClassifiedPointCloud(),
+            bundled_mesh = new HL2Com.Messages.Mesh(),
+            marker_tags = new MarkerTags()
+        };
         await Task.Run(() =>
         {
             Log("Loading saved environment vertices...");
@@ -331,23 +338,51 @@ public class MainMenuScript : MonoBehaviour
             while ((line = reader.ReadLine()) != null) // While loop is used to avoid loading the entire file into memory
             {
                 var coords = line.Split(',');
-                pc.point_cloud.Add(new Vector3(
+                bundle.classified_point_cloud.point_cloud.Add(new Vector3(
                     float.Parse(coords[0], CultureInfo.InvariantCulture),
                     float.Parse(coords[1], CultureInfo.InvariantCulture),
                     float.Parse(coords[2], CultureInfo.InvariantCulture)
                 ));
-                pc.classification.Add((byte) 0); // c = 0 means unclassified, default for original points
+                bundle.classified_point_cloud.classification.Add((byte) 0); // c = 0 means unclassified, default for original points
             }
         });
-        Log($"Loaded {pc.classification.Count} vertices from saved environment file.");
+        Log($"Loaded {bundle.classified_point_cloud.classification.Count} vertices from saved environment file.");
 
-        if (pc.classification.Count == 0)
+        if (bundle.classified_point_cloud.classification.Count == 0)
         {
             Log("Point cloud is empty. Please save the environment before sending to remote processing.", GeoTECH.Logger.LogType.Warning);
             return;
         }
+
+        Log("Loading generated mesh files...");
+        bundle.bundled_mesh = LoadMergedMeshFromObjFiles(meshesFolder);
+        if (bundle.bundled_mesh == null || bundle.bundled_mesh.vertices.Count == 0 || bundle.bundled_mesh.triangles.Count == 0)
+        {
+            Log("No generated mesh files were found to bundle.", GeoTECH.Logger.LogType.Warning);
+            return;
+        }
+
+        await Task.Run(() =>
+        {
+            if (File.Exists(markersFilePath)) {
+                Log("Loading marker tags...");
+                using StreamReader reader = new StreamReader(markersFilePath);
+                string line;
+                while ((line = reader.ReadLine()) != null) // While loop is used to avoid loading the entire file into memory
+                {
+                    var info = line.Split(',');
+                    bundle.marker_tags.name.Add(info[0]);
+                    bundle.marker_tags.position.Add(new Vector3(
+                        float.Parse(info[1], CultureInfo.InvariantCulture),
+                        float.Parse(info[2], CultureInfo.InvariantCulture),
+                        float.Parse(info[3], CultureInfo.InvariantCulture)
+                    ));
+                }
+            }
+        });
+
         Log("Serializing data...");
-        byte[] binaryData = pc.Serialize();
+        byte[] binaryData = bundle.Serialize();
         Log("Data serialized.");
 
         // Prepare request information
@@ -378,16 +413,199 @@ public class MainMenuScript : MonoBehaviour
 
         try
         {
-            ClassifiedPointCloud response = await Task.Run(() =>
+            RealityMesherBundle response = await Task.Run(() =>
             {
-                return ClassifiedPointCloud.Deserialize(responseData);
+                return RealityMesherBundle.Deserialize(responseData);
             });
 
-            Log($"Remote response received with {response.classification.Count(p => p != 0)}/{response.classification.Count} classified points.");
+            string classified_points = (response.classified_point_cloud != null) ? response.classified_point_cloud.classification.Count.ToString() : "no";
+            string mesh_faces = (response.bundled_mesh != null) ? response.bundled_mesh.triangles.Count.ToString() : "no";
+            Log($"Response contains {classified_points} points classified and {mesh_faces} mesh vertices.");
         }
         catch (Exception e)
         {
-            Log($"Response deserialization failed: {e.Message}", GeoTECH.Logger.LogType.Error);
+            Log($"Response deserialization failed: {e.Message}", GeoTECH.Logger.LogType.Error); // TODO: Deserialization failed
         }
+    }
+
+    private HL2Com.Messages.Mesh LoadMergedMeshFromObjFiles(string meshesFolder)
+    {
+        if (!Directory.Exists(meshesFolder))
+        {
+            return null;
+        }
+
+        string[] objFiles = Directory.GetFiles(meshesFolder, "*_mesh.obj")
+            .OrderBy(GetMeshFileOrderKey)
+            .ToArray();
+
+        if (objFiles.Length == 0)
+        {
+            return null;
+        }
+
+        HL2Com.Messages.Mesh mergedMesh = new HL2Com.Messages.Mesh();
+
+        foreach (string objFile in objFiles)
+        {
+            MergeObjFileIntoMesh(objFile, mergedMesh);
+        }
+
+        return mergedMesh;
+    }
+
+    private static int GetMeshFileOrderKey(string filePath)
+    {
+        string fileName = Path.GetFileNameWithoutExtension(filePath);
+        int separatorIndex = fileName.IndexOf('_');
+        string prefix = separatorIndex > 0 ? fileName[..separatorIndex] : fileName;
+
+        if (int.TryParse(prefix, NumberStyles.Integer, CultureInfo.InvariantCulture, out int order))
+        {
+            return order;
+        }
+
+        return int.MaxValue;
+    }
+
+private static void MergeObjFileIntoMesh(string objPath, HL2Com.Messages.Mesh targetMesh)
+{
+    // Global offsets in merged mesh (OBJ indices are 1-based)
+    int vertexBase = targetMesh.vertices.Count;
+    int uvBase = targetMesh.uvs.Count;
+    int normalBase = targetMesh.normals.Count;
+
+    // Local counts for handling negative OBJ indices (-1 = last local item)
+    int localVertexCount = 0;
+    int localUvCount = 0;
+    int localNormalCount = 0;
+
+    using StreamReader reader = new StreamReader(objPath);
+    string line;
+    while ((line = reader.ReadLine()) != null)
+    {
+        if (string.IsNullOrWhiteSpace(line) || line.StartsWith("#"))
+            continue;
+
+        string[] tokens = line.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+        if (tokens.Length == 0)
+            continue;
+
+        switch (tokens[0])
+        {
+            case "v":
+                if (tokens.Length >= 4)
+                {
+                    Vector3 vertex = new Vector3(
+                        float.Parse(tokens[1], CultureInfo.InvariantCulture),
+                        float.Parse(tokens[2], CultureInfo.InvariantCulture),
+                        float.Parse(tokens[3], CultureInfo.InvariantCulture)
+                    );
+                    targetMesh.vertices.Add(vertex);
+                    localVertexCount++;
+                }
+                break;
+
+            case "vt":
+                if (tokens.Length >= 3)
+                {
+                    targetMesh.uvs.Add(new Vector2(
+                        float.Parse(tokens[1], CultureInfo.InvariantCulture),
+                        float.Parse(tokens[2], CultureInfo.InvariantCulture)
+                    ));
+                    localUvCount++;
+                }
+                break;
+
+            case "vn":
+                if (tokens.Length >= 4)
+                {
+                    targetMesh.normals.Add(new Vector3(
+                        float.Parse(tokens[1], CultureInfo.InvariantCulture),
+                        float.Parse(tokens[2], CultureInfo.InvariantCulture),
+                        float.Parse(tokens[3], CultureInfo.InvariantCulture)
+                    ));
+                    localNormalCount++;
+                }
+                break;
+
+            case "f":
+                // Supports triangles and n-gons (fan triangulation)
+                if (tokens.Length >= 4)
+                {
+                    List<Vector3> corners = new List<Vector3>(tokens.Length - 1);
+                    for (int i = 1; i < tokens.Length; i++)
+                    {
+                        corners.Add(ParseObjFaceCorner(
+                            tokens[i],
+                            vertexBase, uvBase, normalBase,
+                            localVertexCount, localUvCount, localNormalCount
+                        ));
+                    }
+
+                    // Triangulate fan: (0, i, i+1)
+                    for (int i = 1; i < corners.Count - 1; i++)
+                    {
+                        MeshFace tri = new MeshFace();
+                        tri.corners.Add(corners[0]);
+                        tri.corners.Add(corners[i]);
+                        tri.corners.Add(corners[i + 1]);
+                        targetMesh.triangles.Add(tri);
+                    }
+                }
+                break;
+            }
+        }
+    }
+
+    private static Vector3 ParseObjFaceCorner(
+        string faceToken,
+        int vertexBase, int uvBase, int normalBase,
+        int localVertexCount, int localUvCount, int localNormalCount)
+    {
+        // OBJ corner formats:
+        // v
+        // v/vt
+        // v//vn
+        // v/vt/vn
+        string[] parts = faceToken.Split('/');
+
+        float v = ParseObjFaceIndex(parts, 0, vertexBase, localVertexCount);
+        float vt = ParseObjFaceIndex(parts, 1, uvBase, localUvCount);
+        float vn = ParseObjFaceIndex(parts, 2, normalBase, localNormalCount);
+
+        return new Vector3(v, vt, vn);
+    }
+
+    private static float ParseObjFaceIndex(string[] parts, int index, int globalBase, int localCount)
+    {
+        // Missing value => sentinel
+        if (index >= parts.Length || string.IsNullOrWhiteSpace(parts[index]))
+            return -1f;
+
+        // OBJ indices should be integers
+        if (!int.TryParse(parts[index], NumberStyles.Integer, CultureInfo.InvariantCulture, out int idx))
+            return -1f;
+
+        // OBJ indexing rules:
+        //  > 0 : 1-based absolute index within current OBJ file section
+        //  < 0 : relative to end of currently defined local list (-1 = last)
+        //   0  : invalid in OBJ
+        if (idx > 0)
+        {
+            // convert local 1-based to merged 1-based
+            return idx + globalBase;
+        }
+        else if (idx < 0)
+        {
+            // local 1-based resolved index
+            int resolvedLocal = localCount + idx + 1; // idx is negative
+            if (resolvedLocal <= 0)
+                return -1f;
+
+            return resolvedLocal + globalBase;
+        }
+
+        return -1f; // idx == 0 invalid
     }
 }

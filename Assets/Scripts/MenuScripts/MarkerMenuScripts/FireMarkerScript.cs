@@ -1,5 +1,6 @@
 using MixedReality.Toolkit.SpatialManipulation;
 using UnityEngine;
+using static GeoTECH.Logger.AppLogger;
 
 public class FireMarkerScript : MonoBehaviour
 {
@@ -91,8 +92,8 @@ public class FireMarkerScript : MonoBehaviour
             DeleteMarkerButton.transform.SetParent(realMarker.transform);
 
             // Add the marker to the MarkerManager
-            Debug.Log(MarkerManager.Instance);
-            Debug.Log(realMarker);
+            Log(MarkerManager.Instance);
+            Log(realMarker);
             MarkerManager.Instance.AddMarker(realMarker);
         }
     }
